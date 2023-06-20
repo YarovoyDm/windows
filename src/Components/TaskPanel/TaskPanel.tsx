@@ -1,7 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from 'react-tooltip';
-import { ContextMenuItem, useContextMenu } from "use-context-menu";
 import { map } from 'lodash';
 import cn from 'classnames';
 import { LANGUAGES } from 'Constants/TaskPanel';
@@ -42,14 +41,6 @@ const TaskPanel = () => {
         dispatch(handleClickOutside());
     });
 
-    const { contextMenu, onContextMenu, onKeyDown } = useContextMenu(
-        <>
-            <ContextMenuItem >One</ContextMenuItem>
-            <ContextMenuItem>Two</ContextMenuItem>
-            <ContextMenuItem >Three</ContextMenuItem>
-        </>,
-    );
-
     const pinedAppsRender = useMemo(() => {
         return taskPanelApps
             && map(taskPanelApps, ({ name, isOpen, isFocused } : {name: string, isOpen: boolean, isFocused: boolean}) => {
@@ -80,8 +71,7 @@ const TaskPanel = () => {
     // };
 
     return(
-        <div className='taskPanel' onContextMenu={onContextMenu} onKeyDown={onKeyDown} tabIndex={0}>
-            {contextMenu}
+        <div className='taskPanel'>
             <div className='taskPanelWindows'>
                 <Windows className='taskPanelWindowsIcon'/>
             </div>
