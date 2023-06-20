@@ -4,11 +4,13 @@
 2. Local imports by alies
     a.Components
     b.Constants
-    c.Icons
-    d.Reducers
+    c.Hooks
+    d.Icons
+    e.Reducers
 3. Other local imports
     a.Components
     b.Constants
-    c.Icons
-    d.Reducers
+    c.Hooks
+    d.Icons
+    e.Reducers
 4. Styles imports with one line brake

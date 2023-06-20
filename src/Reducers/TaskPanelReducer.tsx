@@ -10,6 +10,11 @@ import { ReactComponent as Steam } from 'Icons/steamIcon.svg';
 type TaskPanelType = {
     taskPanelApps: { [key: string]: { name: string, isOpen?: boolean, isFocused?: boolean, component: React.ReactElement } },
     systemLanguageIndex: number,
+    searchInput: {
+        searchInputValue: string,
+        searchInputModalOpen: boolean,
+    },
+    hiddenAppsModalOpen: boolean,
 };
 
 const initialTaskPanelState = {
@@ -20,6 +25,11 @@ const initialTaskPanelState = {
         [STEAM]: { name: STEAM, component: <Steam className='icon'/>, isOpen: false, isFocused: false },
     },
     systemLanguageIndex: 0,
+    searchInput: {
+        searchInputValue: '',
+        searchInputModalOpen: false,
+    },
+    hiddenAppsModalOpen: false,
 } as TaskPanelType;
 
 const taskPanelSlice = createSlice({
@@ -40,8 +50,29 @@ const taskPanelSlice = createSlice({
                 state.systemLanguageIndex += 1;
             }
         },
+        handleInputModal(state: TaskPanelType) {
+            state.searchInput.searchInputModalOpen = !state.searchInput.searchInputModalOpen;
+        },
+        handleInputValue(state: TaskPanelType, action) {
+            state.searchInput.searchInputValue = action.payload;
+        },
+        handleHiddenAppsModal(state: TaskPanelType) {
+            state.hiddenAppsModalOpen = !state.hiddenAppsModalOpen;
+        },
+        handleClickOutside(state: TaskPanelType) {
+            state.hiddenAppsModalOpen = false;
+            state.searchInput.searchInputModalOpen = false;
+        },
     },
 });
 
 export default taskPanelSlice.reducer;
-export const { openingApp, changeApp, changeLanguageIndex } = taskPanelSlice.actions;
+export const {
+    openingApp,
+    changeApp,
+    changeLanguageIndex,
+    handleInputModal,
+    handleInputValue,
+    handleHiddenAppsModal,
+    handleClickOutside,
+} = taskPanelSlice.actions;
