@@ -5,7 +5,10 @@
       "Components/*": ["Components/*"],
       "Constants/*": ["Constants/*"],
       "Reducers/*": ["Reducers/*"],
-      "Icons/*": ["Icons/*"]
+      "Icons/*": ["Icons/*"],
+      "Modals/*": ["/Components/Modals/*"],
+      "Types/*": ["Types/*"],
+      "Hooks/*": ["Hooks/*"]
     },
     "target": "es5",
     "lib": [

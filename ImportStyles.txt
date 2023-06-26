@@ -14,3 +14,9 @@
     d.Icons
     e.Reducers
 4. Styles imports with one line brake
+
+
+
+// Behavior
+1. Lock
+    a. Display Lock screen until user put the correct password

@@ -1,0 +1,28 @@
+.hiddenAppsModal{
+    width: 166px;
+    height: 81px;
+    top: -110px;
+    padding: 5px;
+    background: #fbfbfb;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.hiddenAppUnit{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hiddenAppUnit:hover{
+    background: var(--TASK_PANEL_ELEMENT_FOCUS);
+}
+
+.appUnitIcon{
+    width: 18px;
+    height: 18px;
+}

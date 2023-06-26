@@ -1,45 +1,82 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from 'react-tooltip';
 import { map } from 'lodash';
 import cn from 'classnames';
-import { LANGUAGES } from 'Constants/TaskPanel';
-import { useClickOutside } from "../../Hooks/useClickOutside";
-import Icon from '../Icon/Icon';
-import { ReactComponent as Search } from 'Icons/searchIcon.svg';
-import { ReactComponent as Windows } from 'Icons/windowsIcon.svg';
-import { ReactComponent as Arrow } from 'Icons/upArrowIcon.svg';
+import HiddenAppsModal from "Components/Modals/HiddenAppsModal/HiddenAppsModal";
+import WindowsModal from "Components/Modals/WindowsModal/WindowsModal";
+import {
+    LANGUAGES,
+    WINDOWS_KEY,
+    HIDDEN_APPS_KEY,
+    LANGUAGES_KEY,
+    SEARCH,
+    WINDOWS,
+    ARROW,
+} from 'Constants/TaskPanel';
+import { useClickOutside } from "Hooks/useClickOutside";
+import Icon from 'Components/Icon/Icon';
 import {
     openingApp,
     changeApp,
     handleInputValue,
-    handleInputModal,
     handleHiddenAppsModal,
     handleClickOutside,
+    handleWindowsModal,
+    handleLanguagesModal,
 } from 'Reducers/TaskPanelReducer';
-import { AppDispatch } from "Reducers";
+import { AppDispatch, RootState } from "Reducers";
+import { ObjectOfModalRefs } from "Types/TaskPanelTypes";
 
 import './TaskPanel.css';
-import "use-context-menu/styles.css";
+import LanguagesModal from "Components/Modals/LanguagesModal/LanguagesModal";
 
-const TaskPanel = () => {
+const TaskPanel: React.FC = () => {
     const dispatch: AppDispatch = useDispatch();
-    const ref = useRef(null);
+    const [currentModal, setCurrentModal] = useState<string>('');
+    const refs: ObjectOfModalRefs = {
+        windows: useRef(null),
+        hiddenApps: useRef(null),
+        languages: useRef(null),
+    };
 
-    const taskPanelApps = useSelector(({ taskPanel: { taskPanelApps } }) => taskPanelApps);
-    const languageIndex = useSelector(({ taskPanel: { systemLanguageIndex } }) => systemLanguageIndex);
-    const searchInputValue = useSelector(({ taskPanel: { searchInput: { searchInputValue } } }) => searchInputValue);
-    const isSearchInputModalOpen = useSelector(({ taskPanel: { searchInput: { searchInputModalOpen } } }) => searchInputModalOpen);
-    const isHiddenAppsModalOpen = useSelector(({ taskPanel: { hiddenAppsModalOpen } }) => hiddenAppsModalOpen);
+    const store = useSelector((state: RootState) => state);
+    const {
+        taskPanelApps,
+        systemLanguageIndex,
+        searchInput,
+        hiddenAppsModalOpen,
+        windowsModalOpen,
+        isLanguagesModalOpen,
+    } = store.taskPanel;
+
+    useClickOutside(refs[currentModal as keyof typeof refs], () => {
+        dispatch(handleClickOutside());
+    });
 
     const onAppClick = (name: string) => {
         dispatch(openingApp(name));
         dispatch(changeApp(name));
     };
 
-    useClickOutside(ref, () => {
-        dispatch(handleClickOutside());
-    });
+    const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(handleInputValue(e.target.value));
+    };
+
+    const onHiddenAppsChange = () => {
+        setCurrentModal(HIDDEN_APPS_KEY);
+        dispatch(handleHiddenAppsModal());
+    };
+
+    const onWindowsModalChange = () => {
+        setCurrentModal(WINDOWS_KEY);
+        dispatch(handleWindowsModal());
+    };
+
+    const onLanguagesModalChange = () => {
+        setCurrentModal(LANGUAGES_KEY);
+        dispatch(handleLanguagesModal());
+    };
 
     const pinedAppsRender = useMemo(() => {
         return taskPanelApps
@@ -48,61 +85,61 @@ const TaskPanel = () => {
                     key={name}
                     className={cn('taskPanelAppUnit', isFocused && 'appIsActive')}
                     data-tooltip-content={name}
-                    data-tooltip-id='my-tooltip'
+                    data-tooltip-id='taskPanelTooltips'
                     onClick={() => onAppClick(name)}
                 >
-                    <div className='taskPanelAppIcon'><Icon name={name}/></div>
+                    <Icon className='taskPanelAppIcon' name={name}/>
                     {isOpen && <div className={cn('isAppOpen', isFocused && 'appInFocus')}></div>}
                 </div>;
             });
     }, [taskPanelApps]);
 
-    const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(handleInputValue(e.target.value));
-    };
-
-    const onHiddenAppsChange = () => {
-        console.log('hehe');
-        dispatch(handleHiddenAppsModal());
-    };
-
-    // const ss = () => {
-    //     dispatch(handleInputModal());
-    // };
-
     return(
         <div className='taskPanel'>
-            <div className='taskPanelWindows'>
-                <Windows className='taskPanelWindowsIcon'/>
+            <div
+                ref={refs.windows}
+                className={cn('taskPanelWindows', windowsModalOpen && 'windowsModalOpen')}
+                onClick={onWindowsModalChange}
+            >
+                <Icon name={WINDOWS} className='taskPanelWindowsIcon'/>
+                {windowsModalOpen && <WindowsModal />}
             </div>
             <div className='taskPanelSearch'>
-                <Search className='searchIcon'/>
+                <Icon name={SEARCH} className='searchIcon'/>
                 <input
                     className='taskPanelSearchInput'
                     placeholder='Пошук'
-                    value={searchInputValue}
+                    value={searchInput.searchInputValue}
                     onChange={onSearchInputChange}
                     // onFocus={ss}
                 />
-                {isSearchInputModalOpen
+                {searchInput.searchInputModalOpen
                     && <div className='searchInputModal taskPanelModal'>1</div>}
             </div>
             <div className='taskPanelAppWrapper'>{pinedAppsRender}</div>
             <Tooltip
-                id='my-tooltip'
+                id='taskPanelTooltips'
                 className='taskPanelAppTooltip'
                 classNameArrow='tooltipArrow'
             />
             <div className='taskPanelSidebar'>
                 <div
-                    ref={ref}
-                    className={cn('taskPanelSidebarUnit', isHiddenAppsModalOpen && 'isHiddenAppOpen')}
-                    onClick={() => onHiddenAppsChange()}
+                    ref={refs.hiddenApps}
+                    className={cn('taskPanelSidebarUnit', hiddenAppsModalOpen && 'hiddenAppOpen')}
+                    onClick={onHiddenAppsChange}
                 >
-                    <Arrow className={cn('collapseArrow', isHiddenAppsModalOpen && 'collapseArrowRotate')}/>
-                    {isHiddenAppsModalOpen && <div className='hiddenAppsModal taskPanelModal'>1</div>}
+                    {hiddenAppsModalOpen && <HiddenAppsModal />}
+                    <Icon name={ARROW} className={cn('collapseArrow', hiddenAppsModalOpen && 'collapseArrowRotate')}/>
+
                 </div>
-                <div className='taskPanelSidebarUnit'>{LANGUAGES[languageIndex]}</div>
+                <div
+                    ref={refs.languages}
+                    className={cn('taskPanelSidebarUnit', isLanguagesModalOpen && 'languagesModalOpen')}
+                    onClick={onLanguagesModalChange}
+                >
+                    {isLanguagesModalOpen && <LanguagesModal />}
+                    {LANGUAGES[systemLanguageIndex].abbreviation}
+                </div>
                 <div className='taskPanelSidebarUnit'></div>
                 <div className='taskPanelSidebarUnit'></div>
             </div>

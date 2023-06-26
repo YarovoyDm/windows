@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 import './App.css';
 import Desktop from 'Components/Desktop/Desktop';
 import TaskPanel from 'Components/TaskPanel/TaskPanel';
+import LockScreen from "Components/LockScreen/LockScreen";
 import { useDispatch } from "react-redux";
-import { changeLanguageIndex } from "Reducers/TaskPanelReducer";
+import { changeLanguageIndexByHotKeys } from "Reducers/TaskPanelReducer";
 
 function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const handleContextMenu = (e: any) => {
-            // prevent the right-click menu from appearing
+        const handleContextMenu = (e: Event) => {
             e.preventDefault();
         };
 
@@ -29,14 +29,15 @@ function App() {
 
     }, []);
 
-    const detectKeyDown = (e: any) => {
+    const detectKeyDown = (e: KeyboardEvent) => {
         if (e.shiftKey && e.altKey) {
-            dispatch(changeLanguageIndex());
+            dispatch(changeLanguageIndexByHotKeys());
         }
     };
 
     return (
         <div className='window'>
+            {false && <LockScreen />}
             <Desktop />
             <TaskPanel />
         </div>

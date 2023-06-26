@@ -1,35 +1,38 @@
 import React from "react";
 import { map } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
-import { GOOGLE_CHROME, TASK_PANEL, SKYPE, STEAM, TELEGRAM } from 'Constants/TaskPanel';
-import { ReactComponent as Telegram } from 'Icons/telegramIcon.svg';
-import { ReactComponent as Skype } from 'Icons/skypeIcon.svg';
-import { ReactComponent as Chrome } from 'Icons/chromeIcon.svg';
-import { ReactComponent as Steam } from 'Icons/steamIcon.svg';
-
-type TaskPanelType = {
-    taskPanelApps: { [key: string]: { name: string, isOpen?: boolean, isFocused?: boolean, component: React.ReactElement } },
-    systemLanguageIndex: number,
-    searchInput: {
-        searchInputValue: string,
-        searchInputModalOpen: boolean,
-    },
-    hiddenAppsModalOpen: boolean,
-};
+import {
+    GOOGLE_CHROME,
+    TASK_PANEL,
+    SKYPE,
+    STEAM,
+    TELEGRAM,
+    DEFAULT_LANGUAGE_INDEX,
+    LANGUAGE_CHANGE_STEP,
+    MAX_LANGUAGES,
+    SYSTEM_PASSWORD,
+} from 'Constants/TaskPanel';
+import Icon from 'Components/Icon/Icon';
+import { TaskPanelType } from "Types/TaskPanelTypes";
 
 const initialTaskPanelState = {
     taskPanelApps: {
-        [TELEGRAM]: { name: TELEGRAM, component: <Telegram className='icon'/>, isOpen: false, isFocused: false },
-        [SKYPE]: { name: SKYPE, component: <Skype className='icon'/>, isOpen: false, isFocused: false },
-        [GOOGLE_CHROME]: { name: GOOGLE_CHROME, component: <Chrome className='icon'/>, isOpen: false, isFocused: false },
-        [STEAM]: { name: STEAM, component: <Steam className='icon'/>, isOpen: false, isFocused: false },
+        [TELEGRAM]: { name: TELEGRAM, component: <Icon name={TELEGRAM} />, isOpen: false, isFocused: false },
+        [SKYPE]: { name: SKYPE, component: <Icon name={SKYPE} />, isOpen: false, isFocused: false },
+        [GOOGLE_CHROME]: { name: GOOGLE_CHROME, component: <Icon name={GOOGLE_CHROME} />, isOpen: false, isFocused: false },
+        [STEAM]: { name: STEAM, component: <Icon name={STEAM} />, isOpen: false, isFocused: false },
     },
-    systemLanguageIndex: 0,
+    systemLanguageIndex: DEFAULT_LANGUAGE_INDEX,
     searchInput: {
         searchInputValue: '',
         searchInputModalOpen: false,
     },
     hiddenAppsModalOpen: false,
+    windowsModalOpen: false,
+    systemPassword: SYSTEM_PASSWORD,
+    isWindowsUnlock: false,
+    isPowerModalOpen: false,
+    isLanguagesModalOpen: false,
 } as TaskPanelType;
 
 const taskPanelSlice = createSlice({
@@ -43,25 +46,50 @@ const taskPanelSlice = createSlice({
             map(state.taskPanelApps, item => item.isFocused = false);
             state.taskPanelApps[action.payload].isFocused = true;
         },
-        changeLanguageIndex(state: TaskPanelType) {
-            if(state.systemLanguageIndex >= 1){
-                state.systemLanguageIndex = 0;
+        changeLanguageIndexByHotKeys(state: TaskPanelType) {
+            if(state.systemLanguageIndex >= MAX_LANGUAGES){
+                state.systemLanguageIndex = DEFAULT_LANGUAGE_INDEX;
             }else{
-                state.systemLanguageIndex += 1;
+                state.systemLanguageIndex += LANGUAGE_CHANGE_STEP;
             }
         },
-        handleInputModal(state: TaskPanelType) {
-            state.searchInput.searchInputModalOpen = !state.searchInput.searchInputModalOpen;
-        },
-        handleInputValue(state: TaskPanelType, action) {
-            state.searchInput.searchInputValue = action.payload;
-        },
-        handleHiddenAppsModal(state: TaskPanelType) {
-            state.hiddenAppsModalOpen = !state.hiddenAppsModalOpen;
+        changeLanguageIndex(state: TaskPanelType, action) {
+            state.systemLanguageIndex = action.payload;
         },
         handleClickOutside(state: TaskPanelType) {
             state.hiddenAppsModalOpen = false;
             state.searchInput.searchInputModalOpen = false;
+            state.windowsModalOpen = false;
+            state.isPowerModalOpen = false;
+            state.isLanguagesModalOpen = false;
+        },
+        handleInputValue(state: TaskPanelType, action) {
+            state.searchInput.searchInputValue = action.payload;
+        },
+        handleInputModal(state: TaskPanelType) {
+            state.searchInput.searchInputModalOpen = !state.searchInput.searchInputModalOpen;
+            state.windowsModalOpen = false;
+            state.hiddenAppsModalOpen = false;
+        },
+        handleHiddenAppsModal(state: TaskPanelType) {
+            state.hiddenAppsModalOpen = !state.hiddenAppsModalOpen;
+            state.searchInput.searchInputModalOpen = false;
+            state.windowsModalOpen = false;
+            state.isLanguagesModalOpen = false;
+        },
+        handleWindowsModal(state: TaskPanelType) {
+            state.windowsModalOpen = !state.windowsModalOpen;
+            state.hiddenAppsModalOpen = false;
+            state.searchInput.searchInputModalOpen = false;
+            state.isLanguagesModalOpen = false;
+        },
+        handlePowerModal(state: TaskPanelType) {
+            state.isPowerModalOpen = !state.isPowerModalOpen;
+        },
+        handleLanguagesModal(state: TaskPanelType) {
+            state.isLanguagesModalOpen = !state.isLanguagesModalOpen;
+            state.windowsModalOpen = false;
+            state.hiddenAppsModalOpen = false;
         },
     },
 });
@@ -70,9 +98,13 @@ export default taskPanelSlice.reducer;
 export const {
     openingApp,
     changeApp,
-    changeLanguageIndex,
+    changeLanguageIndexByHotKeys,
     handleInputModal,
     handleInputValue,
     handleHiddenAppsModal,
     handleClickOutside,
+    handleWindowsModal,
+    handlePowerModal,
+    handleLanguagesModal,
+    changeLanguageIndex,
 } = taskPanelSlice.actions;
