@@ -5,13 +5,13 @@ import Icon from "Components/Icon/Icon";
 import { USER, POWER, SLEEP, RELOAD } from "Constants/TaskPanel";
 import { handlePowerModal } from "Store/slices/TaskPanelSlice";
 
-import { AppDispatch, RootState } from "Store/index";
+import { RootState, useAppDispatch } from "Store/index";
 
 import styles from "./WindowsModal.module.scss";
 import PowerModal from "../PowerModal/PowerModal";
 
 const WindowsModal: React.FC = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const store = useSelector((state: RootState) => state);
     const { isPowerModalOpen } = store.taskPanel;
 

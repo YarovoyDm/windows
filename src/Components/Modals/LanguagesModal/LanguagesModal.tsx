@@ -7,13 +7,13 @@ import {
 } from "Store/slices/TaskPanelSlice";
 
 import styles from "./LanguagesModal.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "Store/index";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "Store/index";
 
 const LanguagesModal = () => {
     const store = useSelector((state: RootState) => state);
     const { systemLanguageIndex } = store.taskPanel;
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onLanguageChange = (index: number) => {
         dispatch(changeLanguageIndex(index));

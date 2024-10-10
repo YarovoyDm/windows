@@ -13,6 +13,8 @@ import { ReactComponent as Search } from "Icons/searchIcon.svg";
 import { ReactComponent as Windows } from "Icons/windowsIcon.svg";
 import { ReactComponent as Arrow } from "Icons/upArrowIcon.svg";
 import { ReactComponent as TextFile } from "Icons/TextFileIcon.svg";
+import { ReactComponent as Folder } from "Icons/folderIcon.svg";
+import { ReactComponent as Bin } from "Icons/binIcon.svg";
 import {
     TELEGRAM,
     SKYPE,
@@ -29,6 +31,7 @@ import {
     ARROW,
     TEXT_FILE,
 } from "Constants/TaskPanel";
+import { FOLDER, BIN } from "Constants/Desktop";
 
 type IProps = {
     name: string;
@@ -50,6 +53,8 @@ const Icons = {
     [WINDOWS]: Windows,
     [ARROW]: Arrow,
     [TEXT_FILE]: TextFile,
+    [FOLDER]: Folder,
+    [BIN]: Bin,
 };
 
 const Icon = (props: IProps) => {

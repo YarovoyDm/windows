@@ -4,8 +4,7 @@ import cn from "classnames";
 import Icon from "Components/Icon/Icon";
 
 import styles from "./PinnedApps.module.scss";
-import { AppDispatch } from "Store/index";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "Store/index";
 import { changeApp, openingApp } from "Store/slices/TaskPanelSlice";
 
 type App = {
@@ -20,7 +19,7 @@ const PinnedApps = ({
 }: {
     taskPanelApps: { [key: string]: App };
 }) => {
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onAppClick = (name: string) => {
         dispatch(openingApp(name));

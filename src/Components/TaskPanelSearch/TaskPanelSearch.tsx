@@ -3,8 +3,7 @@ import cn from "classnames";
 
 import styles from "./TaskPanelSearch.module.scss";
 import { SEARCH } from "Constants/TaskPanel";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "Store/index";
+import { useAppDispatch } from "Store/index";
 import { handleInputValue } from "Store/slices/TaskPanelSlice";
 import Icon from "Components/Icon/Icon";
 
@@ -13,7 +12,7 @@ interface IInput {
 }
 
 const TaskPanelSearch = ({ searchInput }: IInput) => {
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;

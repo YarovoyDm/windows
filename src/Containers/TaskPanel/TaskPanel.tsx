@@ -10,7 +10,7 @@ import {
     handleClickOutside,
     handleWindowsModal,
 } from "Store/slices/TaskPanelSlice";
-import { AppDispatch, RootState } from "Store";
+import { RootState, useAppDispatch } from "Store";
 import { ObjectOfModalRefs } from "Types/TaskPanelTypes";
 
 import styles from "./TaskPanel.module.scss";
@@ -20,7 +20,7 @@ import TaskPanelSideBar from "Components/TaskPanelSideBar/TaskPanelSideBar";
 import TaskPanelSearch from "Components/TaskPanelSearch/TaskPanelSearch";
 
 const TaskPanel: React.FC = () => {
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [currentModal, setCurrentModal] = useState<string>("");
 
     const refs: ObjectOfModalRefs = {

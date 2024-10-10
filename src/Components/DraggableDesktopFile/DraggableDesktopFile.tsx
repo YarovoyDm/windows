@@ -1,21 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import styles from "./DraggableDesktopItem.module.scss";
+import styles from "./DraggableDesktopFile.module.scss";
 import cn from "classnames";
 import Icon from "Components/Icon/Icon";
-import { TEXT_FILE } from "Constants/TaskPanel";
+import { useAppDispatch } from "Store/index";
+import { removeFile } from "Store/slices/Desktop";
 
 type Position = {
     x: number;
     y: number;
 };
 
-const DraggableDesktopItem = () => {
+type IFile = {
+    name: string;
+    icon: string;
+    filePosition: { x: number; y: number };
+};
+
+const DraggableDesktopFile = ({ name, icon, filePosition }: IFile) => {
+    const dispatch = useAppDispatch();
     const [isDragging, setIsDragging] = useState<boolean>(false);
-    const [position, setPosition] = useState<Position>({ x: 50, y: 50 });
+    const [position, setPosition] = useState<Position>({
+        x: filePosition.x,
+        y: filePosition.y,
+    });
     const [offset, setOffset] = useState<Position>({ x: 0, y: 0 });
     const [isSelected, setIsSelected] = useState<boolean>(false);
-    const folderRef = useRef<HTMLDivElement>(null);
+    const fileRef = useRef<HTMLDivElement>(null);
 
     const handleMouseDown = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -38,8 +49,8 @@ const DraggableDesktopItem = () => {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
 
-        const folderWidth = 100;
-        const folderHeight = 100;
+        const folderWidth = 80;
+        const folderHeight = 70;
 
         if (newX < 0) newX = 0;
         if (newY < 0) newY = 0;
@@ -55,15 +66,22 @@ const DraggableDesktopItem = () => {
     };
 
     const handleClickOutside = (e: MouseEvent) => {
-        if (
-            folderRef.current &&
-            !folderRef.current.contains(e.target as Node)
-        ) {
+        if (fileRef.current && !fileRef.current.contains(e.target as Node)) {
             setIsSelected(false);
         }
     };
 
+    const detectKeyDown = (e: KeyboardEvent) => {
+        if (e.code === "Delete") {
+            dispatch(removeFile(name));
+        }
+    };
+
     useEffect(() => {
+        if (isSelected) {
+            document.addEventListener("keydown", detectKeyDown, true);
+        }
+
         if (isDragging) {
             document.addEventListener("mousemove", handleMouseMove);
             document.addEventListener("mouseup", handleMouseUp);
@@ -72,8 +90,9 @@ const DraggableDesktopItem = () => {
         return () => {
             document.removeEventListener("mousemove", handleMouseMove);
             document.removeEventListener("mouseup", handleMouseUp);
+            document.removeEventListener("keydown", detectKeyDown, true);
         };
-    }, [isDragging]);
+    }, [isDragging, isSelected]);
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
@@ -86,7 +105,7 @@ const DraggableDesktopItem = () => {
     return (
         <div
             onMouseDown={handleMouseDown}
-            ref={folderRef}
+            ref={fileRef}
             className={cn(styles.file, { [styles.selected]: isSelected })}
             style={{
                 top: `${position.y}px`,
@@ -94,10 +113,10 @@ const DraggableDesktopItem = () => {
                 position: "absolute",
             }}
         >
-            <Icon name={TEXT_FILE} />
-            <div className={styles.fileName}>Read me!</div>
+            <Icon name={icon} />
+            <div className={styles.fileName}>{name}</div>
         </div>
     );
 };
 
-export default DraggableDesktopItem;
+export default DraggableDesktopFile;

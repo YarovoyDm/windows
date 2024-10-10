@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import styles from "./Desktop.module.scss";
-import DraggableDesktopItem from "Components/DraggableDesktopItem/DraggableDesktopItem";
+
+import { useAppSelector } from "Store/index";
+import { selectFiles } from "Store/selectors/Desktop";
+import DraggableDesktopFile from "Components/DraggableDesktopFile/DraggableDesktopFile";
 
 type Position = {
     x: number;
@@ -19,6 +22,7 @@ const Desktop = () => {
         y: 0,
     });
     const selectionRef = useRef<HTMLDivElement>(null);
+    const desktopFiles = useAppSelector(selectFiles);
 
     const handleMouseDown = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -72,7 +76,17 @@ const Desktop = () => {
                     style={getSelectionStyles()}
                 />
             )}
-            <DraggableDesktopItem />
+            {desktopFiles.map(({ name, icon, position }) => {
+                return (
+                    <DraggableDesktopFile
+                        key={name}
+                        name={name}
+                        icon={icon}
+                        filePosition={position}
+                    />
+                );
+            })}
+
             {/* <DraggableDesktopItem /> */}
         </div>
     );
