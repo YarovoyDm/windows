@@ -4,9 +4,9 @@ import cn from "classnames";
 import Icon from "Components/Icon/Icon";
 
 import styles from "./PinnedApps.module.scss";
-import { AppDispatch } from "Reducers/index";
+import { AppDispatch } from "Store/index";
 import { useDispatch } from "react-redux";
-import { changeApp, openingApp } from "Reducers/TaskPanelReducer";
+import { changeApp, openingApp } from "Store/slices/TaskPanelSlice";
 
 type App = {
     name: string;
@@ -49,6 +49,7 @@ const PinnedApps = ({
                                 })}
                                 data-tooltip-content={name}
                                 data-tooltip-id='taskPanelTooltips'
+                                data-tooltip-delay-show={500}
                                 onClick={() => onAppClick(name)}
                             >
                                 <Icon

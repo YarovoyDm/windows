@@ -13,9 +13,9 @@ import LanguagesModal from "Components/Modals/LanguagesModal/LanguagesModal";
 import {
     handleHiddenAppsModal,
     handleLanguagesModal,
-} from "Reducers/TaskPanelReducer";
+} from "Store/slices/TaskPanelSlice";
 import { AnyAction, ThunkAction } from "@reduxjs/toolkit";
-import { RootState } from "Reducers/index";
+import { RootState } from "Store/index";
 import { ObjectOfModalRefs } from "Types/TaskPanelTypes";
 
 const TaskPanelSideBar = ({
@@ -47,6 +47,9 @@ const TaskPanelSideBar = ({
                 onClick={() =>
                     handleModalChange(HIDDEN_APPS_KEY, handleHiddenAppsModal)
                 }
+                data-tooltip-content='Відображати приховані піктограми'
+                data-tooltip-id='taskPanelTooltips'
+                data-tooltip-delay-show={500}
             >
                 {hiddenAppsModalOpen && <HiddenAppsModal />}
                 <Icon
@@ -66,6 +69,9 @@ const TaskPanelSideBar = ({
                 onClick={() =>
                     handleModalChange(LANGUAGES_KEY, handleLanguagesModal)
                 }
+                data-tooltip-content='Щоб змінити метод вводу, натисніть сполучення клавіш shift + alt'
+                data-tooltip-id='taskPanelTooltips'
+                data-tooltip-delay-show={500}
             >
                 {isLanguagesModalOpen && <LanguagesModal />}
                 {LANGUAGES[systemLanguageIndex].abbreviation}

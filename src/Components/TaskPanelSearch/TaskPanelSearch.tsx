@@ -4,8 +4,8 @@ import cn from "classnames";
 import styles from "./TaskPanelSearch.module.scss";
 import { SEARCH } from "Constants/TaskPanel";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "Reducers/index";
-import { handleInputValue } from "Reducers/TaskPanelReducer";
+import { AppDispatch } from "Store/index";
+import { handleInputValue } from "Store/slices/TaskPanelSlice";
 import Icon from "Components/Icon/Icon";
 
 interface IInput {

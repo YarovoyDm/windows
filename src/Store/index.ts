@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import taskPanelSlice from './TaskPanelReducer';
+import taskPanelSlice from "./slices/TaskPanelSlice";
 
 const rootReducer = combineReducers({
     taskPanel: taskPanelSlice,
@@ -7,7 +7,7 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
+    middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
             serializableCheck: false,
         }),

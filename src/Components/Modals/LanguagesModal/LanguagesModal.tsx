@@ -4,11 +4,11 @@ import { LANGUAGES } from "Constants/TaskPanel";
 import {
     changeLanguageIndex,
     handleLanguagesModal,
-} from "Reducers/TaskPanelReducer";
+} from "Store/slices/TaskPanelSlice";
 
 import styles from "./LanguagesModal.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "Reducers/index";
+import { AppDispatch, RootState } from "Store/index";
 
 const LanguagesModal = () => {
     const store = useSelector((state: RootState) => state);

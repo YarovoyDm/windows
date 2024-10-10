@@ -3,76 +3,82 @@
     height: 270px;
     right: -30px;
     top: -290px;
-}
+    position: relative; // Якщо необхідно, для позиціонування
 
-.languagesModalTitle {
-    display: flex;
-    align-items: center;
-    height: 15%;
-}
+    &Title {
+        display: flex;
+        align-items: center;
+        height: 15%;
 
-.titleText {
-    color: #535353;
-    font-size: 14px;
-    margin-right: 10px;
-    font-weight: 500;
-    padding-left: 15px;
-}
+        .titleText {
+            color: #535353;
+            font-size: 14px;
+            margin-right: 10px;
+            font-weight: 500;
+            padding-left: 15px;
+        }
 
-.titleHotKeys {
-    display: flex;
-    align-items: center;
-    color: #535353;
-}
+        .titleHotKeys {
+            display: flex;
+            align-items: center;
+            color: #535353;
 
-.hotKeysUnit {
-    font-size: 10px;
-    border: solid 1px #c3c3c3;
-    padding: 0 3px;
-    border-radius: 5px;
-}
+            .hotKeysUnit {
+                font-size: 10px;
+                border: solid 1px #c3c3c3;
+                padding: 0 3px;
+                border-radius: 5px;
+            }
+        }
+    }
 
-.languagesModalMain {
-    height: 65%;
-    width: calc(100% - 12px);
-    padding: 0 6px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
+    &Main {
+        height: 65%;
+        width: calc(100% - 12px);
+        padding: 0 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
 
-.selectMarker {
-    position: absolute;
-    left: 2px;
-    background: #1c88e7;
-    height: 18px;
-    width: 3px;
-    border-radius: 3px;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
+        .languageUnitWrapper {
+            display: flex;
+            position: relative;
+            height: calc(33% - 20px);
+            width: calc(100% - 15px);
+            padding: 18px 0 0 15px;
+            background: transparent;
 
-.languageUnitWrapper {
-    display: flex;
-    position: relative;
-    height: calc(33% - 20px);
-    width: calc(100% - 15px);
-    padding: 18px 0 0 15px;
-}
+            &:hover {
+                background: #d9d8d8;
+                border-radius: 5px;
+            }
 
-.abbreviation {
-    margin-right: 10px;
-}
+            &.languageSelected {
+                background: #d9d8d8;
+                border-radius: 5px;
+            }
 
-.languageSelected,
-.languageUnitWrapper:hover {
-    background: #d9d8d8;
-    border-radius: 5px;
-}
+            .selectMarker {
+                position: absolute;
+                left: 2px;
+                background: #1c88e7;
+                height: 18px;
+                width: 3px;
+                border-radius: 3px;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
 
-.title {
-    font-weight: 500;
+            .abbreviation {
+                margin-right: 10px;
+            }
+
+            .title {
+                font-weight: 500;
+            }
+        }
+    }
 }
 .taskPanelModal {
     box-shadow: 5px 5px 12px -6px gray;

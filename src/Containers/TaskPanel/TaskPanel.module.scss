@@ -1,10 +1,10 @@
+@import "scss/mixins.scss";
+
 .taskPanel {
     height: 50px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #efefef;
+    @include flex-center;
+    background: #c5c5c5;
     border-top: solid 1px #d3d3d3;
     position: relative;
 
@@ -12,9 +12,7 @@
         width: 40px;
         height: 40px;
         border-radius: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include flex-center;
         margin-right: 10px;
         position: relative;
 
@@ -33,16 +31,6 @@
         display: flex;
         width: fit-content;
         block-size: fit-content;
-    }
-
-    .taskPanelAppTooltip {
-        background-color: #f3f3f3;
-        color: black;
-        user-select: none;
-
-        .tooltipArrow {
-            display: none;
-        }
     }
 }
 

@@ -9,8 +9,8 @@ import Icon from "Components/Icon/Icon";
 import {
     handleClickOutside,
     handleWindowsModal,
-} from "Reducers/TaskPanelReducer";
-import { AppDispatch, RootState } from "Reducers";
+} from "Store/slices/TaskPanelSlice";
+import { AppDispatch, RootState } from "Store";
 import { ObjectOfModalRefs } from "Types/TaskPanelTypes";
 
 import styles from "./TaskPanel.module.scss";
@@ -64,6 +64,9 @@ const TaskPanel: React.FC = () => {
                 onClick={() =>
                     handleModalChange(WINDOWS_KEY, handleWindowsModal)
                 }
+                data-tooltip-content='Пуск'
+                data-tooltip-id='taskPanelTooltips'
+                data-tooltip-delay-show={500}
             >
                 <Icon name={WINDOWS} className={styles.taskPanelWindowsIcon} />
                 {windowsModalOpen && <WindowsModal />}
@@ -72,11 +75,6 @@ const TaskPanel: React.FC = () => {
             <div className={styles.taskPanelAppWrapper}>
                 <PinnedApps taskPanelApps={taskPanelApps} />
             </div>
-            <Tooltip
-                id='taskPanelTooltips'
-                className={styles.taskPanelAppTooltip}
-                classNameArrow={styles.tooltipArrow}
-            />
             <TaskPanelSideBar
                 hiddenAppsModalOpen={hiddenAppsModalOpen}
                 isLanguagesModalOpen={isLanguagesModalOpen}

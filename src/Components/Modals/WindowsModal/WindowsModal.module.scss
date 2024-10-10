@@ -1,3 +1,5 @@
+@import "scss/mixins.scss";
+
 .taskPanelWindowsModal {
     display: flex;
     flex-direction: column;
@@ -42,9 +44,7 @@
                 width: 30px;
                 height: 30px;
                 border-radius: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                @include flex-center;
                 background: #d3d3d3;
 
                 .userIcon {
@@ -67,9 +67,7 @@
             width: 40px;
             height: 40px;
             border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            @include flex-center;
             position: relative;
 
             &:hover {
@@ -82,51 +80,6 @@
 
                 > path {
                     fill: #535353;
-                }
-            }
-
-            .powerModal {
-                position: absolute;
-                top: -107px;
-                width: 180px;
-                height: 100px;
-                background: green;
-                padding: 5px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-between;
-
-                .powerModalUnit {
-                    height: calc(33% - 2px);
-                    padding: 0 10px;
-                    width: calc(100% - 20px);
-                    border-radius: 5px;
-                    display: flex;
-                    align-items: center;
-
-                    &:hover {
-                        background: #d3d3d3;
-                    }
-
-                    .modalUnitIcon {
-                        width: 15px;
-                        height: 15px;
-                        margin-right: 10px;
-
-                        &:first-child > path {
-                            stroke: #535353;
-                        }
-
-                        &:nth-child(n + 2) > path {
-                            fill: #535353;
-                        }
-                    }
-
-                    .modalUnitText {
-                        color: #535353;
-                        font-size: 15px;
-                    }
                 }
             }
 

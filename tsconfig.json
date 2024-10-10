@@ -5,10 +5,11 @@
             "Components/*": ["Components/*"],
             "Containers/*": ["Containers/*"],
             "Constants/*": ["Constants/*"],
-            "Reducers/*": ["Reducers/*"],
+            "Store/*": ["Store/*"],
             "Icons/*": ["Icons/*"],
             "Modals/*": ["/Components/Modals/*"],
             "Types/*": ["Types/*"],
+            "Sccs/*": ["Sccs/*"],
             "Hooks/*": ["Hooks/*"]
         },
         "target": "es5",
