@@ -1,17 +1,17 @@
-.languagesModal{
+.languagesModal {
     width: 380px;
     height: 270px;
     right: -30px;
     top: -290px;
 }
 
-.languagesModalTitle{
+.languagesModalTitle {
     display: flex;
     align-items: center;
     height: 15%;
 }
 
-.titleText{
+.titleText {
     color: #535353;
     font-size: 14px;
     margin-right: 10px;
@@ -19,20 +19,20 @@
     padding-left: 15px;
 }
 
-.titleHotKeys{
+.titleHotKeys {
     display: flex;
     align-items: center;
     color: #535353;
 }
 
-.hotKeysUnit{
+.hotKeysUnit {
     font-size: 10px;
     border: solid 1px #c3c3c3;
     padding: 0 3px;
     border-radius: 5px;
 }
 
-.languagesModalMain{
+.languagesModalMain {
     height: 65%;
     width: calc(100% - 12px);
     padding: 0 6px;
@@ -42,7 +42,7 @@
     justify-content: space-between;
 }
 
-.selectMarker{
+.selectMarker {
     position: absolute;
     left: 2px;
     background: #1c88e7;
@@ -53,7 +53,7 @@
     transform: translate(-50%, -50%);
 }
 
-.languageUnitWrapper{
+.languageUnitWrapper {
     display: flex;
     position: relative;
     height: calc(33% - 20px);
@@ -61,16 +61,23 @@
     padding: 18px 0 0 15px;
 }
 
-.abbreviation{
+.abbreviation {
     margin-right: 10px;
 }
 
 .languageSelected,
-.languageUnitWrapper:hover{
+.languageUnitWrapper:hover {
     background: #d9d8d8;
     border-radius: 5px;
 }
 
-.title{
+.title {
     font-weight: 500;
+}
+.taskPanelModal {
+    box-shadow: 5px 5px 12px -6px gray;
+    border: solid 1px #e3e3e3;
+    border-radius: 10px;
+    position: absolute;
+    background: #e9e9e9;
 }

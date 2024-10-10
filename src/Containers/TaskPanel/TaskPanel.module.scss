@@ -1,0 +1,55 @@
+.taskPanel {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #efefef;
+    border-top: solid 1px #d3d3d3;
+    position: relative;
+
+    .taskPanelWindows {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        position: relative;
+
+        .taskPanelWindowsIcon {
+            height: 30px;
+            width: 30px;
+        }
+
+        &:hover,
+        &.windowsModalOpen {
+            background: var(--TASK_PANEL_ELEMENT_FOCUS);
+        }
+    }
+
+    .taskPanelAppWrapper {
+        display: flex;
+        width: fit-content;
+        block-size: fit-content;
+    }
+
+    .taskPanelAppTooltip {
+        background-color: #f3f3f3;
+        color: black;
+        user-select: none;
+
+        .tooltipArrow {
+            display: none;
+        }
+    }
+}
+
+:global(.taskPanelModal) {
+    box-shadow: 5px 5px 12px -6px gray;
+    border: solid 1px #e3e3e3;
+    border-radius: 10px;
+    position: absolute;
+    background: #e9e9e9;
+}

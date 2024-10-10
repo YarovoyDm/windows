@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import './App.css';
-import Desktop from 'Components/Desktop/Desktop';
-import TaskPanel from 'Components/TaskPanel/TaskPanel';
+import React, { useEffect } from "react";
+import styles from "./App.module.scss";
+import Desktop from "Components/Desktop/Desktop";
+import TaskPanel from "Containers/TaskPanel/TaskPanel";
 import LockScreen from "Components/LockScreen/LockScreen";
 import { useDispatch } from "react-redux";
 import { changeLanguageIndexByHotKeys } from "Reducers/TaskPanelReducer";
@@ -14,19 +14,11 @@ function App() {
             e.preventDefault();
         };
 
-        // attach the event listener to
-        // the document object
         document.addEventListener("contextmenu", handleContextMenu);
-
-        // add keydown listener
-        document.addEventListener('keydown', detectKeyDown, true);
-
-        // clean up the event listener when
-        // the component unmounts
+        document.addEventListener("keydown", detectKeyDown, true);
         return () => {
             document.removeEventListener("contextmenu", handleContextMenu);
         };
-
     }, []);
 
     const detectKeyDown = (e: KeyboardEvent) => {
@@ -36,7 +28,7 @@ function App() {
     };
 
     return (
-        <div className='window'>
+        <div className={styles.window}>
             {false && <LockScreen />}
             <Desktop />
             <TaskPanel />

@@ -1,0 +1,146 @@
+.taskPanelWindowsModal {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    height: 700px;
+    top: -720px;
+    left: -10px;
+    background: grey;
+
+    .windowsModalMain {
+        height: 92%;
+        width: 100%;
+        background: red;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+
+    .windowsModalFooter {
+        height: 8%;
+        width: calc(100% - 140px);
+        background: #e9e9e9;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 70px;
+
+        .footerUser {
+            height: 70%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            border-radius: 5px;
+
+            &:hover {
+                background: var(--TASK_PANEL_ELEMENT_FOCUS);
+            }
+
+            .userIconWrapper {
+                width: 30px;
+                height: 30px;
+                border-radius: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #d3d3d3;
+
+                .userIcon {
+                    height: 18px;
+                    width: 18px;
+
+                    > path {
+                        fill: #535353;
+                    }
+                }
+            }
+
+            .userName {
+                font-size: 12px;
+                margin-left: 15px;
+            }
+        }
+
+        .footerPower {
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+
+            &:hover {
+                background: var(--TASK_PANEL_ELEMENT_FOCUS);
+            }
+
+            .powerIcon {
+                width: 20px;
+                height: 20px;
+
+                > path {
+                    fill: #535353;
+                }
+            }
+
+            .powerModal {
+                position: absolute;
+                top: -107px;
+                width: 180px;
+                height: 100px;
+                background: green;
+                padding: 5px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+
+                .powerModalUnit {
+                    height: calc(33% - 2px);
+                    padding: 0 10px;
+                    width: calc(100% - 20px);
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;
+
+                    &:hover {
+                        background: #d3d3d3;
+                    }
+
+                    .modalUnitIcon {
+                        width: 15px;
+                        height: 15px;
+                        margin-right: 10px;
+
+                        &:first-child > path {
+                            stroke: #535353;
+                        }
+
+                        &:nth-child(n + 2) > path {
+                            fill: #535353;
+                        }
+                    }
+
+                    .modalUnitText {
+                        color: #535353;
+                        font-size: 15px;
+                    }
+                }
+            }
+
+            &.powerModalOpen:hover {
+                background: #e9e9e9;
+            }
+        }
+    }
+}
+
+.taskPanelModal {
+    box-shadow: 5px 5px 12px -6px gray;
+    border: solid 1px #e3e3e3;
+    border-radius: 10px;
+    position: absolute;
+    background: #e9e9e9;
+}

@@ -1,4 +1,4 @@
-.hiddenAppsModal{
+.hiddenAppsModal {
     width: 166px;
     height: 81px;
     top: -110px;
@@ -9,7 +9,7 @@
     gap: 2px;
 }
 
-.hiddenAppUnit{
+.hiddenAppUnit {
     width: 40px;
     height: 40px;
     border-radius: 5px;
@@ -18,11 +18,18 @@
     justify-content: center;
 }
 
-.hiddenAppUnit:hover{
+.hiddenAppUnit:hover {
     background: var(--TASK_PANEL_ELEMENT_FOCUS);
 }
 
-.appUnitIcon{
+.appUnitIcon {
     width: 18px;
     height: 18px;
+}
+.taskPanelModal {
+    box-shadow: 5px 5px 12px -6px gray;
+    border: solid 1px #e3e3e3;
+    border-radius: 10px;
+    position: absolute;
+    background: #e9e9e9;
 }

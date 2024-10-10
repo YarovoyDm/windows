@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import './Desktop.css';
+import styles from "./Desktop.module.scss";
 
 const Desktop = () => {
-    return (
-        <div className='Desktop'>1</div>
-    );
+    return <div className={styles.Desktop}></div>;
 };
 
 export default Desktop;

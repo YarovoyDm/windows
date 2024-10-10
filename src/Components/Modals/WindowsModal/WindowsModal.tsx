@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import cn from 'classnames';
-import Icon from 'Components/Icon/Icon';
+import cn from "classnames";
+import Icon from "Components/Icon/Icon";
 import { USER, POWER, SLEEP, RELOAD } from "Constants/TaskPanel";
 import { handlePowerModal } from "Reducers/TaskPanelReducer";
+
 import { AppDispatch, RootState } from "Reducers/index";
 
-import './WindowsModal.css';
+import styles from "./WindowsModal.module.scss";
 
 const WindowsModal: React.FC = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -20,35 +21,59 @@ const WindowsModal: React.FC = () => {
     return (
         <div
             onClick={e => e.stopPropagation()}
-            className='taskPanelWindowsModal taskPanelModal'
+            className={cn(styles.taskPanelWindowsModal, styles.taskPanelModal)}
         >
-            <div className='windowsModalMain'>1</div>
-            <div className='windowsModalFooter'>
-                <div className='footerUser'>
-                    <div className='userIconWrapper'><Icon name={USER} className='userIcon'/></div>
-                    <div className='userName'>Beast</div>
+            <div className={styles.windowsModalMain}>1</div>
+            <div className={styles.windowsModalFooter}>
+                <div className={styles.footerUser}>
+                    <div className={styles.userIconWrapper}>
+                        <Icon name={USER} className={styles.userIcon} />
+                    </div>
+                    <div className={styles.userName}>Beast</div>
                 </div>
-                <div onClick={onWindowsModalChange} className={cn('footerPower', isPowerModalOpen && 'powerModalOpen')}>
-                    {isPowerModalOpen &&
+                <div
+                    onClick={onWindowsModalChange}
+                    className={cn(
+                        styles.footerPower,
+                        isPowerModalOpen && styles.powerModalOpen,
+                    )}
+                >
+                    {isPowerModalOpen && (
                         <div
-                            onClick={(e) => e.stopPropagation()}
-                            className='powerModal taskPanelModal'
+                            onClick={e => e.stopPropagation()}
+                            className={cn(
+                                styles.powerModal,
+                                styles.taskPanelModal,
+                            )}
                         >
-                            <div className='powerModalUnit'>
-                                <Icon name={SLEEP} className='modalUnitIcon'/>
-                                <div className='modalUnitText'>Сон</div>
+                            <div className={styles.powerModalUnit}>
+                                <Icon
+                                    name={SLEEP}
+                                    className={styles.modalUnitIcon}
+                                />
+                                <div className={styles.modalUnitText}>Сон</div>
                             </div>
-                            <div className='powerModalUnit'>
-                                <Icon name={RELOAD} className='modalUnitIcon'/>
-                                <div className='modalUnitText'>Перезавантажити</div>
+                            <div className={styles.powerModalUnit}>
+                                <Icon
+                                    name={RELOAD}
+                                    className={styles.modalUnitIcon}
+                                />
+                                <div className={styles.modalUnitText}>
+                                    Перезавантажити
+                                </div>
                             </div>
-                            <div className='powerModalUnit'>
-                                <Icon name={POWER} className='modalUnitIcon'/>
-                                <div className='modalUnitText'>Завершити роботу</div>
+                            <div className={styles.powerModalUnit}>
+                                <Icon
+                                    name={POWER}
+                                    className={styles.modalUnitIcon}
+                                />
+                                <div className={styles.modalUnitText}>
+                                    Завершити роботу
+                                </div>
                             </div>
                         </div>
-                    }
-                    <Icon name={POWER} className='powerIcon'/>
+                    )}
+                    <Icon name={POWER} className={styles.powerIcon} />
                 </div>
             </div>
         </div>

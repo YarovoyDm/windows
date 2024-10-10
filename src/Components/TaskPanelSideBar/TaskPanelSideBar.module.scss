@@ -1,0 +1,35 @@
+.taskPanelSidebar {
+    position: absolute;
+    right: 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
+
+    .taskPanelSidebarUnit {
+        height: 40px;
+        padding: 0 10px;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        position: relative;
+        margin-right: 2px;
+
+        &:hover,
+        &.hiddenAppOpen,
+        &.languagesModalOpen {
+            background: var(--TASK_PANEL_ELEMENT_FOCUS);
+        }
+
+        .collapseArrow {
+            width: 15px;
+            height: 15px;
+            transition: transform 200ms ease-in-out;
+
+            &.collapseArrowRotate {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
