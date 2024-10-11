@@ -15,6 +15,8 @@ import { ReactComponent as Arrow } from "Icons/upArrowIcon.svg";
 import { ReactComponent as TextFile } from "Icons/TextFileIcon.svg";
 import { ReactComponent as Folder } from "Icons/folderIcon.svg";
 import { ReactComponent as Bin } from "Icons/binIcon.svg";
+import { ReactComponent as Settings } from "Icons/settingsIcon.svg";
+import { ReactComponent as Calculator } from "Icons/calculatorIcon.svg";
 import {
     TELEGRAM,
     SKYPE,
@@ -30,6 +32,8 @@ import {
     WINDOWS,
     ARROW,
     TEXT_FILE,
+    SETTINGS,
+    CALCULATOR,
 } from "Constants/TaskPanel";
 import { FOLDER, BIN } from "Constants/Desktop";
 
@@ -55,6 +59,8 @@ const Icons = {
     [TEXT_FILE]: TextFile,
     [FOLDER]: Folder,
     [BIN]: Bin,
+    [SETTINGS]: Settings,
+    [CALCULATOR]: Calculator,
 };
 
 const Icon = (props: IProps) => {

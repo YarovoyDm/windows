@@ -1,9 +1,10 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import cn from "classnames";
 import Icon from "Components/Icon/Icon";
-import { USER, POWER, SLEEP, RELOAD } from "Constants/TaskPanel";
+import { USER, POWER, SETTINGS, CALCULATOR } from "Constants/TaskPanel";
 import { handlePowerModal } from "Store/slices/TaskPanelSlice";
+import File from "Components/File/File";
 
 import { RootState, useAppDispatch } from "Store/index";
 
@@ -24,7 +25,17 @@ const WindowsModal: React.FC = () => {
             onClick={e => e.stopPropagation()}
             className={cn(styles.taskPanelWindowsModal, styles.taskPanelModal)}
         >
-            <div className={styles.windowsModalMain}>1</div>
+            <div className={styles.windowsModalMain}>
+                <div className={styles.mainBlock}>
+                    <div className={styles.unitHeader}>Закріплено</div>
+                    <div className={styles.unitContent}>
+                        <File name='Налаштування' icon={SETTINGS} />
+                        <File name='Калькулятор' icon={CALCULATOR} />
+                        {/* Need to refactoring */}
+                    </div>
+                </div>
+                <div className={styles.mainBlock}>2</div>
+            </div>
             <div className={styles.windowsModalFooter}>
                 <div className={styles.footerUser}>
                     <div className={styles.userIconWrapper}>

@@ -29,7 +29,6 @@ const Desktop = () => {
     ) => {
         const target = e.target as HTMLElement;
 
-        // Якщо клік був не на папці, починаємо виділення
         if (!target.closest(".desktop-file")) {
             setIsSelecting(true);
             setStartPosition({ x: e.clientX, y: e.clientY });

@@ -27,6 +27,8 @@ export const SEARCH: string = "Search";
 export const WINDOWS: string = "Windows";
 export const ARROW: string = "Arrow";
 export const TEXT_FILE: string = "Text_file";
+export const SETTINGS: string = "Settings";
+export const CALCULATOR: string = "Calculator";
 
 export const POWER_MODAL_UNITS = {
     [POWER]: "Завершити роботу",
