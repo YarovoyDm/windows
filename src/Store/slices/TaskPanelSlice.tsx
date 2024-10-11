@@ -79,7 +79,7 @@ const taskPanelSlice = createSlice({
         changeLanguageIndex(state: TaskPanelType, action) {
             state.systemLanguageIndex = action.payload;
         },
-        handleClickOutside(state: TaskPanelType) {
+        handleCloseAllModals(state: TaskPanelType) {
             state.hiddenAppsModalOpen = false;
             state.searchInput.searchInputModalOpen = false;
             state.windowsModalOpen = false;
@@ -126,7 +126,7 @@ export const {
     handleInputModal,
     handleInputValue,
     handleHiddenAppsModal,
-    handleClickOutside,
+    handleCloseAllModals,
     handleWindowsModal,
     handlePowerModal,
     handleLanguagesModal,

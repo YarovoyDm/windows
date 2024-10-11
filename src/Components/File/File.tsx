@@ -5,7 +5,7 @@ import Icon from "Components/Icon/Icon";
 import { useAppDispatch } from "Store/index";
 import {
     addAppToTaskPanel,
-    handleClickOutside,
+    handleCloseAllModals,
 } from "Store/slices/TaskPanelSlice";
 import { FILE_ACTIONS } from "Constants/File";
 
@@ -17,9 +17,9 @@ type IFile = {
 const File = ({ name, text }: IFile) => {
     const dispatch = useAppDispatch();
 
-    const onSettingsModalChange = () => {
+    const onFileModalChange = () => {
         dispatch(FILE_ACTIONS[name]);
-        dispatch(handleClickOutside());
+        dispatch(handleCloseAllModals());
         dispatch(
             addAppToTaskPanel({
                 name: name,
@@ -31,7 +31,7 @@ const File = ({ name, text }: IFile) => {
     };
 
     return (
-        <div className={styles.file} onClick={onSettingsModalChange}>
+        <div className={styles.file} onClick={onFileModalChange}>
             <Icon name={name} />
             <div className={styles.fileName}>{text}</div>
         </div>

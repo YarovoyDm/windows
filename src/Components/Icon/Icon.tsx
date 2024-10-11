@@ -17,6 +17,7 @@ import { ReactComponent as Folder } from "Icons/folderIcon.svg";
 import { ReactComponent as Bin } from "Icons/binIcon.svg";
 import { ReactComponent as Settings } from "Icons/settingsIcon.svg";
 import { ReactComponent as Calculator } from "Icons/calculatorIcon.svg";
+import { ReactComponent as Cross } from "Icons/crossIcon.svg";
 import {
     TELEGRAM,
     SKYPE,
@@ -34,6 +35,7 @@ import {
     TEXT_FILE,
     SETTINGS,
     CALCULATOR,
+    CROSS,
 } from "Constants/TaskPanel";
 import { FOLDER, BIN } from "Constants/Desktop";
 
@@ -61,6 +63,7 @@ const Icons = {
     [BIN]: Bin,
     [SETTINGS]: Settings,
     [CALCULATOR]: Calculator,
+    [CROSS]: Cross,
 };
 
 const Icon = (props: IProps) => {

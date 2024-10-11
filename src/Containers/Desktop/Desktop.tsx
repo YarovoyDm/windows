@@ -31,7 +31,7 @@ const Desktop = () => {
     ) => {
         const target = e.target as HTMLElement;
 
-        if (!target.closest(".desktop-file")) {
+        if (!target.closest(".prevent-selecting")) {
             setIsSelecting(true);
             setStartPosition({ x: e.clientX, y: e.clientY });
             setCurrentPosition({ x: e.clientX, y: e.clientY });
@@ -93,7 +93,9 @@ const Desktop = () => {
                     />
                 );
             })}
-            {isSettingsModalOpen && <SettingsModal />}
+            {isSettingsModalOpen && (
+                <SettingsModal setIsSelecting={setIsSelecting} />
+            )}
         </div>
     );
 };

@@ -7,7 +7,7 @@ import { WINDOWS_KEY, WINDOWS } from "Constants/TaskPanel";
 import { useClickOutside } from "Hooks/useClickOutside";
 import Icon from "Components/Icon/Icon";
 import {
-    handleClickOutside,
+    handleCloseAllModals,
     handleWindowsModal,
 } from "Store/slices/TaskPanelSlice";
 import { RootState, useAppDispatch } from "Store";
@@ -40,7 +40,7 @@ const TaskPanel: React.FC = () => {
     } = store.taskPanel;
 
     useClickOutside(refs[currentModal as keyof typeof refs], () => {
-        dispatch(handleClickOutside());
+        dispatch(handleCloseAllModals());
     });
 
     const handleModalChange = (
