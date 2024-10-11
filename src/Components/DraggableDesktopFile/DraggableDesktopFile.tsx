@@ -15,9 +15,15 @@ type IFile = {
     name: string;
     icon: string;
     filePosition: { x: number; y: number };
+    setIsSelecting: (isSelecting: boolean) => void;
 };
 
-const DraggableDesktopFile = ({ name, icon, filePosition }: IFile) => {
+const DraggableDesktopFile = ({
+    name,
+    icon,
+    filePosition,
+    setIsSelecting,
+}: IFile) => {
     const dispatch = useAppDispatch();
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [position, setPosition] = useState<Position>({
@@ -31,6 +37,7 @@ const DraggableDesktopFile = ({ name, icon, filePosition }: IFile) => {
     const handleMouseDown = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     ) => {
+        e.preventDefault();
         setIsDragging(true);
         setOffset({
             x: e.clientX - position.x,
@@ -38,10 +45,12 @@ const DraggableDesktopFile = ({ name, icon, filePosition }: IFile) => {
         });
 
         setIsSelected(true);
+        setIsSelecting(false);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
         if (!isDragging) return;
+        e.preventDefault();
 
         let newX = e.clientX - offset.x;
         let newY = e.clientY - offset.y;
@@ -106,7 +115,10 @@ const DraggableDesktopFile = ({ name, icon, filePosition }: IFile) => {
         <div
             onMouseDown={handleMouseDown}
             ref={fileRef}
-            className={cn(styles.file, { [styles.selected]: isSelected })}
+            data-file='true'
+            className={cn(styles.file, "desktop-file", {
+                [styles.selected]: isSelected,
+            })}
             style={{
                 top: `${position.y}px`,
                 left: `${position.x}px`,

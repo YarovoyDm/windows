@@ -27,9 +27,14 @@ const Desktop = () => {
     const handleMouseDown = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     ) => {
-        setIsSelecting(true);
-        setStartPosition({ x: e.clientX, y: e.clientY });
-        setCurrentPosition({ x: e.clientX, y: e.clientY });
+        const target = e.target as HTMLElement;
+
+        // Якщо клік був не на папці, починаємо виділення
+        if (!target.closest(".desktop-file")) {
+            setIsSelecting(true);
+            setStartPosition({ x: e.clientX, y: e.clientY });
+            setCurrentPosition({ x: e.clientX, y: e.clientY });
+        }
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -54,7 +59,7 @@ const Desktop = () => {
     }, [isSelecting]);
 
     const getSelectionStyles = () => {
-        const width = Math.abs(currentPosition.x - startPosition.x);
+        const width = Math.abs(currentPosition.x - startPosition.x - 1);
         const height = Math.abs(currentPosition.y - startPosition.y);
         const left = Math.min(startPosition.x, currentPosition.x);
         const top = Math.min(startPosition.y, currentPosition.y);
@@ -83,11 +88,10 @@ const Desktop = () => {
                         name={name}
                         icon={icon}
                         filePosition={position}
+                        setIsSelecting={setIsSelecting}
                     />
                 );
             })}
-
-            {/* <DraggableDesktopItem /> */}
         </div>
     );
 };
