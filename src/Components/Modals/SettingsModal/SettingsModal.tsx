@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./SettingsModal.module.scss";
 import cn from "classnames";
 import { CROSS } from "Constants/TaskPanel";
 import Icon from "Components/Icon/Icon";
 import useDrag from "Hooks/useDrag";
 
-type IProps = {
-    setIsSelecting: (isSelecting: boolean) => void;
-};
-
-const SettingsModal = ({ setIsSelecting }: IProps) => {
+const SettingsModal = () => {
     const { position, handleMouseDown } = useDrag(
         { x: 100, y: 100 },
         {

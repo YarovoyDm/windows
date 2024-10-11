@@ -5,10 +5,12 @@ export type File = {
         x: number;
         y: number;
     };
+    isSelected: boolean;
 };
 
 export type Desktop = {
-    desktopFiles: Array<File>;
+    desktopFiles: File[];
     bin: Array<File>;
     isSettingsModalOpen: boolean;
+    selectedFiles: Array<string>;
 };

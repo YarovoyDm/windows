@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import styles from "./Desktop.module.scss";
-
-import { useAppSelector } from "Store/index";
+import { useAppSelector, useAppDispatch } from "Store/index";
 import { settingsModalState, selectFiles } from "Store/selectors/Desktop";
+import { selectMultipleFiles, clearSelection } from "Store/slices/Desktop";
 import DraggableDesktopFile from "Components/DraggableDesktopFile/DraggableDesktopFile";
 import SettingsModal from "Components/Modals/SettingsModal/SettingsModal";
 
@@ -25,6 +24,8 @@ const Desktop = () => {
     const selectionRef = useRef<HTMLDivElement>(null);
     const desktopFiles = useAppSelector(selectFiles);
     const isSettingsModalOpen = useAppSelector(settingsModalState);
+    const dispatch = useAppDispatch();
+    const selectedFiles = useAppSelector(state => state.desktop.selectedFiles);
 
     const handleMouseDown = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -35,6 +36,7 @@ const Desktop = () => {
             setIsSelecting(true);
             setStartPosition({ x: e.clientX, y: e.clientY });
             setCurrentPosition({ x: e.clientX, y: e.clientY });
+            dispatch(clearSelection());
         }
     };
 
@@ -59,6 +61,40 @@ const Desktop = () => {
         };
     }, [isSelecting]);
 
+    const isFileInSelection = (
+        filePosition: Position,
+        fileSize: { width: number; height: number },
+    ) => {
+        const selectionX = Math.min(startPosition.x, currentPosition.x);
+        const selectionY = Math.min(startPosition.y, currentPosition.y);
+        const selectionWidth = Math.abs(currentPosition.x - startPosition.x);
+        const selectionHeight = Math.abs(currentPosition.y - startPosition.y);
+
+        const fileX = filePosition.x;
+        const fileY = filePosition.y;
+        const fileWidth = fileSize.width;
+        const fileHeight = fileSize.height;
+
+        return !(
+            selectionX > fileX + fileWidth ||
+            selectionX + selectionWidth < fileX ||
+            selectionY > fileY + fileHeight ||
+            selectionY + selectionHeight < fileY
+        );
+    };
+
+    useEffect(() => {
+        if (isSelecting) {
+            const newSelectedFiles = desktopFiles
+                .filter(({ position }) =>
+                    isFileInSelection(position, { width: 80, height: 70 }),
+                )
+                .map(({ name }) => name);
+
+            dispatch(selectMultipleFiles(newSelectedFiles));
+        }
+    }, [currentPosition, isSelecting, desktopFiles, dispatch]);
+
     const getSelectionStyles = () => {
         const width = Math.abs(currentPosition.x - startPosition.x - 1);
         const height = Math.abs(currentPosition.y - startPosition.y);
@@ -82,20 +118,17 @@ const Desktop = () => {
                     style={getSelectionStyles()}
                 />
             )}
-            {desktopFiles.map(({ name, icon, position }) => {
-                return (
-                    <DraggableDesktopFile
-                        key={name}
-                        name={name}
-                        icon={icon}
-                        filePosition={position}
-                        setIsSelecting={setIsSelecting}
-                    />
-                );
-            })}
-            {isSettingsModalOpen && (
-                <SettingsModal setIsSelecting={setIsSelecting} />
-            )}
+            {desktopFiles.map(({ name, icon, position }) => (
+                <DraggableDesktopFile
+                    key={name}
+                    name={name}
+                    icon={icon}
+                    filePosition={position}
+                    setIsSelecting={setIsSelecting}
+                    isSelected={selectedFiles.includes(name)}
+                />
+            ))}
+            {isSettingsModalOpen && <SettingsModal />}
         </div>
     );
 };

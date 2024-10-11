@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import styles from "./DraggableDesktopFile.module.scss";
 import cn from "classnames";
 import Icon from "Components/Icon/Icon";
@@ -12,6 +11,7 @@ type IFile = {
     icon: string;
     filePosition: { x: number; y: number };
     setIsSelecting: (isSelecting: boolean) => void;
+    isSelected: boolean;
 };
 
 const DraggableDesktopFile = ({
@@ -19,11 +19,11 @@ const DraggableDesktopFile = ({
     icon,
     filePosition,
     setIsSelecting,
+    isSelected,
 }: IFile) => {
     const dispatch = useAppDispatch();
-    const [isSelected, setIsSelected] = useState<boolean>(false);
     const fileRef = useRef<HTMLDivElement>(null);
-
+    const [isFileSelected, setIsFileSelected] = useState(isSelected);
     const { position, handleMouseDown } = useDrag(filePosition, {
         width: 80,
         height: 70,
@@ -31,7 +31,7 @@ const DraggableDesktopFile = ({
 
     const handleClickOutside = (e: MouseEvent) => {
         if (fileRef.current && !fileRef.current.contains(e.target as Node)) {
-            setIsSelected(false);
+            setIsFileSelected(false);
         }
     };
 
@@ -42,14 +42,14 @@ const DraggableDesktopFile = ({
     };
 
     useEffect(() => {
-        if (isSelected) {
+        if (isFileSelected) {
             document.addEventListener("keydown", detectKeyDown, true);
         }
 
         return () => {
             document.removeEventListener("keydown", detectKeyDown, true);
         };
-    }, [isSelected]);
+    }, [isFileSelected]);
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
@@ -59,17 +59,21 @@ const DraggableDesktopFile = ({
         };
     }, []);
 
+    useEffect(() => {
+        setIsFileSelected(isSelected);
+    }, [isSelected]);
+
     return (
         <div
             onMouseDown={e => {
                 handleMouseDown(e);
-                setIsSelected(true);
+                setIsFileSelected(true);
                 setIsSelecting(false);
             }}
             ref={fileRef}
             data-file='true'
             className={cn(styles.file, "prevent-selecting", {
-                [styles.selected]: isSelected,
+                [styles.selected]: isFileSelected,
             })}
             style={{
                 top: `${position.y}px`,
