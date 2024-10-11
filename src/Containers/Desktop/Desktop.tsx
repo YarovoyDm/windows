@@ -3,8 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./Desktop.module.scss";
 
 import { useAppSelector } from "Store/index";
-import { selectFiles } from "Store/selectors/Desktop";
+import { settingsModalState, selectFiles } from "Store/selectors/Desktop";
 import DraggableDesktopFile from "Components/DraggableDesktopFile/DraggableDesktopFile";
+import SettingsModal from "Components/Modals/SettingsModal/SettingsModal";
 
 type Position = {
     x: number;
@@ -23,6 +24,7 @@ const Desktop = () => {
     });
     const selectionRef = useRef<HTMLDivElement>(null);
     const desktopFiles = useAppSelector(selectFiles);
+    const isSettingsModalOpen = useAppSelector(settingsModalState);
 
     const handleMouseDown = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -91,6 +93,7 @@ const Desktop = () => {
                     />
                 );
             })}
+            {isSettingsModalOpen && <SettingsModal />}
         </div>
     );
 };

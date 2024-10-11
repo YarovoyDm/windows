@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./App.module.scss";
-import Desktop from "Components/Desktop/Desktop";
+import Desktop from "Containers/Desktop/Desktop";
 import TaskPanel from "Containers/TaskPanel/TaskPanel";
 import LockScreen from "Components/LockScreen/LockScreen";
 import { useDispatch } from "react-redux";

@@ -19,6 +19,7 @@ const initialDesktopState = {
         },
     ],
     bin: [],
+    isSettingsModalOpen: false,
 } as Desktop;
 
 const desktopSlice = createSlice({
@@ -35,8 +36,11 @@ const desktopSlice = createSlice({
                 )[0],
             );
         },
+        settingsModalHandler(state: Desktop) {
+            state.isSettingsModalOpen = !state.isSettingsModalOpen;
+        },
     },
 });
 
 export default desktopSlice.reducer;
-export const { removeFile } = desktopSlice.actions;
+export const { removeFile, settingsModalHandler } = desktopSlice.actions;

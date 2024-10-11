@@ -29,8 +29,8 @@ const WindowsModal: React.FC = () => {
                 <div className={styles.mainBlock}>
                     <div className={styles.unitHeader}>Закріплено</div>
                     <div className={styles.unitContent}>
-                        <File name='Налаштування' icon={SETTINGS} />
-                        <File name='Калькулятор' icon={CALCULATOR} />
+                        <File text='Налаштування' name={SETTINGS} />
+                        <File text='Калькулятор' name={CALCULATOR} />
                         {/* Need to refactoring */}
                     </div>
                 </div>

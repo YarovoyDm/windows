@@ -10,4 +10,5 @@ export type File = {
 export type Desktop = {
     desktopFiles: Array<File>;
     bin: Array<File>;
+    isSettingsModalOpen: boolean;
 };

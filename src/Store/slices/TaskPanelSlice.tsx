@@ -1,6 +1,6 @@
 import React from "react";
-import { map } from 'lodash';
-import { createSlice } from '@reduxjs/toolkit';
+import { map } from "lodash";
+import { createSlice } from "@reduxjs/toolkit";
 import {
     GOOGLE_CHROME,
     TASK_PANEL,
@@ -11,20 +11,40 @@ import {
     LANGUAGE_CHANGE_STEP,
     MAX_LANGUAGES,
     SYSTEM_PASSWORD,
-} from 'Constants/TaskPanel';
-import Icon from 'Components/Icon/Icon';
+} from "Constants/TaskPanel";
+import Icon from "Components/Icon/Icon";
 import { TaskPanelType } from "Types/TaskPanelTypes";
 
 const initialTaskPanelState = {
     taskPanelApps: {
-        [TELEGRAM]: { name: TELEGRAM, component: <Icon name={TELEGRAM} />, isOpen: false, isFocused: false },
-        [SKYPE]: { name: SKYPE, component: <Icon name={SKYPE} />, isOpen: false, isFocused: false },
-        [GOOGLE_CHROME]: { name: GOOGLE_CHROME, component: <Icon name={GOOGLE_CHROME} />, isOpen: false, isFocused: false },
-        [STEAM]: { name: STEAM, component: <Icon name={STEAM} />, isOpen: false, isFocused: false },
+        [TELEGRAM]: {
+            name: TELEGRAM,
+            component: <Icon name={TELEGRAM} />,
+            isOpen: false,
+            isFocused: false,
+        },
+        [SKYPE]: {
+            name: SKYPE,
+            component: <Icon name={SKYPE} />,
+            isOpen: false,
+            isFocused: false,
+        },
+        [GOOGLE_CHROME]: {
+            name: GOOGLE_CHROME,
+            component: <Icon name={GOOGLE_CHROME} />,
+            isOpen: false,
+            isFocused: false,
+        },
+        [STEAM]: {
+            name: STEAM,
+            component: <Icon name={STEAM} />,
+            isOpen: false,
+            isFocused: false,
+        },
     },
     systemLanguageIndex: DEFAULT_LANGUAGE_INDEX,
     searchInput: {
-        searchInputValue: '',
+        searchInputValue: "",
         searchInputModalOpen: false,
     },
     hiddenAppsModalOpen: false,
@@ -39,17 +59,20 @@ const taskPanelSlice = createSlice({
     name: TASK_PANEL,
     initialState: initialTaskPanelState,
     reducers: {
+        addAppToTaskPanel(state: TaskPanelType, action) {
+            state.taskPanelApps[action.payload.name] = action.payload;
+        },
         openingApp(state: TaskPanelType, action) {
             state.taskPanelApps[action.payload].isOpen = true;
         },
         changeApp(state: TaskPanelType, action) {
-            map(state.taskPanelApps, item => item.isFocused = false);
+            map(state.taskPanelApps, item => (item.isFocused = false));
             state.taskPanelApps[action.payload].isFocused = true;
         },
         changeLanguageIndexByHotKeys(state: TaskPanelType) {
-            if(state.systemLanguageIndex >= MAX_LANGUAGES){
+            if (state.systemLanguageIndex >= MAX_LANGUAGES) {
                 state.systemLanguageIndex = DEFAULT_LANGUAGE_INDEX;
-            }else{
+            } else {
                 state.systemLanguageIndex += LANGUAGE_CHANGE_STEP;
             }
         },
@@ -67,7 +90,8 @@ const taskPanelSlice = createSlice({
             state.searchInput.searchInputValue = action.payload;
         },
         handleInputModal(state: TaskPanelType) {
-            state.searchInput.searchInputModalOpen = !state.searchInput.searchInputModalOpen;
+            state.searchInput.searchInputModalOpen =
+                !state.searchInput.searchInputModalOpen;
             state.windowsModalOpen = false;
             state.hiddenAppsModalOpen = false;
         },
@@ -107,4 +131,5 @@ export const {
     handlePowerModal,
     handleLanguagesModal,
     changeLanguageIndex,
+    addAppToTaskPanel,
 } = taskPanelSlice.actions;

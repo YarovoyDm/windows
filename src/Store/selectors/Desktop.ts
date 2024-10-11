@@ -8,3 +8,8 @@ export const selectFiles = createSelector(
     selectDesktop,
     (state: Desktop) => state.desktopFiles,
 );
+
+export const settingsModalState = createSelector(
+    selectDesktop,
+    (state: Desktop) => state.isSettingsModalOpen,
+);
