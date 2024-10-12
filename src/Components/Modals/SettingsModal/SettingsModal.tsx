@@ -7,7 +7,7 @@ import useDrag from "Hooks/useDrag";
 
 const SettingsModal = () => {
     const { position, handleMouseDown } = useDrag(
-        { x: 100, y: 100 },
+        { x: 300, y: 300 },
         {
             width: 700,
             height: 500,

@@ -3,7 +3,7 @@ import styles from "./DraggableDesktopFile.module.scss";
 import cn from "classnames";
 import Icon from "Components/Icon/Icon";
 import { useAppDispatch } from "Store/index";
-import { removeFile } from "Store/slices/Desktop";
+import { changeFilePosition, removeFile } from "Store/slices/Desktop";
 import useDrag from "Hooks/useDrag";
 
 type IFile = {
@@ -40,6 +40,10 @@ const DraggableDesktopFile = ({
             dispatch(removeFile(name));
         }
     };
+
+    useEffect(() => {
+        dispatch(changeFilePosition({ name, position }));
+    }, [position]);
 
     useEffect(() => {
         if (isFileSelected) {

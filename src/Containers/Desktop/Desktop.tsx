@@ -5,6 +5,7 @@ import { settingsModalState, selectFiles } from "Store/selectors/Desktop";
 import { selectMultipleFiles, clearSelection } from "Store/slices/Desktop";
 import DraggableDesktopFile from "Components/DraggableDesktopFile/DraggableDesktopFile";
 import SettingsModal from "Components/Modals/SettingsModal/SettingsModal";
+import { isFileInSelection } from "utils/IsFileInSelection";
 
 type Position = {
     x: number;
@@ -42,7 +43,18 @@ const Desktop = () => {
 
     const handleMouseMove = (e: MouseEvent) => {
         if (!isSelecting) return;
-        setCurrentPosition({ x: e.clientX, y: e.clientY });
+
+        const newPosition = { x: e.clientX, y: e.clientY };
+
+        setCurrentPosition(newPosition);
+        const footerOffset = 51;
+
+        if (newPosition.y > window.innerHeight - footerOffset) {
+            setCurrentPosition(prev => ({
+                ...prev,
+                y: window.innerHeight - footerOffset,
+            }));
+        }
     };
 
     const handleMouseUp = () => {
@@ -61,33 +73,15 @@ const Desktop = () => {
         };
     }, [isSelecting]);
 
-    const isFileInSelection = (
-        filePosition: Position,
-        fileSize: { width: number; height: number },
-    ) => {
-        const selectionX = Math.min(startPosition.x, currentPosition.x);
-        const selectionY = Math.min(startPosition.y, currentPosition.y);
-        const selectionWidth = Math.abs(currentPosition.x - startPosition.x);
-        const selectionHeight = Math.abs(currentPosition.y - startPosition.y);
-
-        const fileX = filePosition.x;
-        const fileY = filePosition.y;
-        const fileWidth = fileSize.width;
-        const fileHeight = fileSize.height;
-
-        return !(
-            selectionX > fileX + fileWidth ||
-            selectionX + selectionWidth < fileX ||
-            selectionY > fileY + fileHeight ||
-            selectionY + selectionHeight < fileY
-        );
-    };
-
     useEffect(() => {
         if (isSelecting) {
             const newSelectedFiles = desktopFiles
                 .filter(({ position }) =>
-                    isFileInSelection(position, { width: 80, height: 70 }),
+                    isFileInSelection(
+                        position,
+                        { width: 80, height: 70 },
+                        { startPosition, currentPosition },
+                    ),
                 )
                 .map(({ name }) => name);
 

@@ -45,6 +45,15 @@ const desktopSlice = createSlice({
                 state.bin.push(fileToRemove);
             }
         },
+        changeFilePosition(state: Desktop, action) {
+            const file = state.desktopFiles.find(
+                file => file.name === action.payload.name,
+            );
+
+            if (file) {
+                file.position = action.payload.position;
+            }
+        },
         settingsModalHandler(state: Desktop) {
             state.isSettingsModalOpen = !state.isSettingsModalOpen;
         },
@@ -75,4 +84,5 @@ export const {
     deselectFile,
     clearSelection,
     selectMultipleFiles,
+    changeFilePosition,
 } = desktopSlice.actions;
