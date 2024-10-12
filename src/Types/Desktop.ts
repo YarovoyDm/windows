@@ -1,4 +1,4 @@
-export type File = {
+export type IFile = {
     name: string;
     icon: string;
     position: {
@@ -6,11 +6,13 @@ export type File = {
         y: number;
     };
     isSelected: boolean;
+    type: string;
+    innerContent: Array<IFile>;
 };
 
 export type Desktop = {
-    desktopFiles: File[];
-    bin: Array<File>;
+    desktopFiles: IFile[];
+    bin: Array<IFile>;
     isSettingsModalOpen: boolean;
     selectedFiles: Array<string>;
 };

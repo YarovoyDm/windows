@@ -1,27 +1,40 @@
-import React from 'react';
+import React from "react";
 
 export type ObjectOfModalRefs = {
-    windows: React.MutableRefObject<null>,
-    hiddenApps: React.MutableRefObject<null>,
-    languages: React.MutableRefObject<null>,
+    isWindowsModalOpen: React.MutableRefObject<null>;
+    isHiddenAppsModalOpen: React.MutableRefObject<null>;
+    isLanguagesModalOpen: React.MutableRefObject<null>;
 };
 export type TaskPanelType = {
-    taskPanelApps: { [key: string]: { name: string, isOpen?: boolean, isFocused?: boolean, component: React.ReactElement } },
-    systemLanguageIndex: number,
-    searchInput: {
-        searchInputValue: string,
-        searchInputModalOpen: boolean,
-    },
-    hiddenAppsModalOpen: boolean,
-    windowsModalOpen: boolean,
-    systemPassword: number,
-    isWindowsUnlock: boolean,
-    isPowerModalOpen: boolean,
-    isLanguagesModalOpen: boolean,
+    taskPanelApps: {
+        [key: string]: {
+            name: string;
+            isOpen?: boolean;
+            isFocused?: boolean;
+            component: React.ReactElement;
+        };
+    };
+    systemLanguageIndex: number;
+    isHiddenAppsModalOpen: boolean;
+    isWindowsModalOpen: boolean;
+    systemPassword: number;
+    isWindowsUnlock: boolean;
+    isPowerModalOpen: boolean;
+    isLanguagesModalOpen: boolean;
 };
 
 export type LanguagesType = {
-    abbreviation: string,
-    title: string,
-    subTitle: string,
+    abbreviation: string;
+    title: string;
+    subTitle: string;
 };
+
+export type ModalNames =
+    | "isHiddenAppsModalOpen"
+    | "isWindowsModalOpen"
+    | "isPowerModalOpen"
+    | "isLanguagesModalOpen";
+
+export interface ToggleModalPayload {
+    modalName: ModalNames;
+}

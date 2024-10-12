@@ -6,6 +6,7 @@ import { selectMultipleFiles, clearSelection } from "Store/slices/Desktop";
 import DraggableDesktopFile from "Components/DraggableDesktopFile/DraggableDesktopFile";
 import SettingsModal from "Components/Modals/SettingsModal/SettingsModal";
 import { isFileInSelection } from "utils/IsFileInSelection";
+import DesktopContextMenu from "Components/DesktopContextMenu/DesktopContextMenu";
 
 type Position = {
     x: number;
@@ -22,11 +23,28 @@ const Desktop = () => {
         x: 0,
         y: 0,
     });
+    const [contextMenuVisible, setContextMenuVisible] = useState(false);
+    const [contextMenuPosition, setContextMenuPosition] = useState<Position>({
+        x: 0,
+        y: 0,
+    });
+
     const selectionRef = useRef<HTMLDivElement>(null);
     const desktopFiles = useAppSelector(selectFiles);
     const isSettingsModalOpen = useAppSelector(settingsModalState);
     const dispatch = useAppDispatch();
     const selectedFiles = useAppSelector(state => state.desktop.selectedFiles);
+
+    const handleContextMenu = (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    ) => {
+        if (e.button === 2) {
+            e.preventDefault();
+
+            setContextMenuPosition({ x: e.clientX, y: e.clientY });
+            setContextMenuVisible(true);
+        }
+    };
 
     const handleMouseDown = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -60,6 +78,18 @@ const Desktop = () => {
     const handleMouseUp = () => {
         setIsSelecting(false);
     };
+
+    useEffect(() => {
+        const handleClickOutside = () => {
+            setContextMenuVisible(false);
+        };
+
+        document.addEventListener("click", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => {
         if (isSelecting) {
@@ -104,7 +134,18 @@ const Desktop = () => {
     };
 
     return (
-        <div className={styles.Desktop} onMouseDown={handleMouseDown}>
+        <div
+            className={styles.Desktop}
+            onMouseDown={handleMouseDown}
+            onContextMenu={handleContextMenu}
+        >
+            {contextMenuVisible && (
+                <DesktopContextMenu
+                    contextMenuPosition={contextMenuPosition}
+                    files={desktopFiles}
+                    setContextMenuVisible={setContextMenuVisible}
+                />
+            )}
             {isSelecting && (
                 <div
                     ref={selectionRef}

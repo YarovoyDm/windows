@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BIN, DESKTOP, FOLDER } from "Constants/Desktop";
 import { TEXT_FILE } from "Constants/TaskPanel";
-import { Desktop } from "Types/Desktop";
+import { Desktop, IFile } from "Types/Desktop";
 
 const initialDesktopState = {
     desktopFiles: [
@@ -10,18 +10,24 @@ const initialDesktopState = {
             icon: TEXT_FILE,
             position: { x: 50, y: 50 },
             isSelected: false,
+            type: "text_file",
+            innerContent: [],
         },
         {
             name: "Check what I have",
             icon: FOLDER,
             position: { x: 50, y: 150 },
             isSelected: false,
+            type: "folder",
+            innerContent: [],
         },
         {
             name: "Кошик",
             icon: BIN,
             position: { x: 1800, y: 750 },
             isSelected: false,
+            type: "bin",
+            innerContent: [],
         },
     ],
     selectedFiles: [],
@@ -73,6 +79,9 @@ const desktopSlice = createSlice({
         selectMultipleFiles(state: Desktop, action) {
             state.selectedFiles = action.payload;
         },
+        addDesktopFile(state, action: PayloadAction<IFile>) {
+            state.desktopFiles.push(action.payload);
+        },
     },
 });
 
@@ -85,4 +94,5 @@ export const {
     clearSelection,
     selectMultipleFiles,
     changeFilePosition,
+    addDesktopFile,
 } = desktopSlice.actions;

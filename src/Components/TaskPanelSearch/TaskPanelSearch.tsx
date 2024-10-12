@@ -4,20 +4,14 @@ import cn from "classnames";
 import styles from "./TaskPanelSearch.module.scss";
 import { SEARCH } from "Constants/TaskPanel";
 import { useAppDispatch } from "Store/index";
-import { handleInputValue } from "Store/slices/TaskPanelSlice";
+
 import Icon from "Components/Icon/Icon";
 
-interface IInput {
-    searchInput: { searchInputValue: string; searchInputModalOpen: boolean };
-}
-
-const TaskPanelSearch = ({ searchInput }: IInput) => {
+const TaskPanelSearch = () => {
     const dispatch = useAppDispatch();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-
-        dispatch(handleInputValue(value));
     };
 
     return (
@@ -26,10 +20,10 @@ const TaskPanelSearch = ({ searchInput }: IInput) => {
             <input
                 className={styles.taskPanelSearchInput}
                 placeholder='Пошук'
-                value={searchInput.searchInputValue}
+                value={5}
                 onChange={handleInputChange}
             />
-            {searchInput.searchInputModalOpen && (
+            {/* {searchInput.searchInputModalOpen && (
                 <div
                     className={cn(
                         styles.searchInputModal,
@@ -38,7 +32,7 @@ const TaskPanelSearch = ({ searchInput }: IInput) => {
                 >
                     1
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

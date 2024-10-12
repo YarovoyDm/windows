@@ -1,6 +1,6 @@
 import React from "react";
 import { map } from "lodash";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
     GOOGLE_CHROME,
     TASK_PANEL,
@@ -13,7 +13,7 @@ import {
     SYSTEM_PASSWORD,
 } from "Constants/TaskPanel";
 import Icon from "Components/Icon/Icon";
-import { TaskPanelType } from "Types/TaskPanelTypes";
+import { TaskPanelType, ToggleModalPayload } from "Types/TaskPanelTypes";
 
 const initialTaskPanelState = {
     taskPanelApps: {
@@ -43,13 +43,9 @@ const initialTaskPanelState = {
         },
     },
     systemLanguageIndex: DEFAULT_LANGUAGE_INDEX,
-    searchInput: {
-        searchInputValue: "",
-        searchInputModalOpen: false,
-    },
-    hiddenAppsModalOpen: false,
-    windowsModalOpen: false,
     systemPassword: SYSTEM_PASSWORD,
+    isHiddenAppsModalOpen: false,
+    isWindowsModalOpen: false,
     isWindowsUnlock: false,
     isPowerModalOpen: false,
     isLanguagesModalOpen: false,
@@ -80,40 +76,18 @@ const taskPanelSlice = createSlice({
             state.systemLanguageIndex = action.payload;
         },
         handleCloseAllModals(state: TaskPanelType) {
-            state.hiddenAppsModalOpen = false;
-            state.searchInput.searchInputModalOpen = false;
-            state.windowsModalOpen = false;
+            state.isHiddenAppsModalOpen = false;
+            state.isWindowsModalOpen = false;
             state.isPowerModalOpen = false;
             state.isLanguagesModalOpen = false;
         },
-        handleInputValue(state: TaskPanelType, action) {
-            state.searchInput.searchInputValue = action.payload;
-        },
-        handleInputModal(state: TaskPanelType) {
-            state.searchInput.searchInputModalOpen =
-                !state.searchInput.searchInputModalOpen;
-            state.windowsModalOpen = false;
-            state.hiddenAppsModalOpen = false;
-        },
-        handleHiddenAppsModal(state: TaskPanelType) {
-            state.hiddenAppsModalOpen = !state.hiddenAppsModalOpen;
-            state.searchInput.searchInputModalOpen = false;
-            state.windowsModalOpen = false;
-            state.isLanguagesModalOpen = false;
-        },
-        handleWindowsModal(state: TaskPanelType) {
-            state.windowsModalOpen = !state.windowsModalOpen;
-            state.hiddenAppsModalOpen = false;
-            state.searchInput.searchInputModalOpen = false;
-            state.isLanguagesModalOpen = false;
-        },
-        handlePowerModal(state: TaskPanelType) {
-            state.isPowerModalOpen = !state.isPowerModalOpen;
-        },
-        handleLanguagesModal(state: TaskPanelType) {
-            state.isLanguagesModalOpen = !state.isLanguagesModalOpen;
-            state.windowsModalOpen = false;
-            state.hiddenAppsModalOpen = false;
+        toggleModal(
+            state: TaskPanelType,
+            action: PayloadAction<ToggleModalPayload>,
+        ) {
+            const { modalName } = action.payload;
+
+            state[modalName] = !state[modalName];
         },
     },
 });
@@ -123,13 +97,8 @@ export const {
     openingApp,
     changeApp,
     changeLanguageIndexByHotKeys,
-    handleInputModal,
-    handleInputValue,
-    handleHiddenAppsModal,
+    toggleModal,
     handleCloseAllModals,
-    handleWindowsModal,
-    handlePowerModal,
-    handleLanguagesModal,
     changeLanguageIndex,
     addAppToTaskPanel,
 } = taskPanelSlice.actions;

@@ -1,10 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import { LANGUAGES } from "Constants/TaskPanel";
-import {
-    changeLanguageIndex,
-    handleLanguagesModal,
-} from "Store/slices/TaskPanelSlice";
+import { changeLanguageIndex, toggleModal } from "Store/slices/TaskPanelSlice";
 
 import styles from "./LanguagesModal.module.scss";
 import { useSelector } from "react-redux";
@@ -17,7 +14,7 @@ const LanguagesModal = () => {
 
     const onLanguageChange = (index: number) => {
         dispatch(changeLanguageIndex(index));
-        dispatch(handleLanguagesModal());
+        dispatch(toggleModal({ modalName: "isLanguagesModalOpen" }));
     };
 
     return (

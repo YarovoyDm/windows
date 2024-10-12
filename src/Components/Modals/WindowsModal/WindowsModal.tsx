@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import cn from "classnames";
 import Icon from "Components/Icon/Icon";
 import { USER, POWER, SETTINGS, CALCULATOR } from "Constants/TaskPanel";
-import { handlePowerModal } from "Store/slices/TaskPanelSlice";
+import { toggleModal } from "Store/slices/TaskPanelSlice";
 import File from "Components/File/File";
 
 import { RootState, useAppDispatch } from "Store/index";
@@ -17,7 +17,7 @@ const WindowsModal: React.FC = () => {
     const { isPowerModalOpen } = store.taskPanel;
 
     const onWindowsModalChange = () => {
-        dispatch(handlePowerModal());
+        dispatch(toggleModal({ modalName: "isPowerModalOpen" }));
     };
 
     return (
