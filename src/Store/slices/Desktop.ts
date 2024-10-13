@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BIN, DESKTOP, FOLDER } from "Constants/Desktop";
-import { TEXT_FILE } from "Constants/TaskPanel";
+import { TEXT_FILE } from "Constants/System";
 import { Desktop, IFile } from "Types/Desktop";
 
 const initialDesktopState = {
@@ -10,7 +10,7 @@ const initialDesktopState = {
             icon: TEXT_FILE,
             position: { x: 50, y: 50 },
             isSelected: false,
-            type: "text_file",
+            type: TEXT_FILE,
             innerContent: [],
         },
         {

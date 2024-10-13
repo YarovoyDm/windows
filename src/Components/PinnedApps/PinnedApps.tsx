@@ -1,11 +1,11 @@
 import React from "react";
 import { map } from "lodash";
 import cn from "classnames";
-import Icon from "Components/Icon/Icon";
-
-import styles from "./PinnedApps.module.scss";
+import { Icon } from "Components";
 import { useAppDispatch } from "Store/index";
 import { changeApp, openingApp } from "Store/slices/TaskPanelSlice";
+
+import styles from "./PinnedApps.module.scss";
 
 type App = {
     name: string;

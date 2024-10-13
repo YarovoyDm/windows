@@ -1,10 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./DraggableDesktopFile.module.scss";
 import cn from "classnames";
-import Icon from "Components/Icon/Icon";
+import { Icon } from "Components";
+import { DESKTOP_FILE_SIZE } from "Constants/File";
+import {
+    DELETE_KEY_CODE,
+    KEY_DOWN_EVENT,
+    MOUSE_DOWN_EVENT,
+} from "Constants/System";
+import useDrag from "Hooks/useDrag";
 import { useAppDispatch } from "Store/index";
 import { changeFilePosition, removeFile } from "Store/slices/Desktop";
-import useDrag from "Hooks/useDrag";
+
+import styles from "./DraggableDesktopFile.module.scss";
 
 type IFile = {
     name: string;
@@ -26,10 +33,10 @@ const DraggableDesktopFile = ({
     const dispatch = useAppDispatch();
     const fileRef = useRef<HTMLDivElement>(null);
     const [isFileSelected, setIsFileSelected] = useState(isSelected);
-    const { position, handleMouseDown } = useDrag(filePosition, {
-        width: 80,
-        height: 70,
-    });
+    const { position, handleMouseDown } = useDrag(
+        filePosition,
+        DESKTOP_FILE_SIZE,
+    );
 
     const handleClickOutside = (e: MouseEvent) => {
         if (fileRef.current && !fileRef.current.contains(e.target as Node)) {
@@ -38,7 +45,7 @@ const DraggableDesktopFile = ({
     };
 
     const detectKeyDown = (e: KeyboardEvent) => {
-        if (e.code === "Delete") {
+        if (e.code === DELETE_KEY_CODE) {
             dispatch(removeFile(name));
         }
     };
@@ -49,19 +56,33 @@ const DraggableDesktopFile = ({
 
     useEffect(() => {
         if (isFileSelected) {
-            document.addEventListener("keydown", detectKeyDown, true);
+            document.addEventListener(
+                KEY_DOWN_EVENT,
+                detectKeyDown as EventListener,
+                true,
+            );
         }
 
         return () => {
-            document.removeEventListener("keydown", detectKeyDown, true);
+            document.removeEventListener(
+                KEY_DOWN_EVENT,
+                detectKeyDown as EventListener,
+                true,
+            );
         };
     }, [isFileSelected]);
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener(
+            MOUSE_DOWN_EVENT,
+            handleClickOutside as EventListener,
+        );
 
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener(
+                MOUSE_DOWN_EVENT,
+                handleClickOutside as EventListener,
+            );
         };
     }, []);
 

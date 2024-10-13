@@ -1,20 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import cn from "classnames";
-import Icon from "Components/Icon/Icon";
-import { USER, POWER, SETTINGS, CALCULATOR } from "Constants/TaskPanel";
+import { Icon, File } from "Components";
+import { CALCULATOR, POWER, SETTINGS, USER } from "Constants/System";
 import { toggleModal } from "Store/slices/TaskPanelSlice";
-import File from "Components/File/File";
-
-import { RootState, useAppDispatch } from "Store/index";
+import { useAppDispatch, useAppSelector } from "Store/index";
+import PowerModal from "../PowerModal/PowerModal";
 
 import styles from "./WindowsModal.module.scss";
-import PowerModal from "../PowerModal/PowerModal";
+import { selectPowerModalState } from "Store/selectors/TaskPanel";
 
 const WindowsModal: React.FC = () => {
     const dispatch = useAppDispatch();
-    const store = useSelector((state: RootState) => state);
-    const { isPowerModalOpen } = store.taskPanel;
+    const isPowerModalOpen = useAppSelector(selectPowerModalState);
 
     const onWindowsModalChange = () => {
         dispatch(toggleModal({ modalName: "isPowerModalOpen" }));

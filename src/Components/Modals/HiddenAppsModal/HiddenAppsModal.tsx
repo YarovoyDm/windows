@@ -1,6 +1,6 @@
 import React from "react";
-import Icon from "Components/Icon/Icon";
 import cn from "classnames";
+import { Icon } from "Components";
 import { HIDDEN_APPS } from "Constants/TaskPanel";
 
 import styles from "./HiddenAppsModal.module.scss";

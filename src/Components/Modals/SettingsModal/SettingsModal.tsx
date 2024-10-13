@@ -1,17 +1,20 @@
 import React from "react";
-import styles from "./SettingsModal.module.scss";
+
 import cn from "classnames";
-import { CROSS } from "Constants/TaskPanel";
-import Icon from "Components/Icon/Icon";
+import { Icon } from "Components";
+import { CROSS } from "Constants/System";
 import useDrag from "Hooks/useDrag";
+
+import styles from "./SettingsModal.module.scss";
+import {
+    DEFAULT_DESKTOP_MODAL_POSITION,
+    DEFAULT_DESKTOP_MODAL_SIZE,
+} from "Constants/Desktop";
 
 const SettingsModal = () => {
     const { position, handleMouseDown } = useDrag(
-        { x: 300, y: 300 },
-        {
-            width: 700,
-            height: 500,
-        },
+        DEFAULT_DESKTOP_MODAL_POSITION,
+        DEFAULT_DESKTOP_MODAL_SIZE,
     );
 
     return (

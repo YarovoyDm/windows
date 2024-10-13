@@ -1,4 +1,9 @@
 import { useState, useEffect } from "react";
+import {
+    MOUSE_MOVE_EVENT,
+    MOUSE_UP_EVENT,
+    TASK_PANEL_HEIGHT,
+} from "Constants/System";
 
 const useDrag = (
     initialPosition: { x: number; y: number },
@@ -24,8 +29,8 @@ const useDrag = (
         if (newX < 0) newX = 0;
         if (newY < 0) newY = 0;
         if (newX + objectWidth > windowWidth) newX = windowWidth - objectWidth;
-        if (newY + (objectHeight + 51) > windowHeight)
-            newY = windowHeight - (objectHeight + 51);
+        if (newY + (objectHeight + TASK_PANEL_HEIGHT) > windowHeight)
+            newY = windowHeight - (objectHeight + TASK_PANEL_HEIGHT);
 
         setPosition({ x: newX, y: newY });
     };
@@ -41,13 +46,19 @@ const useDrag = (
 
     useEffect(() => {
         if (isDragging) {
-            document.addEventListener("mousemove", handleMouseMove);
-            document.addEventListener("mouseup", handleMouseUp);
+            document.addEventListener(
+                MOUSE_MOVE_EVENT,
+                handleMouseMove as EventListener,
+            );
+            document.addEventListener(MOUSE_UP_EVENT, handleMouseUp);
         }
 
         return () => {
-            document.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("mouseup", handleMouseUp);
+            document.removeEventListener(
+                MOUSE_MOVE_EVENT,
+                handleMouseMove as EventListener,
+            );
+            document.removeEventListener(MOUSE_UP_EVENT, handleMouseUp);
         };
     }, [isDragging]);
 

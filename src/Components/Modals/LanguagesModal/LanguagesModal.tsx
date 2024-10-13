@@ -1,15 +1,14 @@
 import React from "react";
 import cn from "classnames";
-import { LANGUAGES } from "Constants/TaskPanel";
+import { LANGUAGES } from "Constants/System";
 import { changeLanguageIndex, toggleModal } from "Store/slices/TaskPanelSlice";
+import { useAppDispatch, useAppSelector } from "Store/index";
 
 import styles from "./LanguagesModal.module.scss";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "Store/index";
+import { selectLanguageIndex } from "Store/selectors/TaskPanel";
 
-const LanguagesModal = () => {
-    const store = useSelector((state: RootState) => state);
-    const { systemLanguageIndex } = store.taskPanel;
+const LanguagesModal: React.FC = () => {
+    const systemLanguageIndex = useAppSelector(selectLanguageIndex);
     const dispatch = useAppDispatch();
 
     const onLanguageChange = (index: number) => {

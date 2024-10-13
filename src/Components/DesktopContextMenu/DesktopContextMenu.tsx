@@ -1,10 +1,9 @@
-import React from "react";
-
-import styles from "./DesktopContextMenu.module.scss";
-import { TEXT_FILE } from "Constants/TaskPanel";
+import { TEXT_FILE } from "Constants/System";
 import { useAppDispatch } from "Store/index";
 import { addDesktopFile } from "Store/slices/Desktop";
 import { IFile } from "Types/Desktop";
+
+import styles from "./DesktopContextMenu.module.scss";
 
 type IProps = {
     contextMenuPosition: {
@@ -26,11 +25,11 @@ const DesktopContextMenu = ({
 
     const createTextFile = () => {
         const newFile = {
-            name: `Новий текстовий документ ${files.length + 1}`,
+            name: `Новий текстовий документ`,
             icon: TEXT_FILE,
             position: contextMenuPosition,
             isSelected: false,
-            type: "text_file",
+            type: TEXT_FILE,
             innerContent: [],
         };
 

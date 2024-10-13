@@ -1,11 +1,9 @@
 import React from "react";
-import cn from "classnames";
-
-import styles from "./TaskPanelSearch.module.scss";
-import { SEARCH } from "Constants/TaskPanel";
+import { Icon } from "Components";
+import { SEARCH } from "Constants/System";
 import { useAppDispatch } from "Store/index";
 
-import Icon from "Components/Icon/Icon";
+import styles from "./TaskPanelSearch.module.scss";
 
 const TaskPanelSearch = () => {
     const dispatch = useAppDispatch();

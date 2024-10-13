@@ -1,4 +1,3 @@
-import React from "react";
 import { ReactComponent as Telegram } from "Icons/telegramIcon.svg";
 import { ReactComponent as Skype } from "Icons/skypeIcon.svg";
 import { ReactComponent as Chrome } from "Icons/chromeIcon.svg";
@@ -25,19 +24,21 @@ import {
     STEAM,
     POSTMAN,
     WEBSTORM,
-    USER,
-    POWER,
-    SLEEP,
-    RELOAD,
-    SEARCH,
-    WINDOWS,
-    ARROW,
-    TEXT_FILE,
-    SETTINGS,
-    CALCULATOR,
-    CROSS,
 } from "Constants/TaskPanel";
 import { FOLDER, BIN } from "Constants/Desktop";
+import {
+    ARROW,
+    CALCULATOR,
+    CROSS,
+    POWER,
+    RELOAD,
+    SEARCH,
+    SETTINGS,
+    SLEEP,
+    TEXT_FILE,
+    USER,
+    WINDOWS,
+} from "Constants/System";
 
 type IProps = {
     name: string;

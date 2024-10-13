@@ -1,10 +1,10 @@
 import React from "react";
 import cn from "classnames";
 import * as _ from "lodash";
+import { Icon } from "Components";
+import { POWER_MODAL_UNITS } from "Constants/System";
 
 import styles from "./PowerModal.module.scss";
-import { POWER, RELOAD, SLEEP, POWER_MODAL_UNITS } from "Constants/TaskPanel";
-import Icon from "Components/Icon/Icon";
 
 const PowerModal = () => {
     return (

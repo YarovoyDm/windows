@@ -1,18 +1,20 @@
 import React from "react";
 import { map } from "lodash";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Icon from "Components/Icon/Icon";
 import {
     GOOGLE_CHROME,
     TASK_PANEL,
     SKYPE,
     STEAM,
     TELEGRAM,
+} from "Constants/TaskPanel";
+import {
     DEFAULT_LANGUAGE_INDEX,
     LANGUAGE_CHANGE_STEP,
     MAX_LANGUAGES,
     SYSTEM_PASSWORD,
-} from "Constants/TaskPanel";
-import Icon from "Components/Icon/Icon";
+} from "Constants/System";
 import { TaskPanelType, ToggleModalPayload } from "Types/TaskPanelTypes";
 
 const initialTaskPanelState = {

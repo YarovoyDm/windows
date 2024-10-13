@@ -1,18 +1,20 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import cn from "classnames";
-import WindowsModal from "Components/Modals/WindowsModal/WindowsModal";
-import { WINDOWS } from "Constants/TaskPanel";
+import {
+    PinnedApps,
+    TaskPanelSideBar,
+    TaskPanelSearch,
+    Icon,
+} from "Components";
+import { WindowsModal } from "Components/Modals";
+import { WINDOWS } from "Constants/System";
 import { useClickOutside } from "Hooks/useClickOutside";
-import Icon from "Components/Icon/Icon";
 import { handleCloseAllModals, toggleModal } from "Store/slices/TaskPanelSlice";
 import { RootState, useAppDispatch } from "Store";
 import { ModalNames, ObjectOfModalRefs } from "Types/TaskPanelTypes";
 
 import styles from "./TaskPanel.module.scss";
-import PinnedApps from "Components/PinnedApps/PinnedApps";
-import TaskPanelSideBar from "Components/TaskPanelSideBar/TaskPanelSideBar";
-import TaskPanelSearch from "Components/TaskPanelSearch/TaskPanelSearch";
 
 const TaskPanel: React.FC = () => {
     const dispatch = useAppDispatch();

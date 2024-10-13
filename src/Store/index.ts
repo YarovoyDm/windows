@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import taskPanelSlice from "./slices/TaskPanelSlice";
 import desktopSlice from "./slices/Desktop";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const rootReducer = combineReducers({
     taskPanel: taskPanelSlice,

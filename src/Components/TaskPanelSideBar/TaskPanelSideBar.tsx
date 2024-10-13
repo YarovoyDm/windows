@@ -1,11 +1,11 @@
 import React from "react";
 import cn from "classnames";
-import styles from "./TaskPanelSideBar.module.scss";
-import { ARROW, LANGUAGES } from "Constants/TaskPanel";
-import HiddenAppsModal from "Components/Modals/HiddenAppsModal/HiddenAppsModal";
-import Icon from "Components/Icon/Icon";
-import LanguagesModal from "Components/Modals/LanguagesModal/LanguagesModal";
+import { HiddenAppsModal, LanguagesModal } from "Components/Modals";
+import { Icon } from "Components";
+import { ARROW, LANGUAGES } from "Constants/System";
 import { ModalNames, ObjectOfModalRefs } from "Types/TaskPanelTypes";
+
+import styles from "./TaskPanelSideBar.module.scss";
 
 const TaskPanelSideBar = ({
     hiddenAppsModalOpen,

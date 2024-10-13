@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./Desktop.module.scss";
+import { DraggableDesktopFile, DesktopContextMenu } from "Components";
+import { SettingsModal } from "Components/Modals";
+import { DEFAULT_DESKTOP_CONTEXT_MENU_WIDTH } from "Constants/Desktop";
+import { DESKTOP_FILE_SIZE } from "Constants/File";
+import {
+    CLICK_EVENT,
+    MOUSE_MOVE_EVENT,
+    MOUSE_UP_EVENT,
+    ZERO_POSITION,
+} from "Constants/System";
 import { useAppSelector, useAppDispatch } from "Store/index";
-import { settingsModalState, selectFiles } from "Store/selectors/Desktop";
+import { selectSettingsModalState, selectFiles } from "Store/selectors/Desktop";
 import { selectMultipleFiles, clearSelection } from "Store/slices/Desktop";
-import DraggableDesktopFile from "Components/DraggableDesktopFile/DraggableDesktopFile";
-import SettingsModal from "Components/Modals/SettingsModal/SettingsModal";
 import { isFileInSelection } from "utils/IsFileInSelection";
-import DesktopContextMenu from "Components/DesktopContextMenu/DesktopContextMenu";
+
+import styles from "./Desktop.module.scss";
 
 type Position = {
     x: number;
@@ -15,25 +23,19 @@ type Position = {
 
 const Desktop = () => {
     const [isSelecting, setIsSelecting] = useState<boolean>(false);
-    const [startPosition, setStartPosition] = useState<Position>({
-        x: 0,
-        y: 0,
-    });
-    const [currentPosition, setCurrentPosition] = useState<Position>({
-        x: 0,
-        y: 0,
-    });
+    const [startPosition, setStartPosition] = useState<Position>(ZERO_POSITION);
+    const [currentPosition, setCurrentPosition] =
+        useState<Position>(ZERO_POSITION);
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
-    const [contextMenuPosition, setContextMenuPosition] = useState<Position>({
-        x: 0,
-        y: 0,
-    });
-
-    const selectionRef = useRef<HTMLDivElement>(null);
+    const [contextMenuPosition, setContextMenuPosition] =
+        useState<Position>(ZERO_POSITION);
     const [isFile, setIsFile] = useState(false);
-    const desktopFiles = useAppSelector(selectFiles);
-    const isSettingsModalOpen = useAppSelector(settingsModalState);
+
     const dispatch = useAppDispatch();
+    const selectionRef = useRef<HTMLDivElement>(null);
+
+    const desktopFiles = useAppSelector(selectFiles);
+    const isSettingsModalOpen = useAppSelector(selectSettingsModalState);
     const selectedFiles = useAppSelector(state => state.desktop.selectedFiles);
 
     const handleContextMenu = (
@@ -47,7 +49,7 @@ const Desktop = () => {
 
             setIsFile(isFileClicked);
 
-            const menuWidth = 250;
+            const menuWidth = DEFAULT_DESKTOP_CONTEXT_MENU_WIDTH;
 
             let x = e.clientX;
             let y = e.clientY;
@@ -80,12 +82,11 @@ const Desktop = () => {
         const newPosition = { x: e.clientX, y: e.clientY };
 
         setCurrentPosition(newPosition);
-        const footerOffset = 51;
 
-        if (newPosition.y > window.innerHeight - footerOffset) {
+        if (newPosition.y > window.innerHeight) {
             setCurrentPosition(prev => ({
                 ...prev,
-                y: window.innerHeight - footerOffset,
+                y: window.innerHeight,
             }));
         }
     };
@@ -99,22 +100,28 @@ const Desktop = () => {
             setContextMenuVisible(false);
         };
 
-        document.addEventListener("click", handleClickOutside);
+        document.addEventListener(CLICK_EVENT, handleClickOutside);
 
         return () => {
-            document.removeEventListener("click", handleClickOutside);
+            document.removeEventListener(CLICK_EVENT, handleClickOutside);
         };
     }, []);
 
     useEffect(() => {
         if (isSelecting) {
-            document.addEventListener("mousemove", handleMouseMove);
-            document.addEventListener("mouseup", handleMouseUp);
+            document.addEventListener(
+                MOUSE_MOVE_EVENT,
+                handleMouseMove as EventListener,
+            );
+            document.addEventListener(MOUSE_UP_EVENT, handleMouseUp);
         }
 
         return () => {
-            document.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("mouseup", handleMouseUp);
+            document.removeEventListener(
+                MOUSE_MOVE_EVENT,
+                handleMouseMove as EventListener,
+            );
+            document.removeEventListener(MOUSE_UP_EVENT, handleMouseUp);
         };
     }, [isSelecting]);
 
@@ -122,11 +129,10 @@ const Desktop = () => {
         if (isSelecting) {
             const newSelectedFiles = desktopFiles
                 .filter(({ position }) =>
-                    isFileInSelection(
-                        position,
-                        { width: 80, height: 70 },
-                        { startPosition, currentPosition },
-                    ),
+                    isFileInSelection(position, DESKTOP_FILE_SIZE, {
+                        startPosition,
+                        currentPosition,
+                    }),
                 )
                 .map(({ name }) => name);
 
@@ -135,7 +141,7 @@ const Desktop = () => {
     }, [currentPosition, isSelecting, desktopFiles, dispatch]);
 
     const getSelectionStyles = () => {
-        const width = Math.abs(currentPosition.x - startPosition.x - 1);
+        const width = Math.abs(currentPosition.x - startPosition.x);
         const height = Math.abs(currentPosition.y - startPosition.y);
         const left = Math.min(startPosition.x, currentPosition.x);
         const top = Math.min(startPosition.y, currentPosition.y);

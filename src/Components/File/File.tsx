@@ -1,13 +1,12 @@
-import React from "react";
-
-import styles from "./File.module.scss";
-import Icon from "Components/Icon/Icon";
+import { Icon } from "Components";
+import { FILE_ACTIONS } from "Constants/File";
 import { useAppDispatch } from "Store/index";
 import {
     addAppToTaskPanel,
     handleCloseAllModals,
 } from "Store/slices/TaskPanelSlice";
-import { FILE_ACTIONS } from "Constants/File";
+
+import styles from "./File.module.scss";
 
 type IFile = {
     name: string;

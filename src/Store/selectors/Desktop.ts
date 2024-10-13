@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { RootState } from "..";
 import { Desktop } from "Types/Desktop";
+import { RootState } from "..";
 
 const selectDesktop = (state: RootState) => state.desktop;
 
@@ -9,7 +9,7 @@ export const selectFiles = createSelector(
     (state: Desktop) => state.desktopFiles,
 );
 
-export const settingsModalState = createSelector(
+export const selectSettingsModalState = createSelector(
     selectDesktop,
     (state: Desktop) => state.isSettingsModalOpen,
 );
