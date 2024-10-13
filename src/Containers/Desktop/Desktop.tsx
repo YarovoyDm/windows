@@ -30,6 +30,7 @@ const Desktop = () => {
     });
 
     const selectionRef = useRef<HTMLDivElement>(null);
+    const [isFile, setIsFile] = useState(false);
     const desktopFiles = useAppSelector(selectFiles);
     const isSettingsModalOpen = useAppSelector(settingsModalState);
     const dispatch = useAppDispatch();
@@ -41,7 +42,21 @@ const Desktop = () => {
         if (e.button === 2) {
             e.preventDefault();
 
-            setContextMenuPosition({ x: e.clientX, y: e.clientY });
+            const target = e.target as HTMLElement;
+            const isFileClicked = target.closest('[data-file="true"]') !== null;
+
+            setIsFile(isFileClicked);
+
+            const menuWidth = 250;
+
+            let x = e.clientX;
+            let y = e.clientY;
+
+            if (x + menuWidth > window.innerWidth) {
+                x = e.clientX - menuWidth;
+            }
+
+            setContextMenuPosition({ x, y });
             setContextMenuVisible(true);
         }
     };
@@ -141,6 +156,7 @@ const Desktop = () => {
         >
             {contextMenuVisible && (
                 <DesktopContextMenu
+                    isFileMenu={isFile}
                     contextMenuPosition={contextMenuPosition}
                     files={desktopFiles}
                     setContextMenuVisible={setContextMenuVisible}
@@ -161,6 +177,7 @@ const Desktop = () => {
                     filePosition={position}
                     setIsSelecting={setIsSelecting}
                     isSelected={selectedFiles.includes(name)}
+                    onContextMenu={handleContextMenu}
                 />
             ))}
             {isSettingsModalOpen && <SettingsModal />}

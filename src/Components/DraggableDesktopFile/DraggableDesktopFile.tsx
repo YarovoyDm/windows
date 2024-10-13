@@ -12,6 +12,7 @@ type IFile = {
     filePosition: { x: number; y: number };
     setIsSelecting: (isSelecting: boolean) => void;
     isSelected: boolean;
+    onContextMenu: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
 const DraggableDesktopFile = ({
@@ -20,6 +21,7 @@ const DraggableDesktopFile = ({
     filePosition,
     setIsSelecting,
     isSelected,
+    onContextMenu,
 }: IFile) => {
     const dispatch = useAppDispatch();
     const fileRef = useRef<HTMLDivElement>(null);
@@ -76,6 +78,7 @@ const DraggableDesktopFile = ({
             }}
             ref={fileRef}
             data-file='true'
+            onContextMenu={onContextMenu}
             className={cn(styles.file, "prevent-selecting", {
                 [styles.selected]: isFileSelected,
             })}

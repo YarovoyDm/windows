@@ -13,12 +13,14 @@ type IProps = {
     };
     files: Array<IFile>;
     setContextMenuVisible: (state: boolean) => void;
+    isFileMenu: boolean;
 };
 
 const DesktopContextMenu = ({
     contextMenuPosition,
     files,
     setContextMenuVisible,
+    isFileMenu,
 }: IProps) => {
     const dispatch = useAppDispatch();
 
@@ -42,9 +44,19 @@ const DesktopContextMenu = ({
             style={{ top: contextMenuPosition.y, left: contextMenuPosition.x }}
         >
             <ul>
-                <li onClick={createTextFile}>Створити текстовий документ</li>
-                <li>Опція 2</li>
-                <li>Опція 3</li>
+                {isFileMenu ? (
+                    <>
+                        <li>Переіменувати</li>
+                        <li>Опція 2 для файлів</li>
+                    </>
+                ) : (
+                    <>
+                        <li onClick={createTextFile}>
+                            Створити текстовий документ
+                        </li>
+                        <li>Опція 2 для робочого столу</li>
+                    </>
+                )}
             </ul>
         </div>
     );
