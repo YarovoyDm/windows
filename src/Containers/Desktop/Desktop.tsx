@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DraggableDesktopFile, DesktopContextMenu } from "Components";
 import { SettingsModal } from "Components/Modals";
-import { DEFAULT_DESKTOP_CONTEXT_MENU_WIDTH } from "Constants/Desktop";
 import { DESKTOP_FILE_SIZE } from "Constants/File";
 import {
     CLICK_EVENT,
@@ -15,6 +14,7 @@ import { selectMultipleFiles, clearSelection } from "Store/slices/Desktop";
 import { isFileInSelection } from "utils/IsFileInSelection";
 
 import styles from "./Desktop.module.scss";
+import { useContextMenu } from "Hooks/useContextMenu";
 
 type Position = {
     x: number;
@@ -26,42 +26,20 @@ const Desktop = () => {
     const [startPosition, setStartPosition] = useState<Position>(ZERO_POSITION);
     const [currentPosition, setCurrentPosition] =
         useState<Position>(ZERO_POSITION);
-    const [contextMenuVisible, setContextMenuVisible] = useState(false);
-    const [contextMenuPosition, setContextMenuPosition] =
-        useState<Position>(ZERO_POSITION);
-    const [isFile, setIsFile] = useState(false);
 
     const dispatch = useAppDispatch();
     const selectionRef = useRef<HTMLDivElement>(null);
+    const {
+        contextMenuVisible,
+        contextMenuPosition,
+        isFile,
+        handleContextMenu,
+        setContextMenuVisible,
+    } = useContextMenu();
 
     const desktopFiles = useAppSelector(selectFiles);
     const isSettingsModalOpen = useAppSelector(selectSettingsModalState);
     const selectedFiles = useAppSelector(state => state.desktop.selectedFiles);
-
-    const handleContextMenu = (
-        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    ) => {
-        if (e.button === 2) {
-            e.preventDefault();
-
-            const target = e.target as HTMLElement;
-            const isFileClicked = target.closest('[data-file="true"]') !== null;
-
-            setIsFile(isFileClicked);
-
-            const menuWidth = DEFAULT_DESKTOP_CONTEXT_MENU_WIDTH;
-
-            let x = e.clientX;
-            let y = e.clientY;
-
-            if (x + menuWidth > window.innerWidth) {
-                x = e.clientX - menuWidth;
-            }
-
-            setContextMenuPosition({ x, y });
-            setContextMenuVisible(true);
-        }
-    };
 
     const handleMouseDown = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
