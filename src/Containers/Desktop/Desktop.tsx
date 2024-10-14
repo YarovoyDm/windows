@@ -142,7 +142,6 @@ const Desktop = () => {
                 <DesktopContextMenu
                     isFileMenu={isFile}
                     contextMenuPosition={contextMenuPosition}
-                    files={desktopFiles}
                     setContextMenuVisible={setContextMenuVisible}
                 />
             )}

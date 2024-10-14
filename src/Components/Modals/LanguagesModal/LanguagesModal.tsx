@@ -1,11 +1,12 @@
 import React from "react";
 import cn from "classnames";
 import { LANGUAGES } from "Constants/System";
-import { changeLanguageIndex, toggleModal } from "Store/slices/TaskPanelSlice";
+import { toggleModal } from "Store/slices/TaskPanelSlice";
 import { useAppDispatch, useAppSelector } from "Store/index";
 
 import styles from "./LanguagesModal.module.scss";
-import { selectLanguageIndex } from "Store/selectors/TaskPanel";
+import { changeLanguageIndex } from "Store/slices/System";
+import { selectLanguageIndex } from "Store/selectors/System";
 
 const LanguagesModal: React.FC = () => {
     const systemLanguageIndex = useAppSelector(selectLanguageIndex);

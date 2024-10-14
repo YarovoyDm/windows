@@ -17,6 +17,11 @@ import { ReactComponent as Bin } from "Icons/binIcon.svg";
 import { ReactComponent as Settings } from "Icons/settingsIcon.svg";
 import { ReactComponent as Calculator } from "Icons/calculatorIcon.svg";
 import { ReactComponent as Cross } from "Icons/crossIcon.svg";
+import { ReactComponent as PlusCircle } from "Icons/plusCircleIcon.svg";
+import { ReactComponent as ViewBoxes } from "Icons/viewBoxesIcon.svg";
+import { ReactComponent as RightArrow } from "Icons/rightArrow.svg";
+import { ReactComponent as SquareList } from "Icons/squareListIcon.svg";
+import { ReactComponent as Dot } from "Icons/dotIcon.svg";
 import {
     TELEGRAM,
     SKYPE,
@@ -30,19 +35,25 @@ import {
     ARROW,
     CALCULATOR,
     CROSS,
+    DOT,
+    PLUS_CIRCLE,
     POWER,
     RELOAD,
+    RIGHT_ARROW,
     SEARCH,
     SETTINGS,
     SLEEP,
+    SQUARE_LIST,
     TEXT_FILE,
     USER,
+    VIEW_BOXES,
     WINDOWS,
 } from "Constants/System";
 
 type IProps = {
     name: string;
     className?: string;
+    style?: { width: number; height: number };
 };
 
 const Icons = {
@@ -65,6 +76,11 @@ const Icons = {
     [SETTINGS]: Settings,
     [CALCULATOR]: Calculator,
     [CROSS]: Cross,
+    [PLUS_CIRCLE]: PlusCircle,
+    [VIEW_BOXES]: ViewBoxes,
+    [RIGHT_ARROW]: RightArrow,
+    [SQUARE_LIST]: SquareList,
+    [DOT]: Dot,
 };
 
 const Icon = (props: IProps) => {

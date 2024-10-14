@@ -1,24 +1,130 @@
 .contextMenu {
     position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: #2f2f2f;
+    border: 1px solid #535353;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    width: 250px;
-    height: 100px;
-}
-
-.contextMenu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.contextMenu li {
-    padding: 8px 12px;
-    cursor: pointer;
-}
-
-.contextMenu li:hover {
-    background-color: #f0f0f0;
+    width: calc(250px - 10px);
+    border-radius: 5px;
+    padding: 5px;
+    .menuItem {
+        position: relative;
+        height: 25px;
+        width: calc(100% - 20px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        &:not(:last-child) {
+            margin-bottom: 5px;
+            .subMenu {
+                .subMenuItem {
+                    &:nth-child(2) {
+                        svg {
+                            width: 12px;
+                            height: 11px;
+                        }
+                    }
+                }
+            }
+        }
+        &:last-child {
+            .subMenu {
+                .subMenuItem {
+                    padding: 0 10px 0 10px;
+                }
+            }
+        }
+        .wrapper {
+            display: flex;
+            align-items: center;
+            .itemName {
+                margin-left: 15px;
+                height: 25px;
+                line-height: 25px;
+                color: #d9d9d9;
+            }
+        }
+        &:hover {
+            background: #535353;
+            border-radius: 5px;
+        }
+        .itemIcon {
+            height: 15px;
+            width: 15px;
+            path {
+                fill: #d9d9d9;
+            }
+        }
+        .itemArrow {
+            height: 10px;
+        }
+        .subMenu {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            background: #2f2f2f;
+            border: 1px solid #535353;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            padding: 5px;
+            border-radius: 5px;
+            .hotKeys {
+                color: #979797;
+                font-size: 12px;
+            }
+            .subMenuItem {
+                height: 25px;
+                padding: 0 10px 0 20px;
+                line-height: 25px;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                position: relative;
+                .sizeSelected {
+                    width: 5px;
+                    height: 5px;
+                    position: absolute;
+                    border-radius: 10px;
+                    background: #d9d9d9;
+                    top: 40%;
+                    left: 10px;
+                    transform: translate(-50%, 0);
+                }
+                svg {
+                    width: 16px;
+                    height: 16px;
+                }
+                .subMenuItemName {
+                    display: flex;
+                    align-items: center;
+                    color: #d9d9d9;
+                    margin-left: 10px;
+                    font-size: 14px;
+                    width: max-content;
+                    .sizeIcon {
+                        fill: #d9d9d9;
+                        transform: rotate(180deg);
+                    }
+                    .sizeName {
+                        margin-left: 15px;
+                        width: 140px;
+                    }
+                }
+                &:hover {
+                    background: #535353;
+                }
+            }
+        }
+        &:hover .subMenu {
+            display: block;
+        }
+    }
+    .iconWrapper {
+        width: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

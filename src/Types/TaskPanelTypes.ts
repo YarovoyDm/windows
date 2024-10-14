@@ -14,11 +14,8 @@ export type TaskPanelType = {
             component: React.ReactElement;
         };
     };
-    systemLanguageIndex: number;
     isHiddenAppsModalOpen: boolean;
     isWindowsModalOpen: boolean;
-    systemPassword: number;
-    isWindowsUnlock: boolean;
     isPowerModalOpen: boolean;
     isLanguagesModalOpen: boolean;
 };

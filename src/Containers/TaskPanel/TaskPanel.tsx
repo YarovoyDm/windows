@@ -11,10 +11,11 @@ import { WindowsModal } from "Components/Modals";
 import { WINDOWS } from "Constants/System";
 import { useClickOutside } from "Hooks/useClickOutside";
 import { handleCloseAllModals, toggleModal } from "Store/slices/TaskPanelSlice";
-import { RootState, useAppDispatch } from "Store";
+import { RootState, useAppDispatch, useAppSelector } from "Store";
 import { ModalNames, ObjectOfModalRefs } from "Types/TaskPanelTypes";
 
 import styles from "./TaskPanel.module.scss";
+import { selectLanguageIndex } from "Store/selectors/System";
 
 const TaskPanel: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -27,9 +28,10 @@ const TaskPanel: React.FC = () => {
     };
 
     const store = useSelector((state: RootState) => state);
+
+    const languageIndex = useAppSelector(selectLanguageIndex);
     const {
         taskPanelApps,
-        systemLanguageIndex,
         isHiddenAppsModalOpen,
         isWindowsModalOpen,
         isLanguagesModalOpen,
@@ -68,7 +70,7 @@ const TaskPanel: React.FC = () => {
                 hiddenAppsModalOpen={isHiddenAppsModalOpen}
                 isLanguagesModalOpen={isLanguagesModalOpen}
                 handleModalChange={handleModalChange}
-                systemLanguageIndex={systemLanguageIndex}
+                systemLanguageIndex={languageIndex}
                 refs={refs}
             />
         </div>

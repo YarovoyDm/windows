@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import cn from "classnames";
 import { Icon } from "Components";
-import { DESKTOP_FILE_SIZE } from "Constants/File";
 import {
     DELETE_KEY_CODE,
     KEY_DOWN_EVENT,
     MOUSE_DOWN_EVENT,
 } from "Constants/System";
 import useDrag from "Hooks/useDrag";
-import { useAppDispatch } from "Store/index";
+import { useAppDispatch, useAppSelector } from "Store/index";
 import { changeFilePosition, removeFile } from "Store/slices/Desktop";
 
 import styles from "./DraggableDesktopFile.module.scss";
+import { selectFileSize } from "Store/selectors/System";
 
 type IFile = {
     name: string;
@@ -33,10 +33,9 @@ const DraggableDesktopFile = ({
     const dispatch = useAppDispatch();
     const fileRef = useRef<HTMLDivElement>(null);
     const [isFileSelected, setIsFileSelected] = useState(isSelected);
-    const { position, handleMouseDown } = useDrag(
-        filePosition,
-        DESKTOP_FILE_SIZE,
-    );
+    const selectedSize = useAppSelector(selectFileSize);
+
+    const { position, handleMouseDown } = useDrag(filePosition, selectedSize);
 
     const handleClickOutside = (e: MouseEvent) => {
         if (fileRef.current && !fileRef.current.contains(e.target as Node)) {
@@ -104,12 +103,20 @@ const DraggableDesktopFile = ({
                 [styles.selected]: isFileSelected,
             })}
             style={{
+                width: selectedSize?.width,
+                height: selectedSize?.height,
                 top: `${position.y}px`,
                 left: `${position.x}px`,
                 position: "absolute",
             }}
         >
-            <Icon name={icon} />
+            <Icon
+                name={icon}
+                style={{
+                    width: selectedSize.width / 2,
+                    height: selectedSize.height / 2,
+                }}
+            />
             <div className={styles.fileName}>{name}</div>
         </div>
     );

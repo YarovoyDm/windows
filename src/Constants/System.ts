@@ -11,6 +11,11 @@ export const TEXT_FILE: string = "Text_file";
 export const SETTINGS: string = "Settings";
 export const CALCULATOR: string = "Calculator";
 export const CROSS: string = "Cross";
+export const VIEW_BOXES: string = "ViewBoxes";
+export const PLUS_CIRCLE: string = "PlusCircle";
+export const RIGHT_ARROW: string = "RightArrow";
+export const SQUARE_LIST: string = "SquareList";
+export const DOT: string = "Dot";
 
 export const POWER_MODAL_UNITS = {
     [POWER]: "Завершити роботу",
@@ -56,3 +61,44 @@ export const MOUSE_MOVE_EVENT: keyof DocumentEventMap = "mousemove";
 export const MOUSE_UP_EVENT: keyof DocumentEventMap = "mouseup";
 export const CLICK_EVENT: keyof DocumentEventMap = "click";
 export const CONTEXT_MENU_EVENT: keyof DocumentEventMap = "contextmenu";
+
+export const RIGHT_MOUSE_BUTTON_CODE: number = 2;
+
+export const SYSTEM: string = "system";
+
+export const DESKTOP_FILE_SIZE_SMALL: string = "small";
+export const DESKTOP_FILE_SIZE_MEDIUM: string = "medium";
+export const DESKTOP_FILE_SIZE_LARGE: string = "large";
+
+export const DESKTOP_FILE_SIZE = {
+    [DESKTOP_FILE_SIZE_SMALL]: { width: 60, height: 50 },
+    [DESKTOP_FILE_SIZE_MEDIUM]: { width: 80, height: 70 },
+    [DESKTOP_FILE_SIZE_LARGE]: { width: 100, height: 90 },
+};
+
+export const SIZE_HOT_KEYS_MAP = {
+    Digit2: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_LARGE],
+    Digit3: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_MEDIUM],
+    Digit4: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_SMALL],
+};
+
+export const DESKTOP_FILE_SIZE_UNIT = [
+    {
+        name: "Великі пікторами",
+        iconName: SQUARE_LIST,
+        size: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_LARGE],
+        hotKeys: "Crtl+Shift+2",
+    },
+    {
+        name: "Середні піктограми",
+        iconName: SQUARE_LIST,
+        size: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_MEDIUM],
+        hotKeys: "Crtl+Shift+3",
+    },
+    {
+        name: "Дрібні піктограми",
+        iconName: VIEW_BOXES,
+        size: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_SMALL],
+        hotKeys: "Crtl+Shift+4",
+    },
+];

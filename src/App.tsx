@@ -4,9 +4,9 @@ import { Tooltip } from "react-tooltip";
 import LockScreen from "Components/LockScreen/LockScreen";
 import { CONTEXT_MENU_EVENT, KEY_DOWN_EVENT } from "Constants/System";
 import { Desktop, TaskPanel } from "Containers";
-import { changeLanguageIndexByHotKeys } from "Store/slices/TaskPanelSlice";
 
 import styles from "./App.module.scss";
+import { changeLanguageIndexByHotKeys } from "Store/slices/System";
 
 function App() {
     const dispatch = useDispatch();

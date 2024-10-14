@@ -13,7 +13,6 @@ import {
     DEFAULT_LANGUAGE_INDEX,
     LANGUAGE_CHANGE_STEP,
     MAX_LANGUAGES,
-    SYSTEM_PASSWORD,
 } from "Constants/System";
 import { TaskPanelType, ToggleModalPayload } from "Types/TaskPanelTypes";
 
@@ -44,11 +43,8 @@ const initialTaskPanelState = {
             isFocused: false,
         },
     },
-    systemLanguageIndex: DEFAULT_LANGUAGE_INDEX,
-    systemPassword: SYSTEM_PASSWORD,
     isHiddenAppsModalOpen: false,
     isWindowsModalOpen: false,
-    isWindowsUnlock: false,
     isPowerModalOpen: false,
     isLanguagesModalOpen: false,
 } as TaskPanelType;
@@ -66,16 +62,6 @@ const taskPanelSlice = createSlice({
         changeApp(state: TaskPanelType, action) {
             map(state.taskPanelApps, item => (item.isFocused = false));
             state.taskPanelApps[action.payload].isFocused = true;
-        },
-        changeLanguageIndexByHotKeys(state: TaskPanelType) {
-            if (state.systemLanguageIndex >= MAX_LANGUAGES) {
-                state.systemLanguageIndex = DEFAULT_LANGUAGE_INDEX;
-            } else {
-                state.systemLanguageIndex += LANGUAGE_CHANGE_STEP;
-            }
-        },
-        changeLanguageIndex(state: TaskPanelType, action) {
-            state.systemLanguageIndex = action.payload;
         },
         handleCloseAllModals(state: TaskPanelType) {
             state.isHiddenAppsModalOpen = false;
@@ -98,9 +84,7 @@ export default taskPanelSlice.reducer;
 export const {
     openingApp,
     changeApp,
-    changeLanguageIndexByHotKeys,
     toggleModal,
     handleCloseAllModals,
-    changeLanguageIndex,
     addAppToTaskPanel,
 } = taskPanelSlice.actions;

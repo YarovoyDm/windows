@@ -1,6 +1,7 @@
-import { DEFAULT_DESKTOP_CONTEXT_MENU_WIDTH } from "Constants/Desktop";
-import { ZERO_POSITION } from "Constants/System";
 import { useState } from "react";
+
+import { DEFAULT_DESKTOP_CONTEXT_MENU_WIDTH } from "Constants/Desktop";
+import { RIGHT_MOUSE_BUTTON_CODE, ZERO_POSITION } from "Constants/System";
 
 type Position = {
     x: number;
@@ -16,7 +17,7 @@ export const useContextMenu = () => {
     const handleContextMenu = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     ) => {
-        if (e.button === 2) {
+        if (e.button === RIGHT_MOUSE_BUTTON_CODE) {
             e.preventDefault();
 
             const target = e.target as HTMLElement;
@@ -27,7 +28,7 @@ export const useContextMenu = () => {
             const menuWidth = DEFAULT_DESKTOP_CONTEXT_MENU_WIDTH;
 
             let x = e.clientX;
-            let y = e.clientY;
+            const y = e.clientY;
 
             if (x + menuWidth > window.innerWidth) {
                 x = e.clientX - menuWidth;
