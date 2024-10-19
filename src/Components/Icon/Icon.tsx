@@ -22,6 +22,9 @@ import { ReactComponent as ViewBoxes } from "Icons/viewBoxesIcon.svg";
 import { ReactComponent as RightArrow } from "Icons/rightArrow.svg";
 import { ReactComponent as SquareList } from "Icons/squareListIcon.svg";
 import { ReactComponent as Dot } from "Icons/dotIcon.svg";
+import { ReactComponent as SquareInSquare } from "Icons/squareOnSquare.svg";
+import { ReactComponent as SquareOutline } from "Icons/squareOutline.svg";
+import { ReactComponent as Line } from "Icons/line.svg";
 import {
     TELEGRAM,
     SKYPE,
@@ -36,6 +39,7 @@ import {
     CALCULATOR,
     CROSS,
     DOT,
+    LINE,
     PLUS_CIRCLE,
     POWER,
     RELOAD,
@@ -43,7 +47,9 @@ import {
     SEARCH,
     SETTINGS,
     SLEEP,
+    SQUARE_IN_SQUARE,
     SQUARE_LIST,
+    SQUARE_OUTLINE,
     TEXT_FILE,
     USER,
     VIEW_BOXES,
@@ -53,7 +59,8 @@ import {
 type IProps = {
     name: string;
     className?: string;
-    style?: { width: number; height: number };
+    style?: React.CSSProperties;
+    onClick?: () => void;
 };
 
 const Icons = {
@@ -81,6 +88,9 @@ const Icons = {
     [RIGHT_ARROW]: RightArrow,
     [SQUARE_LIST]: SquareList,
     [DOT]: Dot,
+    [SQUARE_IN_SQUARE]: SquareInSquare,
+    [SQUARE_OUTLINE]: SquareOutline,
+    [LINE]: Line,
 };
 
 const Icon = (props: IProps) => {

@@ -15,6 +15,8 @@ import { isFileInSelection } from "utils/IsFileInSelection";
 
 import styles from "./Desktop.module.scss";
 import { useContextMenu } from "Hooks/useContextMenu";
+import { selectWallpaper } from "Store/selectors/System";
+import TextWindow from "Components/Windows/TextWindow/TextWindow";
 
 type Position = {
     x: number;
@@ -38,6 +40,7 @@ const Desktop = () => {
     } = useContextMenu();
 
     const desktopFiles = useAppSelector(selectFiles);
+    const wallpaper = useAppSelector(selectWallpaper);
     const isSettingsModalOpen = useAppSelector(selectSettingsModalState);
     const selectedFiles = useAppSelector(state => state.desktop.selectedFiles);
 
@@ -134,6 +137,9 @@ const Desktop = () => {
 
     return (
         <div
+            style={{
+                backgroundImage: `url(${wallpaper})`,
+            }}
             className={styles.Desktop}
             onMouseDown={handleMouseDown}
             onContextMenu={handleContextMenu}
@@ -145,6 +151,7 @@ const Desktop = () => {
                     setContextMenuVisible={setContextMenuVisible}
                 />
             )}
+            <TextWindow name='sdsddsds' />
             {isSelecting && (
                 <div
                     ref={selectionRef}

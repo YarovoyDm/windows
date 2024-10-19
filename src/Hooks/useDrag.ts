@@ -65,6 +65,7 @@ const useDrag = (
     return {
         position,
         handleMouseDown,
+        setPosition,
     };
 };
 

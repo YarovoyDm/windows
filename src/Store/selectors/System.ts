@@ -13,3 +13,8 @@ export const selectFileSize = createSelector(
     selectSystem,
     (state: SystemType) => state.desktopFileSize,
 );
+
+export const selectWallpaper = createSelector(
+    selectSystem,
+    (state: SystemType) => state.wallpaper,
+);

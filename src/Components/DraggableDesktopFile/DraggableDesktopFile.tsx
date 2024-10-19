@@ -37,7 +37,7 @@ const DraggableDesktopFile = ({
 
     const { position, handleMouseDown } = useDrag(filePosition, selectedSize);
 
-    const handleClickOutside = (e: MouseEvent) => {
+    const handleClickFileOutside = (e: MouseEvent) => {
         if (fileRef.current && !fileRef.current.contains(e.target as Node)) {
             setIsFileSelected(false);
         }
@@ -74,13 +74,13 @@ const DraggableDesktopFile = ({
     useEffect(() => {
         document.addEventListener(
             MOUSE_DOWN_EVENT,
-            handleClickOutside as EventListener,
+            handleClickFileOutside as EventListener,
         );
 
         return () => {
             document.removeEventListener(
                 MOUSE_DOWN_EVENT,
-                handleClickOutside as EventListener,
+                handleClickFileOutside as EventListener,
             );
         };
     }, []);

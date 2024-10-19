@@ -8,6 +8,7 @@ import {
     MAX_LANGUAGES,
     SYSTEM,
     SYSTEM_PASSWORD,
+    WALLPAPERS,
 } from "Constants/System";
 import { SystemType } from "Types/System";
 
@@ -16,6 +17,7 @@ const initialSystemState = {
     systemPassword: SYSTEM_PASSWORD,
     isWindowsUnlock: false,
     desktopFileSize: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_MEDIUM],
+    wallpaper: WALLPAPERS[1],
 } as SystemType;
 
 const systemSlice = createSlice({
@@ -35,6 +37,9 @@ const systemSlice = createSlice({
         changeDesktopFileSize(state: SystemType, action) {
             state.desktopFileSize = action.payload;
         },
+        changeWallpaper(state: SystemType, action) {
+            state.wallpaper = action.payload;
+        },
     },
 });
 
@@ -43,4 +48,5 @@ export const {
     changeLanguageIndexByHotKeys,
     changeLanguageIndex,
     changeDesktopFileSize,
+    changeWallpaper,
 } = systemSlice.actions;

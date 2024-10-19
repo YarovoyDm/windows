@@ -32,6 +32,7 @@ const DesktopContextMenu = ({
     setContextMenuVisible,
     isFileMenu,
 }: IProps) => {
+    console.log("coord", contextMenuPosition.x);
     const dispatch = useAppDispatch();
     const selectedSize = useAppSelector(selectFileSize);
     const createNewFile =

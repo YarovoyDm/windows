@@ -1,34 +1,36 @@
 import React from "react";
 
 import cn from "classnames";
-import { Icon } from "Components";
-import { CROSS } from "Constants/System";
-import useDrag from "Hooks/useDrag";
+import { WALLPAPERS } from "Constants/System";
 
 import styles from "./SettingsModal.module.scss";
-import {
-    DEFAULT_DESKTOP_MODAL_POSITION,
-    DEFAULT_DESKTOP_MODAL_SIZE,
-} from "Constants/Desktop";
+import { useAppDispatch, useAppSelector } from "Store/index";
+import { selectWallpaper } from "Store/selectors/System";
+import { changeWallpaper } from "Store/slices/System";
+import WindowBasic from "Components/WindowBasic/WindowBasic";
 
 const SettingsModal = () => {
-    const { position, handleMouseDown } = useDrag(
-        DEFAULT_DESKTOP_MODAL_POSITION,
-        DEFAULT_DESKTOP_MODAL_SIZE,
-    );
+    const dispatch = useAppDispatch();
+    const currentWallpaper = useAppSelector(selectWallpaper);
+
+    const onWallpaperChange = (newWallpaper: string) => {
+        dispatch(changeWallpaper(newWallpaper));
+    };
 
     return (
-        <div
-            className={cn(styles.settings, "prevent-selecting")}
-            style={{ position: "absolute", left: position.x, top: position.y }}
-        >
-            <div className={styles.header} onMouseDown={handleMouseDown}>
-                <div className={styles.title}>Налаштування</div>
-                <div className={styles.close}>
-                    <Icon name={CROSS} />
-                </div>
-            </div>
-        </div>
+        <WindowBasic>
+            {WALLPAPERS.map(wallpaper => {
+                return (
+                    <div
+                        className={cn(styles.wallpaper, {
+                            [styles.selected]: currentWallpaper === wallpaper,
+                        })}
+                        style={{ backgroundImage: `url(${wallpaper})` }}
+                        onClick={() => onWallpaperChange(wallpaper)}
+                    />
+                );
+            })}
+        </WindowBasic>
     );
 };
 

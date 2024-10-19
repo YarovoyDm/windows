@@ -1,5 +1,12 @@
 import { LanguagesType } from "Types/TaskPanelTypes";
 
+import wallpaper from "../assets/wallpaper.jpeg";
+import bri from "../assets/bri.jpg";
+import bessHamiti from "../assets/bessHamiti.jpg";
+import iriser from "../assets/iriser.jpg";
+import witcher from "../assets/witcher.jpg";
+import witcher2 from "../assets/witcher2.jpg";
+
 export const USER: string = "User";
 export const POWER: string = "Power";
 export const SLEEP: string = "Sleep";
@@ -16,12 +23,24 @@ export const PLUS_CIRCLE: string = "PlusCircle";
 export const RIGHT_ARROW: string = "RightArrow";
 export const SQUARE_LIST: string = "SquareList";
 export const DOT: string = "Dot";
+export const SQUARE_IN_SQUARE: string = "SquareInSquare";
+export const SQUARE_OUTLINE: string = "SquareOutline";
+export const LINE: string = "Line";
 
 export const POWER_MODAL_UNITS = {
     [POWER]: "Завершити роботу",
     [SLEEP]: "Сон",
     [RELOAD]: "Перезавантажити",
 };
+
+export const WALLPAPERS = [
+    wallpaper,
+    bri,
+    bessHamiti,
+    iriser,
+    witcher,
+    witcher2,
+];
 
 export const SYSTEM_PASSWORD: number = 1111;
 

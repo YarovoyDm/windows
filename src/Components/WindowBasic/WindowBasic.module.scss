@@ -1,0 +1,77 @@
+.window {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    width: 700px;
+    height: 500px;
+    background: #d9d9d9;
+    z-index: 1;
+    .header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        height: 40px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        .title {
+            height: 40px;
+            line-height: 40px;
+            margin-left: 20px;
+        }
+        .windowButtons {
+            width: 150px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .iconWrapper {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50px;
+                &:hover {
+                    background: #cbcbcb;
+                    &:last-child {
+                        background: red;
+                    }
+                    svg {
+                        path {
+                            fill: white;
+                        }
+                    }
+                }
+            }
+            svg {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    }
+    .resizeHandleRight {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 10px;
+        height: 100%;
+        cursor: ew-resize; // Курсор для тягнення по горизонталі
+    }
+
+    .resizeHandleBottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        cursor: ns-resize; // Курсор для тягнення по вертикалі
+    }
+
+    .resizeHandleCorner {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 10px;
+        height: 10px;
+        cursor: nwse-resize; // Курсор для тягнення по діагоналі
+    }
+}
