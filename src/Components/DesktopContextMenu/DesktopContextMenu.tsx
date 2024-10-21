@@ -16,7 +16,7 @@ import Icon from "Components/Icon/Icon";
 import { FOLDER } from "Constants/Desktop";
 import { changeDesktopFileSize } from "Store/slices/System";
 import { selectFileSize } from "Store/selectors/System";
-import { useEffect } from "react";
+import { useEffect, useId } from "react";
 
 type IProps = {
     contextMenuPosition: {
@@ -32,8 +32,8 @@ const DesktopContextMenu = ({
     setContextMenuVisible,
     isFileMenu,
 }: IProps) => {
-    console.log("coord", contextMenuPosition.x);
     const dispatch = useAppDispatch();
+    const fileId = useId();
     const selectedSize = useAppSelector(selectFileSize);
     const createNewFile =
         ({ name, type }: { name: string; type: string }) =>
@@ -43,6 +43,8 @@ const DesktopContextMenu = ({
                 icon: type,
                 position: contextMenuPosition,
                 isSelected: false,
+                isOpened: false,
+                id: fileId,
                 type,
                 innerContent: [],
             };

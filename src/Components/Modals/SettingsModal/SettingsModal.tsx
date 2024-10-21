@@ -18,7 +18,7 @@ const SettingsModal = () => {
     };
 
     return (
-        <WindowBasic>
+        <WindowBasic name='dsd' id='sds'>
             {WALLPAPERS.map(wallpaper => {
                 return (
                     <div

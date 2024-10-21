@@ -8,7 +8,11 @@ import {
 } from "Constants/System";
 import useDrag from "Hooks/useDrag";
 import { useAppDispatch, useAppSelector } from "Store/index";
-import { changeFilePosition, removeFile } from "Store/slices/Desktop";
+import {
+    changeFilePosition,
+    openWindow,
+    removeFile,
+} from "Store/slices/Desktop";
 
 import styles from "./DraggableDesktopFile.module.scss";
 import { selectFileSize } from "Store/selectors/System";
@@ -20,6 +24,9 @@ type IFile = {
     setIsSelecting: (isSelecting: boolean) => void;
     isSelected: boolean;
     onContextMenu: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    isOpened: boolean;
+    content: string | any;
+    id: string;
 };
 
 const DraggableDesktopFile = ({
@@ -29,6 +36,9 @@ const DraggableDesktopFile = ({
     setIsSelecting,
     isSelected,
     onContextMenu,
+    isOpened,
+    content,
+    id,
 }: IFile) => {
     const dispatch = useAppDispatch();
     const fileRef = useRef<HTMLDivElement>(null);
@@ -47,6 +57,18 @@ const DraggableDesktopFile = ({
         if (e.code === DELETE_KEY_CODE) {
             dispatch(removeFile(name));
         }
+    };
+
+    const openFile = () => {
+        !isOpened &&
+            dispatch(
+                openWindow({
+                    zIndex: 99,
+                    content,
+                    fileName: name,
+                    id,
+                }),
+            );
     };
 
     useEffect(() => {
@@ -96,6 +118,7 @@ const DraggableDesktopFile = ({
                 setIsFileSelected(true);
                 setIsSelecting(false);
             }}
+            onDoubleClick={openFile}
             ref={fileRef}
             data-file='true'
             onContextMenu={onContextMenu}

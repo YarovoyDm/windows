@@ -85,6 +85,10 @@ export const RIGHT_MOUSE_BUTTON_CODE: number = 2;
 
 export const SYSTEM: string = "system";
 
+export const DIRECTION_RIGHT: string = "right";
+export const DIRECTION_BOTTOM: string = "bottom";
+export const DIRECTION_RIGHT_BOTTOM: string = "right bottom";
+
 export const DESKTOP_FILE_SIZE_SMALL: string = "small";
 export const DESKTOP_FILE_SIZE_MEDIUM: string = "medium";
 export const DESKTOP_FILE_SIZE_LARGE: string = "large";

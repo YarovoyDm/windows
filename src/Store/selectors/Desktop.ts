@@ -13,3 +13,15 @@ export const selectSettingsModalState = createSelector(
     selectDesktop,
     (state: Desktop) => state.isSettingsModalOpen,
 );
+
+export const selectOpenedWindows = createSelector(
+    selectDesktop,
+    (state: Desktop) => state.openedWindows,
+);
+
+export const selectWindowZindex = (id: string) =>
+    createSelector(
+        selectDesktop,
+        (state: Desktop) =>
+            state.openedWindows.filter(item => item.id === id)[0].zIndex,
+    );

@@ -9,7 +9,11 @@ import {
     ZERO_POSITION,
 } from "Constants/System";
 import { useAppSelector, useAppDispatch } from "Store/index";
-import { selectSettingsModalState, selectFiles } from "Store/selectors/Desktop";
+import {
+    selectSettingsModalState,
+    selectFiles,
+    selectOpenedWindows,
+} from "Store/selectors/Desktop";
 import { selectMultipleFiles, clearSelection } from "Store/slices/Desktop";
 import { isFileInSelection } from "utils/IsFileInSelection";
 
@@ -24,6 +28,7 @@ type Position = {
 };
 
 const Desktop = () => {
+    const openedWindows = useAppSelector(selectOpenedWindows);
     const [isSelecting, setIsSelecting] = useState<boolean>(false);
     const [startPosition, setStartPosition] = useState<Position>(ZERO_POSITION);
     const [currentPosition, setCurrentPosition] =
@@ -151,7 +156,17 @@ const Desktop = () => {
                     setContextMenuVisible={setContextMenuVisible}
                 />
             )}
-            <TextWindow name='sdsddsds' />
+            {openedWindows.map(window => {
+                return (
+                    <TextWindow
+                        key={window.id}
+                        name={window.fileName}
+                        content={window.content}
+                        id={window.id}
+                    />
+                );
+            })}
+
             {isSelecting && (
                 <div
                     ref={selectionRef}
@@ -159,17 +174,22 @@ const Desktop = () => {
                     style={getSelectionStyles()}
                 />
             )}
-            {desktopFiles.map(({ name, icon, position }) => (
-                <DraggableDesktopFile
-                    key={name}
-                    name={name}
-                    icon={icon}
-                    filePosition={position}
-                    setIsSelecting={setIsSelecting}
-                    isSelected={selectedFiles.includes(name)}
-                    onContextMenu={handleContextMenu}
-                />
-            ))}
+            {desktopFiles.map(
+                ({ name, icon, position, isOpened, innerContent, id }) => (
+                    <DraggableDesktopFile
+                        key={name}
+                        name={name}
+                        icon={icon}
+                        filePosition={position}
+                        isOpened={isOpened}
+                        content={innerContent}
+                        setIsSelecting={setIsSelecting}
+                        isSelected={selectedFiles.includes(name)}
+                        onContextMenu={handleContextMenu}
+                        id={id}
+                    />
+                ),
+            )}
             {isSettingsModalOpen && <SettingsModal />}
         </div>
     );

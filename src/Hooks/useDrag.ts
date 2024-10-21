@@ -3,6 +3,7 @@ import {
     MOUSE_MOVE_EVENT,
     MOUSE_UP_EVENT,
     TASK_PANEL_HEIGHT,
+    ZERO_POSITION,
 } from "Constants/System";
 
 const useDrag = (
@@ -11,7 +12,7 @@ const useDrag = (
 ) => {
     const [position, setPosition] = useState(initialPosition);
     const [isDragging, setIsDragging] = useState(false);
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
+    const [offset, setOffset] = useState(ZERO_POSITION);
 
     const handleMouseMove = (e: MouseEvent) => {
         if (!isDragging) return;
@@ -23,8 +24,8 @@ const useDrag = (
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
 
-        const objectWidth = objectSize.width;
-        const objectHeight = objectSize.height;
+        const objectWidth = objectSize.width * 0.2;
+        const objectHeight = objectSize.height * 0.2;
 
         if (newX < 0) newX = 0;
         if (newY < 0) newY = 0;

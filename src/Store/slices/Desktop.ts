@@ -10,8 +10,10 @@ const initialDesktopState = {
             icon: TEXT_FILE,
             position: { x: 50, y: 50 },
             isSelected: false,
+            isOpened: false,
             type: TEXT_FILE,
-            innerContent: [],
+            innerContent: "Hello from text file, looks like it's work",
+            id: ":2d",
         },
         {
             name: "Check what I have",
@@ -19,19 +21,24 @@ const initialDesktopState = {
             position: { x: 50, y: 150 },
             isSelected: false,
             type: "folder",
+            isOpened: false,
             innerContent: [],
+            id: "223/",
         },
         {
             name: "Кошик",
             icon: BIN,
             position: { x: 1800, y: 750 },
             isSelected: false,
+            isOpened: false,
             type: "bin",
             innerContent: [],
+            id: "ds5",
         },
     ],
     selectedFiles: [],
     bin: [],
+    openedWindows: [],
     isSettingsModalOpen: false,
 } as Desktop;
 
@@ -82,6 +89,45 @@ const desktopSlice = createSlice({
         addDesktopFile(state, action: PayloadAction<IFile>) {
             state.desktopFiles.push(action.payload);
         },
+        openWindow(state: Desktop, action) {
+            const { id } = action.payload;
+            const currentFile = state.desktopFiles.filter(
+                item => item.id === id,
+            )[0];
+
+            state.openedWindows.push(action.payload);
+            currentFile.isOpened = true;
+        },
+        closeWindow(state: Desktop, action) {
+            const { id } = action.payload;
+            const currentFile = state.desktopFiles.filter(
+                item => item.id === id,
+            )[0];
+
+            state.openedWindows = state.openedWindows.filter(
+                window => window.id !== id,
+            );
+            currentFile.isOpened = false;
+        },
+        changeWindowZindex(state: Desktop, action) {
+            const { id } = action.payload;
+            const currentFile = state.openedWindows.filter(
+                item => item.id === id,
+            )[0];
+
+            state.openedWindows.forEach(
+                (item, index) => (item.zIndex = index + 2),
+            );
+            currentFile.zIndex = 99;
+        },
+        updateFile(state: Desktop, action) {
+            const { id, newValue } = action.payload;
+            const currentFile = state.desktopFiles.filter(
+                item => item.id === id,
+            )[0];
+
+            currentFile.innerContent = newValue;
+        },
     },
 });
 
@@ -95,4 +141,8 @@ export const {
     selectMultipleFiles,
     changeFilePosition,
     addDesktopFile,
+    openWindow,
+    closeWindow,
+    changeWindowZindex,
+    updateFile,
 } = desktopSlice.actions;

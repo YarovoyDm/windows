@@ -1,3 +1,11 @@
+import {
+    DIRECTION_BOTTOM,
+    DIRECTION_RIGHT,
+    MOUSE_MOVE_EVENT,
+    MOUSE_UP_EVENT,
+    TASK_PANEL_HEIGHT,
+    ZERO_POSITION,
+} from "Constants/System";
 import { useEffect, useState } from "react";
 
 const MIN_WIDTH = 430; // Мінімальна ширина вікна
@@ -14,7 +22,7 @@ const useResize = (
     });
     const [isResizing, setIsResizing] = useState(false);
     const [resizeDirection, setResizeDirection] = useState("");
-    const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+    const [startPos, setStartPos] = useState(ZERO_POSITION);
     const [startSize, setStartSize] = useState(size);
     const [prevSize, setPrevSize] = useState(size);
     const [prevPosition, setPrevPosition] = useState(position);
@@ -32,10 +40,10 @@ const useResize = (
         } else {
             setPrevSize(size);
             setPrevPosition(position);
-            setPosition({ x: 0, y: 0 });
+            setPosition(ZERO_POSITION);
             setSize({
                 width: window.innerWidth,
-                height: window.innerHeight - 51,
+                height: window.innerHeight - TASK_PANEL_HEIGHT,
             });
         }
         setIsFullscreen(!isFullscreen);
@@ -63,7 +71,7 @@ const useResize = (
             let newWidth = startSize.width;
             let newHeight = startSize.height;
 
-            if (resizeDirection.includes("right")) {
+            if (resizeDirection.includes(DIRECTION_RIGHT)) {
                 const windowWidth = window.innerWidth;
 
                 newWidth = Math.max(
@@ -71,16 +79,19 @@ const useResize = (
                     Math.min(windowWidth, startSize.width + deltaX),
                 );
             }
-            if (resizeDirection.includes("bottom")) {
+            if (resizeDirection.includes(DIRECTION_BOTTOM)) {
                 const windowHeight = window.innerHeight;
 
                 newHeight = Math.max(
                     MIN_HEIGHT,
-                    Math.min(windowHeight - 51, startSize.height + deltaY),
+                    Math.min(
+                        windowHeight - TASK_PANEL_HEIGHT,
+                        startSize.height + deltaY,
+                    ),
                 );
 
-                if (newHeight + position.y > windowHeight - 51) {
-                    newHeight = windowHeight - 51 - position.y;
+                if (newHeight + position.y > windowHeight - TASK_PANEL_HEIGHT) {
+                    newHeight = windowHeight - TASK_PANEL_HEIGHT - position.y;
                 }
             }
 
@@ -90,13 +101,25 @@ const useResize = (
 
     useEffect(() => {
         if (isResizing) {
-            document.addEventListener("mousemove", handleResizeMouseMove);
-            document.addEventListener("mouseup", handleResizeMouseUp);
+            document.addEventListener(
+                MOUSE_MOVE_EVENT,
+                handleResizeMouseMove as EventListener,
+            );
+            document.addEventListener(
+                MOUSE_UP_EVENT,
+                handleResizeMouseUp as EventListener,
+            );
         }
 
         return () => {
-            document.removeEventListener("mousemove", handleResizeMouseMove);
-            document.removeEventListener("mouseup", handleResizeMouseUp);
+            document.removeEventListener(
+                MOUSE_MOVE_EVENT,
+                handleResizeMouseMove as EventListener,
+            );
+            document.removeEventListener(
+                MOUSE_UP_EVENT,
+                handleResizeMouseUp as EventListener,
+            );
         };
     }, [isResizing]);
 
