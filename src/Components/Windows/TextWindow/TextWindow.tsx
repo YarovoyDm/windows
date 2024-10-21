@@ -1,9 +1,14 @@
 import React, { useMemo, useState, useEffect } from "react";
+import WindowBasic from "Components/WindowBasic/WindowBasic";
+import {
+    KEY_DOWN_EVENT,
+    S_KEY_CODE,
+    SHOW_SAVE_MESSAGE_DELAY,
+} from "Constants/System";
+import { useAppDispatch } from "Store/index";
+import { closeWindow, updateFile } from "Store/slices/Desktop";
 
 import styles from "./TextWindow.module.scss";
-import WindowBasic from "Components/WindowBasic/WindowBasic";
-import { useAppDispatch } from "Store/index";
-import { updateFile } from "Store/slices/Desktop";
 
 const TextWindow = ({
     name,
@@ -32,31 +37,40 @@ const TextWindow = ({
         if (isFileChanged) {
             setPrevFileValue(fileValue);
             dispatch(updateFile({ id, newValue: fileValue }));
+            showConfirmationWindow && handleWindows();
 
             setShowSaveMessage(true);
 
             setTimeout(() => {
                 setShowSaveMessage(false);
-            }, 2000);
+            }, SHOW_SAVE_MESSAGE_DELAY);
         }
     };
 
+    const handleWindows = () => {
+        dispatch(closeWindow({ id }));
+        onConfirmationWindowChange();
+    };
+
     const onConfirmationWindowChange = () => {
-        setShowConfirmationWindow(true);
+        setShowConfirmationWindow(prev => !prev);
     };
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.ctrlKey && e.key === "s") {
+            if (e.ctrlKey && e.key === S_KEY_CODE) {
                 e.preventDefault();
                 handleSave();
             }
         };
 
-        window.addEventListener("keydown", handleKeyDown);
+        window.addEventListener(KEY_DOWN_EVENT, handleKeyDown as EventListener);
 
         return () => {
-            window.removeEventListener("keydown", handleKeyDown);
+            window.removeEventListener(
+                KEY_DOWN_EVENT,
+                handleKeyDown as EventListener,
+            );
         };
     }, [fileValue, prevFileValue]);
 
@@ -64,7 +78,7 @@ const TextWindow = ({
         <WindowBasic
             name={name}
             id={id}
-            onCloseCallback={onConfirmationWindowChange}
+            onCloseCallback={isFileChanged && onConfirmationWindowChange}
         >
             <div className={styles.textWindowWrapper}>
                 {showConfirmationWindow && (
@@ -77,9 +91,15 @@ const TextWindow = ({
                                 У вас є незбережені зміни.
                             </div>
                             <div className={styles.confirmationButtons}>
-                                <button onClick={handleSave}>Зберегти</button>
-                                <button>Не зберігати</button>
-                                <button>Скасувати</button>
+                                <button onClick={() => handleSave()}>
+                                    Зберегти
+                                </button>
+                                <button onClick={() => handleWindows()}>
+                                    Не зберігати
+                                </button>
+                                <button onClick={onConfirmationWindowChange}>
+                                    Скасувати
+                                </button>
                             </div>
                         </div>
                     </div>

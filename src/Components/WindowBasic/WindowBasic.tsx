@@ -24,7 +24,7 @@ type IProps = {
     children: React.ReactNode;
     name: string;
     id: string;
-    onCloseCallback?: () => void;
+    onCloseCallback?: false | (() => void);
 };
 
 const WindowBasic = ({ children, name, id, onCloseCallback }: IProps) => {

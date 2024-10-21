@@ -71,6 +71,7 @@ export const MAX_LANGUAGES: number = LANGUAGES.length - LANGUAGE_CHANGE_STEP;
 // Key codes
 
 export const DELETE_KEY_CODE: string = "Delete";
+export const S_KEY_CODE: string = "s";
 
 // Events
 
@@ -125,3 +126,5 @@ export const DESKTOP_FILE_SIZE_UNIT = [
         hotKeys: "Crtl+Shift+4",
     },
 ];
+
+export const SHOW_SAVE_MESSAGE_DELAY: number = 2000;
