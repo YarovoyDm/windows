@@ -6,6 +6,7 @@ import {
     CLICK_EVENT,
     MOUSE_MOVE_EVENT,
     MOUSE_UP_EVENT,
+    TEXT_FILE,
     ZERO_POSITION,
 } from "Constants/System";
 import { useAppSelector, useAppDispatch } from "Store/index";
@@ -21,6 +22,7 @@ import styles from "./Desktop.module.scss";
 import { useContextMenu } from "Hooks/useContextMenu";
 import { selectWallpaper } from "Store/selectors/System";
 import TextWindow from "Components/Windows/TextWindow/TextWindow";
+import FolderWindow from "Components/Windows/FolderWindow/FolderWindow";
 
 type Position = {
     x: number;
@@ -140,6 +142,10 @@ const Desktop = () => {
         };
     };
 
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault(); // Потрібно для дозволу дропу
+    };
+
     return (
         <div
             style={{
@@ -148,6 +154,7 @@ const Desktop = () => {
             className={styles.Desktop}
             onMouseDown={handleMouseDown}
             onContextMenu={handleContextMenu}
+            onDragOver={handleDragOver}
         >
             {contextMenuVisible && (
                 <DesktopContextMenu
@@ -157,12 +164,21 @@ const Desktop = () => {
                 />
             )}
             {openedWindows.map(window => {
+                if (window.type === TEXT_FILE) {
+                    return (
+                        <TextWindow
+                            key={window.id}
+                            name={window.fileName}
+                            content={window.content}
+                            id={window.id}
+                        />
+                    );
+                }
                 return (
-                    <TextWindow
-                        key={window.id}
+                    <FolderWindow
                         name={window.fileName}
-                        content={window.content}
                         id={window.id}
+                        key={window.id}
                     />
                 );
             })}
@@ -175,7 +191,15 @@ const Desktop = () => {
                 />
             )}
             {desktopFiles.map(
-                ({ name, icon, position, isOpened, innerContent, id }) => (
+                ({
+                    name,
+                    icon,
+                    position,
+                    isOpened,
+                    innerContent,
+                    id,
+                    type,
+                }) => (
                     <DraggableDesktopFile
                         key={name}
                         name={name}
@@ -187,6 +211,7 @@ const Desktop = () => {
                         isSelected={selectedFiles.includes(name)}
                         onContextMenu={handleContextMenu}
                         id={id}
+                        type={type}
                     />
                 ),
             )}

@@ -31,7 +31,7 @@ const initialDesktopState = {
             position: { x: 1800, y: 750 },
             isSelected: false,
             isOpened: false,
-            type: "bin",
+            type: "folder",
             innerContent: [],
             id: "ds5",
         },
@@ -128,6 +128,22 @@ const desktopSlice = createSlice({
 
             currentFile.innerContent = newValue;
         },
+        dragFileToFolder(state: Desktop, action) {
+            const { fileName, folderName } = action.payload;
+            const targetFolder = state.desktopFiles.filter(
+                item => item.name === folderName,
+            )[0];
+            const file = state.desktopFiles.filter(
+                item => item.name === fileName,
+            )[0];
+
+            if (Array.isArray(targetFolder.innerContent)) {
+                targetFolder.innerContent.push(file);
+            }
+            state.desktopFiles = state.desktopFiles.filter(
+                item => item.name !== fileName,
+            );
+        },
     },
 });
 
@@ -145,4 +161,5 @@ export const {
     closeWindow,
     changeWindowZindex,
     updateFile,
+    dragFileToFolder,
 } = desktopSlice.actions;

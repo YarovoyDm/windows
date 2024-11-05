@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { ReactPropTypes, useEffect, useMemo, useState } from "react";
 import styles from "./WindowBasic.module.scss";
 import {
     CROSS,
@@ -25,9 +25,15 @@ type IProps = {
     name: string;
     id: string;
     onCloseCallback?: false | (() => void);
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
-const WindowBasic = ({ children, name, id, onCloseCallback }: IProps) => {
+const WindowBasic = ({
+    children,
+    name,
+    id,
+    onCloseCallback,
+    ...rest
+}: IProps) => {
     const dispatch = useAppDispatch();
     const zIndex = useAppSelector(selectWindowZindex(id));
     const [newSize, setNewSize] = useState<{
@@ -79,6 +85,7 @@ const WindowBasic = ({ children, name, id, onCloseCallback }: IProps) => {
                 borderRadius,
                 zIndex: Number(zIndex),
             }}
+            {...rest}
             onMouseDown={onWindowZindexChange}
         >
             <div

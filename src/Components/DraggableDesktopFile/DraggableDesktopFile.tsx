@@ -5,11 +5,14 @@ import {
     DELETE_KEY_CODE,
     KEY_DOWN_EVENT,
     MOUSE_DOWN_EVENT,
+    MOUSE_MOVE_EVENT,
+    MOUSE_UP_EVENT,
 } from "Constants/System";
 import useDrag from "Hooks/useDrag";
 import { useAppDispatch, useAppSelector } from "Store/index";
 import {
     changeFilePosition,
+    dragFileToFolder,
     openWindow,
     removeFile,
 } from "Store/slices/Desktop";
@@ -27,6 +30,7 @@ type IFile = {
     isOpened: boolean;
     content: string | any;
     id: string;
+    type: string;
 };
 
 const DraggableDesktopFile = ({
@@ -39,12 +43,15 @@ const DraggableDesktopFile = ({
     isOpened,
     content,
     id,
+    type,
 }: IFile) => {
-    const dispatch = useAppDispatch();
-    const fileRef = useRef<HTMLDivElement>(null);
     const [isFileSelected, setIsFileSelected] = useState(isSelected);
-    const selectedSize = useAppSelector(selectFileSize);
+    const [targetFolderName, setTargetFolderName] = useState<string>("");
+    const [isDragging, setIsDragging] = useState<boolean>(false);
 
+    const selectedSize = useAppSelector(selectFileSize);
+    const dispatch = useAppDispatch();
+    const fileRef = useRef<HTMLDivElement | null>(null);
     const { position, handleMouseDown } = useDrag(filePosition, selectedSize);
 
     const handleClickFileOutside = (e: MouseEvent) => {
@@ -60,15 +67,17 @@ const DraggableDesktopFile = ({
     };
 
     const openFile = () => {
-        !isOpened &&
+        if (!isOpened) {
             dispatch(
                 openWindow({
                     zIndex: 99,
                     content,
                     fileName: name,
                     id,
+                    type,
                 }),
             );
+        }
     };
 
     useEffect(() => {
@@ -93,19 +102,76 @@ const DraggableDesktopFile = ({
         };
     }, [isFileSelected]);
 
+    const checkDropTarget = () => {
+        const file = fileRef.current;
+
+        if (!file) return;
+
+        const folders = document.querySelectorAll<HTMLDivElement>(
+            "[data-file='folder']",
+        );
+
+        let folderFound = false;
+
+        folders.forEach(folder => {
+            const folderRect = folder.getBoundingClientRect();
+            const fileRect = file.getBoundingClientRect();
+
+            if (
+                fileRect.left < folderRect.right &&
+                fileRect.right > folderRect.left &&
+                fileRect.top < folderRect.bottom &&
+                fileRect.bottom > folderRect.top &&
+                id !== folder.dataset.id
+            ) {
+                setTargetFolderName(folder.dataset.name || "");
+                folderFound = true;
+            }
+        });
+
+        if (!folderFound) {
+            setTargetFolderName("");
+        }
+    };
+
     useEffect(() => {
+        if (targetFolderName && !isDragging) {
+            dispatch(
+                dragFileToFolder({
+                    fileName: name,
+                    folderName: targetFolderName,
+                }),
+            );
+            setTargetFolderName("");
+        }
+    }, [targetFolderName, isDragging, name, dispatch]);
+
+    const handleMouseUp = () => {
+        if (isDragging) {
+            setIsDragging(false);
+        }
+    };
+
+    useEffect(() => {
+        if (isDragging) {
+            document.addEventListener(MOUSE_UP_EVENT, handleMouseUp);
+            document.addEventListener(MOUSE_MOVE_EVENT, checkDropTarget);
+        }
+
         document.addEventListener(
             MOUSE_DOWN_EVENT,
             handleClickFileOutside as EventListener,
         );
 
         return () => {
+            document.removeEventListener(MOUSE_UP_EVENT, handleMouseUp);
+            document.removeEventListener(MOUSE_MOVE_EVENT, checkDropTarget);
             document.removeEventListener(
                 MOUSE_DOWN_EVENT,
                 handleClickFileOutside as EventListener,
             );
         };
-    }, []);
+    }, [isDragging]);
 
     useEffect(() => {
         setIsFileSelected(isSelected);
@@ -117,10 +183,13 @@ const DraggableDesktopFile = ({
                 handleMouseDown(e);
                 setIsFileSelected(true);
                 setIsSelecting(false);
+                setIsDragging(true);
             }}
             onDoubleClick={openFile}
             ref={fileRef}
-            data-file='true'
+            data-file={type}
+            data-id={id}
+            data-name={name}
             onContextMenu={onContextMenu}
             className={cn(styles.file, "prevent-selecting", {
                 [styles.selected]: isFileSelected,
@@ -131,16 +200,32 @@ const DraggableDesktopFile = ({
                 top: `${position.y}px`,
                 left: `${position.x}px`,
                 position: "absolute",
+                zIndex: isFileSelected ? 999 : 1,
             }}
         >
             <Icon
                 name={icon}
+                data-file={type}
+                data-id={id}
+                data-name={name}
                 style={{
                     width: selectedSize.width / 2,
                     height: selectedSize.height / 2,
                 }}
             />
             <div className={styles.fileName}>{name}</div>
+            {isDragging && targetFolderName && (
+                <div
+                    className={styles.tooltip}
+                    style={{
+                        position: "absolute",
+                        top: 25,
+                        left: 60,
+                    }}
+                >
+                    Перемістити до: {targetFolderName}
+                </div>
+            )}
         </div>
     );
 };

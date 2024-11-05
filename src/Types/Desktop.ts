@@ -22,5 +22,6 @@ export type Desktop = {
         content: string;
         id: string;
         zIndex: number;
+        type: string;
     }>;
 };
