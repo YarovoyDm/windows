@@ -76,9 +76,11 @@ const desktopSlice = createSlice({
             }
         },
         deselectFile(state: Desktop, action) {
-            state.selectedFiles = state.selectedFiles.filter(
-                fileName => fileName !== action.payload,
-            );
+            if (Array.isArray(state.selectedFiles)) {
+                state.selectedFiles = state.selectedFiles.filter(
+                    fileName => fileName !== action.payload,
+                );
+            }
         },
         clearSelection(state: Desktop) {
             state.selectedFiles = [];

@@ -71,6 +71,7 @@ export const MAX_LANGUAGES: number = LANGUAGES.length - LANGUAGE_CHANGE_STEP;
 // Key codes
 
 export const DELETE_KEY_CODE: string = "Delete";
+export const ENTER_KEY_CODE: string = "Enter";
 export const S_KEY_CODE: string = "s";
 
 // Events

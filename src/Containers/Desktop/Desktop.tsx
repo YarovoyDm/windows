@@ -143,7 +143,7 @@ const Desktop = () => {
     };
 
     const handleDragOver = (e: React.DragEvent) => {
-        e.preventDefault(); // Потрібно для дозволу дропу
+        e.preventDefault();
     };
 
     return (

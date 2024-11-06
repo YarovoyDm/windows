@@ -25,3 +25,10 @@ export const selectWindowZindex = (id: string) =>
         (state: Desktop) =>
             state.openedWindows.filter(item => item.id === id)[0].zIndex,
     );
+
+export const selectFolder = (id: string) =>
+    createSelector(
+        selectDesktop,
+        (state: Desktop) =>
+            state.desktopFiles.filter(file => file.id === id)[0],
+    );

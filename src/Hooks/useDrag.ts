@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {
     MOUSE_MOVE_EVENT,
     MOUSE_UP_EVENT,
+    RIGHT_MOUSE_BUTTON_CODE,
     TASK_PANEL_HEIGHT,
     ZERO_POSITION,
 } from "Constants/System";
@@ -15,7 +16,7 @@ const useDrag = (
     const [offset, setOffset] = useState(ZERO_POSITION);
 
     const handleMouseMove = (e: MouseEvent) => {
-        if (!isDragging) return;
+        if (!isDragging || e.buttons === RIGHT_MOUSE_BUTTON_CODE) return;
         e.preventDefault();
 
         let newX = e.clientX - offset.x;

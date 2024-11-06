@@ -3,6 +3,7 @@ import cn from "classnames";
 import { Icon } from "Components";
 import {
     DELETE_KEY_CODE,
+    ENTER_KEY_CODE,
     KEY_DOWN_EVENT,
     MOUSE_DOWN_EVENT,
     MOUSE_MOVE_EVENT,
@@ -64,6 +65,10 @@ const DraggableDesktopFile = ({
         if (e.code === DELETE_KEY_CODE) {
             dispatch(removeFile(name));
         }
+        if (e.key === ENTER_KEY_CODE && isFileSelected) {
+            openFile();
+            setIsFileSelected(false);
+        }
     };
 
     const openFile = () => {
@@ -89,7 +94,6 @@ const DraggableDesktopFile = ({
             document.addEventListener(
                 KEY_DOWN_EVENT,
                 detectKeyDown as EventListener,
-                true,
             );
         }
 
@@ -97,7 +101,6 @@ const DraggableDesktopFile = ({
             document.removeEventListener(
                 KEY_DOWN_EVENT,
                 detectKeyDown as EventListener,
-                true,
             );
         };
     }, [isFileSelected]);
