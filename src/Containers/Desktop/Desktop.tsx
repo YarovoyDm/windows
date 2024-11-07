@@ -30,14 +30,13 @@ type Position = {
 };
 
 const Desktop = () => {
-    const openedWindows = useAppSelector(selectOpenedWindows);
     const [isSelecting, setIsSelecting] = useState<boolean>(false);
     const [startPosition, setStartPosition] = useState<Position>(ZERO_POSITION);
     const [currentPosition, setCurrentPosition] =
         useState<Position>(ZERO_POSITION);
+    const selectionRef = useRef<HTMLDivElement>(null);
 
     const dispatch = useAppDispatch();
-    const selectionRef = useRef<HTMLDivElement>(null);
     const {
         contextMenuVisible,
         contextMenuPosition,
@@ -46,6 +45,7 @@ const Desktop = () => {
         setContextMenuVisible,
     } = useContextMenu();
 
+    const openedWindows = useAppSelector(selectOpenedWindows);
     const desktopFiles = useAppSelector(selectFiles);
     const wallpaper = useAppSelector(selectWallpaper);
     const isSettingsModalOpen = useAppSelector(selectSettingsModalState);
@@ -204,9 +204,9 @@ const Desktop = () => {
                         key={name}
                         name={name}
                         icon={icon}
-                        filePosition={position}
+                        position={position}
                         isOpened={isOpened}
-                        content={innerContent}
+                        innerContent={innerContent}
                         setIsSelecting={setIsSelecting}
                         isSelected={selectedFiles.includes(name)}
                         onContextMenu={handleContextMenu}

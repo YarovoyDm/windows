@@ -9,6 +9,8 @@ import { useAppDispatch } from "Store/index";
 import { closeWindow, updateFile } from "Store/slices/Desktop";
 
 import styles from "./TextWindow.module.scss";
+import { IFile } from "Types/Desktop";
+import ConfirmationWithoutSaveModal from "Components/Modals/ConfirmationWithoutSaveModal/ConfirmationWithoutSaveModal";
 
 const TextWindow = ({
     name,
@@ -16,14 +18,15 @@ const TextWindow = ({
     id,
 }: {
     name: string;
-    content: string;
+    content: Array<IFile> | string;
     id: string;
 }) => {
-    const dispatch = useAppDispatch();
     const [fileValue, setFileValue] = useState(content);
     const [prevFileValue, setPrevFileValue] = useState(content);
     const [showSaveMessage, setShowSaveMessage] = useState(false);
-    const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
+    const dispatch = useAppDispatch();
     const isFileChanged = useMemo(
         () => fileValue !== prevFileValue,
         [fileValue, prevFileValue],
@@ -37,7 +40,7 @@ const TextWindow = ({
         if (isFileChanged) {
             setPrevFileValue(fileValue);
             dispatch(updateFile({ id, newValue: fileValue }));
-            showConfirmationWindow && handleWindows();
+            showConfirmationModal && unsaveExit();
 
             setShowSaveMessage(true);
 
@@ -47,13 +50,13 @@ const TextWindow = ({
         }
     };
 
-    const handleWindows = () => {
-        dispatch(closeWindow({ id }));
-        onConfirmationWindowChange();
+    const unsaveExit = () => {
+        dispatch(closeWindow(id));
+        onConfirmationModalChange();
     };
 
-    const onConfirmationWindowChange = () => {
-        setShowConfirmationWindow(prev => !prev);
+    const onConfirmationModalChange = () => {
+        setShowConfirmationModal(prev => !prev);
     };
 
     useEffect(() => {
@@ -78,35 +81,19 @@ const TextWindow = ({
         <WindowBasic
             name={name}
             id={id}
-            onCloseCallback={isFileChanged && onConfirmationWindowChange}
+            onCloseCallback={isFileChanged && onConfirmationModalChange}
         >
             <div className={styles.textWindowWrapper}>
-                {showConfirmationWindow && (
-                    <div className={styles.confirmation}>
-                        <div className={styles.confirmationWindow}>
-                            <div className={styles.confirmationTitle}>
-                                Хочете зберегти зміни?
-                            </div>
-                            <div className={styles.confirmationSubTitle}>
-                                У вас є незбережені зміни.
-                            </div>
-                            <div className={styles.confirmationButtons}>
-                                <button onClick={() => handleSave()}>
-                                    Зберегти
-                                </button>
-                                <button onClick={() => handleWindows()}>
-                                    Не зберігати
-                                </button>
-                                <button onClick={onConfirmationWindowChange}>
-                                    Скасувати
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                {showConfirmationModal && (
+                    <ConfirmationWithoutSaveModal
+                        handleSave={handleSave}
+                        unsaveExit={unsaveExit}
+                        onConfirmationModalChange={onConfirmationModalChange}
+                    />
                 )}
 
                 <textarea
-                    value={fileValue}
+                    value={typeof fileValue === "string" ? fileValue : ""}
                     onChange={e => onTextAreaChange(e)}
                 />
                 {showSaveMessage && (

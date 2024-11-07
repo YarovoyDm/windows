@@ -19,7 +19,7 @@ export type Desktop = {
     selectedFiles: Array<string>;
     openedWindows: Array<{
         fileName: string;
-        content: string;
+        content: Array<IFile> | string;
         id: string;
         zIndex: number;
         type: string;

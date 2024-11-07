@@ -1,10 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
-import styles from "./WindowBasic.module.scss";
 import {
     CROSS,
-    DIRECTION_BOTTOM,
-    DIRECTION_RIGHT,
-    DIRECTION_RIGHT_BOTTOM,
+    DIRECTIONS_RESIZE_MAP,
     LINE,
     SQUARE_IN_SQUARE,
     SQUARE_OUTLINE,
@@ -14,14 +11,15 @@ import cn from "classnames";
 import useDrag from "Hooks/useDrag";
 import { DEFAULT_DESKTOP_MODAL_SIZE } from "Constants/Desktop";
 import Icon from "Components/Icon/Icon";
+import { getRandomCenterCoordinates } from "helpers/getRandomCenterCoordinates";
 import useResize from "Hooks/useResize";
 import { useAppDispatch, useAppSelector } from "Store/index";
 import { changeWindowZindex, closeWindow } from "Store/slices/Desktop";
 import { selectWindowZindex } from "Store/selectors/Desktop";
-import { getRandomCenterCoordinates } from "helpers/getRandomCenterCoordinates";
+
+import styles from "./WindowBasic.module.scss";
 
 type IProps = {
-    children: React.ReactNode;
     name: string;
     id: string;
     onCloseCallback?: false | (() => void);
@@ -34,8 +32,6 @@ const WindowBasic = ({
     onCloseCallback,
     ...rest
 }: IProps) => {
-    const dispatch = useAppDispatch();
-    const zIndex = useAppSelector(selectWindowZindex(id));
     const [newSize, setNewSize] = useState<{
         width: number;
         height: number;
@@ -45,6 +41,8 @@ const WindowBasic = ({
         getRandomCenterCoordinates(),
         newSize || DEFAULT_DESKTOP_MODAL_SIZE,
     );
+    const dispatch = useAppDispatch();
+    const zIndex = useAppSelector(selectWindowZindex(id));
 
     const {
         handleDoubleClick,
@@ -67,11 +65,11 @@ const WindowBasic = ({
     }, [size]);
 
     const onWindowClose = () => {
-        dispatch(closeWindow({ id }));
+        dispatch(closeWindow(id));
     };
 
     const onWindowZindexChange = () => {
-        dispatch(changeWindowZindex({ id }));
+        dispatch(changeWindowZindex(id));
     };
 
     return (
@@ -125,23 +123,18 @@ const WindowBasic = ({
                     </div>
                 </div>
             </div>
-
             {children}
-
-            <div
-                className={styles.resizeHandleRight}
-                onMouseDown={e => handleResizeMouseDown(e, DIRECTION_RIGHT)}
-            />
-            <div
-                className={styles.resizeHandleBottom}
-                onMouseDown={e => handleResizeMouseDown(e, DIRECTION_BOTTOM)}
-            />
-            <div
-                className={styles.resizeHandleCorner}
-                onMouseDown={e =>
-                    handleResizeMouseDown(e, DIRECTION_RIGHT_BOTTOM)
-                }
-            />
+            {DIRECTIONS_RESIZE_MAP.map(direction => {
+                return (
+                    <div
+                        key={direction.name}
+                        className={styles[direction.class]}
+                        onMouseDown={e =>
+                            handleResizeMouseDown(e, direction.name)
+                        }
+                    />
+                );
+            })}
         </div>
     );
 };

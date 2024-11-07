@@ -17,7 +17,7 @@ const initialSystemState = {
     systemPassword: SYSTEM_PASSWORD,
     isWindowsUnlock: false,
     desktopFileSize: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_MEDIUM],
-    wallpaper: WALLPAPERS[1],
+    wallpaper: WALLPAPERS[4],
 } as SystemType;
 
 const systemSlice = createSlice({

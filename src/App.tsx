@@ -26,7 +26,6 @@ function App() {
         document.addEventListener(
             KEY_DOWN_EVENT,
             detectKeyDown as EventListener,
-            true,
         );
         return () => {
             document.removeEventListener(CONTEXT_MENU_EVENT, handleContextMenu);
@@ -40,9 +39,7 @@ function App() {
                 className={styles.taskPanelAppTooltip}
                 classNameArrow={styles.tooltipArrow}
             />
-            {false && <LockScreen />}
-            <Desktop />
-            <TaskPanel />
+            {true ? <LockScreen /> : [<Desktop />, <TaskPanel />]}
         </div>
     );
 }

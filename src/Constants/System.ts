@@ -91,6 +91,12 @@ export const DIRECTION_RIGHT: string = "right";
 export const DIRECTION_BOTTOM: string = "bottom";
 export const DIRECTION_RIGHT_BOTTOM: string = "right bottom";
 
+export const DIRECTIONS_RESIZE_MAP = [
+    { name: DIRECTION_RIGHT, class: "resizeHandleRight" },
+    { name: DIRECTION_BOTTOM, class: "resizeHandleBottom" },
+    { name: DIRECTION_RIGHT_BOTTOM, class: "resizeHandleCorner" },
+];
+
 export const DESKTOP_FILE_SIZE_SMALL: string = "small";
 export const DESKTOP_FILE_SIZE_MEDIUM: string = "medium";
 export const DESKTOP_FILE_SIZE_LARGE: string = "large";
@@ -100,6 +106,9 @@ export const DESKTOP_FILE_SIZE = {
     [DESKTOP_FILE_SIZE_MEDIUM]: { width: 80, height: 70 },
     [DESKTOP_FILE_SIZE_LARGE]: { width: 100, height: 90 },
 };
+
+export const MIN_WINDOW_WIDTH = 430;
+export const MIN_WINDOW_HEIGHT = 260;
 
 export const SIZE_HOT_KEYS_MAP = {
     Digit2: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_LARGE],

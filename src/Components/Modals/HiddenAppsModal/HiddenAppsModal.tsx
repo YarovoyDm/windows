@@ -5,7 +5,7 @@ import { HIDDEN_APPS } from "Constants/TaskPanel";
 
 import styles from "./HiddenAppsModal.module.scss";
 
-const HiddenAppsModal: React.FC = () => {
+const HiddenAppsModal = () => {
     return (
         <div
             onClick={e => e.stopPropagation()}

@@ -46,7 +46,7 @@ const desktopSlice = createSlice({
     name: DESKTOP,
     initialState: initialDesktopState,
     reducers: {
-        removeFile(state: Desktop, action) {
+        removeFile(state: Desktop, action: PayloadAction<string>) {
             const fileToRemove = state.desktopFiles.find(
                 item => item.name === action.payload,
             );
@@ -58,7 +58,13 @@ const desktopSlice = createSlice({
                 state.bin.push(fileToRemove);
             }
         },
-        changeFilePosition(state: Desktop, action) {
+        changeFilePosition(
+            state: Desktop,
+            action: PayloadAction<{
+                name: string;
+                position: { x: number; y: number };
+            }>,
+        ) {
             const file = state.desktopFiles.find(
                 file => file.name === action.payload.name,
             );
@@ -70,12 +76,12 @@ const desktopSlice = createSlice({
         settingsModalHandler(state: Desktop) {
             state.isSettingsModalOpen = !state.isSettingsModalOpen;
         },
-        selectFile(state: Desktop, action) {
+        selectFile(state: Desktop, action: PayloadAction<string>) {
             if (!state.selectedFiles.includes(action.payload)) {
                 state.selectedFiles.push(action.payload);
             }
         },
-        deselectFile(state: Desktop, action) {
+        deselectFile(state: Desktop, action: PayloadAction<string>) {
             if (Array.isArray(state.selectedFiles)) {
                 state.selectedFiles = state.selectedFiles.filter(
                     fileName => fileName !== action.payload,
@@ -85,13 +91,25 @@ const desktopSlice = createSlice({
         clearSelection(state: Desktop) {
             state.selectedFiles = [];
         },
-        selectMultipleFiles(state: Desktop, action) {
+        selectMultipleFiles(
+            state: Desktop,
+            action: PayloadAction<Array<string>>,
+        ) {
             state.selectedFiles = action.payload;
         },
         addDesktopFile(state, action: PayloadAction<IFile>) {
             state.desktopFiles.push(action.payload);
         },
-        openWindow(state: Desktop, action) {
+        openWindow(
+            state: Desktop,
+            action: PayloadAction<{
+                fileName: string;
+                content: string | Array<IFile>;
+                id: string;
+                zIndex: number;
+                type: string;
+            }>,
+        ) {
             const { id } = action.payload;
             const currentFile = state.desktopFiles.filter(
                 item => item.id === id,
@@ -100,21 +118,19 @@ const desktopSlice = createSlice({
             state.openedWindows.push(action.payload);
             currentFile.isOpened = true;
         },
-        closeWindow(state: Desktop, action) {
-            const { id } = action.payload;
+        closeWindow(state: Desktop, action: PayloadAction<string>) {
             const currentFile = state.desktopFiles.filter(
-                item => item.id === id,
+                item => item.id === action.payload,
             )[0];
 
             state.openedWindows = state.openedWindows.filter(
-                window => window.id !== id,
+                window => window.id !== action.payload,
             );
             currentFile.isOpened = false;
         },
-        changeWindowZindex(state: Desktop, action) {
-            const { id } = action.payload;
+        changeWindowZindex(state: Desktop, action: PayloadAction<string>) {
             const currentFile = state.openedWindows.filter(
-                item => item.id === id,
+                item => item.id === action.payload,
             )[0];
 
             state.openedWindows.forEach(
@@ -122,7 +138,13 @@ const desktopSlice = createSlice({
             );
             currentFile.zIndex = 99;
         },
-        updateFile(state: Desktop, action) {
+        updateFile(
+            state: Desktop,
+            action: PayloadAction<{
+                id: string;
+                newValue: Array<IFile> | string;
+            }>,
+        ) {
             const { id, newValue } = action.payload;
             const currentFile = state.desktopFiles.filter(
                 item => item.id === id,
@@ -130,7 +152,10 @@ const desktopSlice = createSlice({
 
             currentFile.innerContent = newValue;
         },
-        dragFileToFolder(state: Desktop, action) {
+        dragFileToFolder(
+            state: Desktop,
+            action: PayloadAction<{ fileName: string; folderName: string }>,
+        ) {
             const { fileName, folderName } = action.payload;
             const targetFolder = state.desktopFiles.filter(
                 item => item.name === folderName,

@@ -17,42 +17,35 @@ import {
     openWindow,
     removeFile,
 } from "Store/slices/Desktop";
+import { selectFileSize } from "Store/selectors/System";
+import { IFile } from "Types/Desktop";
 
 import styles from "./DraggableDesktopFile.module.scss";
-import { selectFileSize } from "Store/selectors/System";
 
-type IFile = {
-    name: string;
-    icon: string;
-    filePosition: { x: number; y: number };
+interface IProps extends IFile {
     setIsSelecting: (isSelecting: boolean) => void;
-    isSelected: boolean;
     onContextMenu: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    isOpened: boolean;
-    content: string | any;
-    id: string;
-    type: string;
-};
+}
 
 const DraggableDesktopFile = ({
     name,
     icon,
-    filePosition,
+    position: filePosition,
     setIsSelecting,
     isSelected,
     onContextMenu,
     isOpened,
-    content,
+    innerContent,
     id,
     type,
-}: IFile) => {
-    const [isFileSelected, setIsFileSelected] = useState(isSelected);
+}: IProps) => {
+    const [isFileSelected, setIsFileSelected] = useState<boolean>(isSelected);
     const [targetFolderName, setTargetFolderName] = useState<string>("");
     const [isDragging, setIsDragging] = useState<boolean>(false);
+    const fileRef = useRef<HTMLDivElement | null>(null);
 
     const selectedSize = useAppSelector(selectFileSize);
     const dispatch = useAppDispatch();
-    const fileRef = useRef<HTMLDivElement | null>(null);
     const { position, handleMouseDown } = useDrag(filePosition, selectedSize);
 
     const handleClickFileOutside = (e: MouseEvent) => {
@@ -75,8 +68,8 @@ const DraggableDesktopFile = ({
         if (!isOpened) {
             dispatch(
                 openWindow({
-                    zIndex: 99,
-                    content,
+                    zIndex: 999,
+                    content: innerContent,
                     fileName: name,
                     id,
                     type,
@@ -203,7 +196,7 @@ const DraggableDesktopFile = ({
                 top: `${position.y}px`,
                 left: `${position.x}px`,
                 position: "absolute",
-                zIndex: isFileSelected ? 999 : 1,
+                zIndex: isFileSelected ? 99 : 1,
             }}
         >
             <Icon
@@ -218,14 +211,7 @@ const DraggableDesktopFile = ({
             />
             <div className={styles.fileName}>{name}</div>
             {isDragging && targetFolderName && (
-                <div
-                    className={styles.tooltip}
-                    style={{
-                        position: "absolute",
-                        top: 25,
-                        left: 60,
-                    }}
-                >
+                <div className={styles.tooltip}>
                     Перемістити до: {targetFolderName}
                 </div>
             )}

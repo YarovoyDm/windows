@@ -9,7 +9,7 @@ import PowerModal from "../PowerModal/PowerModal";
 import styles from "./WindowsModal.module.scss";
 import { selectPowerModalState } from "Store/selectors/TaskPanel";
 
-const WindowsModal: React.FC = () => {
+const WindowsModal = () => {
     const dispatch = useAppDispatch();
     const isPowerModalOpen = useAppSelector(selectPowerModalState);
 

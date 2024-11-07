@@ -1,15 +1,14 @@
 import {
     DIRECTION_BOTTOM,
     DIRECTION_RIGHT,
+    MIN_WINDOW_HEIGHT,
+    MIN_WINDOW_WIDTH,
     MOUSE_MOVE_EVENT,
     MOUSE_UP_EVENT,
     TASK_PANEL_HEIGHT,
     ZERO_POSITION,
 } from "Constants/System";
 import { useEffect, useState } from "react";
-
-const MIN_WIDTH = 430; // Мінімальна ширина вікна
-const MIN_HEIGHT = 260; // Мінімальна висота вікна
 
 const useResize = (
     initialSize: { width: number; height: number },
@@ -75,7 +74,7 @@ const useResize = (
                 const windowWidth = window.innerWidth;
 
                 newWidth = Math.max(
-                    MIN_WIDTH,
+                    MIN_WINDOW_WIDTH,
                     Math.min(windowWidth, startSize.width + deltaX),
                 );
             }
@@ -83,7 +82,7 @@ const useResize = (
                 const windowHeight = window.innerHeight;
 
                 newHeight = Math.max(
-                    MIN_HEIGHT,
+                    MIN_WINDOW_HEIGHT,
                     Math.min(
                         windowHeight - TASK_PANEL_HEIGHT,
                         startSize.height + deltaY,

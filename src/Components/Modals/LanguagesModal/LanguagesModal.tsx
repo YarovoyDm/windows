@@ -8,7 +8,7 @@ import styles from "./LanguagesModal.module.scss";
 import { changeLanguageIndex } from "Store/slices/System";
 import { selectLanguageIndex } from "Store/selectors/System";
 
-const LanguagesModal: React.FC = () => {
+const LanguagesModal = () => {
     const systemLanguageIndex = useAppSelector(selectLanguageIndex);
     const dispatch = useAppDispatch();
 
