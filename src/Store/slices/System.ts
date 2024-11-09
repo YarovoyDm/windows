@@ -1,5 +1,5 @@
 import React from "react";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
     DEFAULT_LANGUAGE_INDEX,
     DESKTOP_FILE_SIZE,
@@ -40,6 +40,9 @@ const systemSlice = createSlice({
         changeWallpaper(state: SystemType, action) {
             state.wallpaper = action.payload;
         },
+        toggleWindowsUnlock(state: SystemType, action: PayloadAction<boolean>) {
+            state.isWindowsUnlock = action.payload;
+        },
     },
 });
 
@@ -49,4 +52,5 @@ export const {
     changeLanguageIndex,
     changeDesktopFileSize,
     changeWallpaper,
+    toggleWindowsUnlock,
 } = systemSlice.actions;

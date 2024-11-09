@@ -7,9 +7,11 @@ import { Desktop, TaskPanel } from "Containers";
 
 import styles from "./App.module.scss";
 import { changeLanguageIndexByHotKeys } from "Store/slices/System";
+import { useAppSelector } from "./Store";
 
 function App() {
     const dispatch = useDispatch();
+    const isWindowsLock = useAppSelector(state => state.system.isWindowsUnlock);
 
     const detectKeyDown = (e: KeyboardEvent) => {
         if (e.shiftKey && e.altKey) {
@@ -39,7 +41,7 @@ function App() {
                 className={styles.taskPanelAppTooltip}
                 classNameArrow={styles.tooltipArrow}
             />
-            {true ? <LockScreen /> : [<Desktop />, <TaskPanel />]}
+            {!isWindowsLock ? <LockScreen /> : [<Desktop />, <TaskPanel />]}
         </div>
     );
 }

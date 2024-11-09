@@ -25,6 +25,7 @@ import { ReactComponent as Dot } from "Icons/dotIcon.svg";
 import { ReactComponent as SquareInSquare } from "Icons/squareOnSquare.svg";
 import { ReactComponent as SquareOutline } from "Icons/squareOutline.svg";
 import { ReactComponent as Line } from "Icons/line.svg";
+import { ReactComponent as FullArrow } from "Icons/fullArrow.svg";
 import {
     TELEGRAM,
     SKYPE,
@@ -54,6 +55,7 @@ import {
     USER,
     VIEW_BOXES,
     WINDOWS,
+    FULL_ARROW,
 } from "Constants/System";
 
 type IProps = {
@@ -91,6 +93,7 @@ const Icons = {
     [SQUARE_IN_SQUARE]: SquareInSquare,
     [SQUARE_OUTLINE]: SquareOutline,
     [LINE]: Line,
+    [FULL_ARROW]: FullArrow,
 };
 
 const Icon = (props: IProps) => {

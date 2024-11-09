@@ -196,7 +196,7 @@ const DraggableDesktopFile = ({
                 top: `${position.y}px`,
                 left: `${position.x}px`,
                 position: "absolute",
-                zIndex: isFileSelected ? 99 : 1,
+                zIndex: isFileSelected ? 999 : 1,
             }}
         >
             <Icon

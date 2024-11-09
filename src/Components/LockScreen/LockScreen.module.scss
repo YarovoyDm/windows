@@ -1,10 +1,104 @@
-.lockScreen{
-    width: 100vw;
-    height: 100vh;
-    background: grey;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0.5;
-    z-index: 99;
+.lockScreen {
+    width: calc(100vw - 240px);
+    height: calc(100vh - 240px);
+    position: relative;
+    padding: 120px;
+    display: flex;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("../../assets/lockScreen.png");
+        background-size: cover;
+        background-position: center;
+        transition: filter 0.3s ease;
+        z-index: -1;
+    }
+    .containerPrimary {
+        color: white;
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        .timePrimary {
+            font-size: 120px;
+        }
+    }
+    .loginForm {
+        position: relative;
+        z-index: 1;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 100px;
+        width: 230px;
+        .userAvatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 140px;
+            background: #bfbfbf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
+            svg {
+                width: 80px;
+                height: 80px;
+                fill: #ffffff;
+            }
+        }
+        .userName {
+            color: white;
+            font-size: 35px;
+            font-weight: 100;
+            margin-bottom: 20px;
+        }
+        .inputWrapper {
+            display: flex;
+            input {
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.1);
+                color: white;
+                height: 25px;
+                border: solid 1px white;
+                border-right: none;
+                &::placeholder {
+                    color: white;
+                }
+                &:focus {
+                    outline: none;
+                }
+            }
+            .error {
+                border-bottom: solid 1px red;
+            }
+            .iconWrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 35px;
+                background: #89bdd7;
+                border: solid 1px white;
+                border-left: none;
+                svg {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+    }
+}
+
+.noBlur::before {
+    filter: none;
+}
+.blur::before {
+    filter: blur(10px);
 }

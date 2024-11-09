@@ -26,6 +26,7 @@ export const DOT: string = "Dot";
 export const SQUARE_IN_SQUARE: string = "SquareInSquare";
 export const SQUARE_OUTLINE: string = "SquareOutline";
 export const LINE: string = "Line";
+export const FULL_ARROW: string = "FullArrow";
 
 export const POWER_MODAL_UNITS = {
     [POWER]: "Завершити роботу",
@@ -42,7 +43,7 @@ export const WALLPAPERS = [
     witcher2,
 ];
 
-export const SYSTEM_PASSWORD: number = 1111;
+export const SYSTEM_PASSWORD: string = "1111";
 
 export const ZERO_POSITION = {
     x: 0,

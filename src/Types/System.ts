@@ -8,7 +8,7 @@ export type FileSize = {
 
 export type SystemType = {
     systemLanguageIndex: number;
-    systemPassword: number;
+    systemPassword: string;
     isWindowsUnlock: boolean;
     desktopFileSize: { width: number; height: number };
     wallpaper: string;
