@@ -7,10 +7,12 @@ import { useAppDispatch, useAppSelector } from "Store/index";
 import styles from "./LanguagesModal.module.scss";
 import { changeLanguageIndex } from "Store/slices/System";
 import { selectLanguageIndex } from "Store/selectors/System";
+import useLanguage from "Hooks/useLanguage";
 
 const LanguagesModal = () => {
     const systemLanguageIndex = useAppSelector(selectLanguageIndex);
     const dispatch = useAppDispatch();
+    const { translate } = useLanguage();
 
     const onLanguageChange = (index: number) => {
         dispatch(changeLanguageIndex(index));
@@ -23,7 +25,9 @@ const LanguagesModal = () => {
             className={cn(styles.languagesModal, styles.taskPanelModal)}
         >
             <div className={styles.languagesModalTitle}>
-                <div className={styles.titleText}>Розкладка клавіатури</div>
+                <div className={styles.titleText}>
+                    {translate("keyboardLayout")}
+                </div>
                 <div className={styles.titleHotKeys}>
                     <div className={styles.hotKeysUnit}>Shift</div>+
                     <div className={styles.hotKeysUnit}>Alt</div>

@@ -13,8 +13,9 @@ import {
 import { SystemType } from "Types/System";
 
 const initialSystemState = {
-    systemLanguageIndex: DEFAULT_LANGUAGE_INDEX,
+    inputLanguageIndex: DEFAULT_LANGUAGE_INDEX,
     systemPassword: SYSTEM_PASSWORD,
+    systemLanguage: "en",
     isWindowsUnlock: false,
     desktopFileSize: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_MEDIUM],
     wallpaper: WALLPAPERS[4],
@@ -25,14 +26,14 @@ const systemSlice = createSlice({
     initialState: initialSystemState,
     reducers: {
         changeLanguageIndexByHotKeys(state: SystemType) {
-            if (state.systemLanguageIndex >= MAX_LANGUAGES) {
-                state.systemLanguageIndex = DEFAULT_LANGUAGE_INDEX;
+            if (state.inputLanguageIndex >= MAX_LANGUAGES) {
+                state.inputLanguageIndex = DEFAULT_LANGUAGE_INDEX;
             } else {
-                state.systemLanguageIndex += LANGUAGE_CHANGE_STEP;
+                state.inputLanguageIndex += LANGUAGE_CHANGE_STEP;
             }
         },
         changeLanguageIndex(state: SystemType, action) {
-            state.systemLanguageIndex = action.payload;
+            state.inputLanguageIndex = action.payload;
         },
         changeDesktopFileSize(state: SystemType, action) {
             state.desktopFileSize = action.payload;
@@ -42,6 +43,9 @@ const systemSlice = createSlice({
         },
         toggleWindowsUnlock(state: SystemType, action: PayloadAction<boolean>) {
             state.isWindowsUnlock = action.payload;
+        },
+        changeSystemLanguage(state: SystemType, action: PayloadAction<string>) {
+            state.systemLanguage = action.payload;
         },
     },
 });
@@ -53,4 +57,5 @@ export const {
     changeDesktopFileSize,
     changeWallpaper,
     toggleWindowsUnlock,
+    changeSystemLanguage,
 } = systemSlice.actions;

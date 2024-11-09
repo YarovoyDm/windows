@@ -6,7 +6,7 @@ const selectSystem = (state: RootState) => state.system;
 
 export const selectLanguageIndex = createSelector(
     selectSystem,
-    (state: SystemType) => state.systemLanguageIndex,
+    (state: SystemType) => state.inputLanguageIndex,
 );
 
 export const selectFileSize = createSelector(
@@ -17,4 +17,9 @@ export const selectFileSize = createSelector(
 export const selectWallpaper = createSelector(
     selectSystem,
     (state: SystemType) => state.wallpaper,
+);
+
+export const selectSystemLanguage = createSelector(
+    selectSystem,
+    (state: SystemType) => state.systemLanguage,
 );

@@ -21,6 +21,7 @@ import { selectFileSize } from "Store/selectors/System";
 import { IFile } from "Types/Desktop";
 
 import styles from "./DraggableDesktopFile.module.scss";
+import useLanguage from "Hooks/useLanguage";
 
 interface IProps extends IFile {
     setIsSelecting: (isSelecting: boolean) => void;
@@ -47,6 +48,7 @@ const DraggableDesktopFile = ({
     const selectedSize = useAppSelector(selectFileSize);
     const dispatch = useAppDispatch();
     const { position, handleMouseDown } = useDrag(filePosition, selectedSize);
+    const { translate } = useLanguage();
 
     const handleClickFileOutside = (e: MouseEvent) => {
         if (fileRef.current && !fileRef.current.contains(e.target as Node)) {
@@ -212,7 +214,7 @@ const DraggableDesktopFile = ({
             <div className={styles.fileName}>{name}</div>
             {isDragging && targetFolderName && (
                 <div className={styles.tooltip}>
-                    Перемістити до: {targetFolderName}
+                    {translate("moveTo")} {targetFolderName}
                 </div>
             )}
         </div>

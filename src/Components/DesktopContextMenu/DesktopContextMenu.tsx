@@ -17,6 +17,7 @@ import { FOLDER } from "Constants/Desktop";
 import { changeDesktopFileSize } from "Store/slices/System";
 import { selectFileSize } from "Store/selectors/System";
 import { useEffect, useId } from "react";
+import useLanguage from "Hooks/useLanguage";
 
 type IProps = {
     contextMenuPosition: {
@@ -35,6 +36,8 @@ const DesktopContextMenu = ({
     const dispatch = useAppDispatch();
     const fileId = useId();
     const selectedSize = useAppSelector(selectFileSize);
+    const { translate } = useLanguage();
+
     const createNewFile =
         ({ name, type }: { name: string; type: string }) =>
         () => {
@@ -95,7 +98,9 @@ const DesktopContextMenu = ({
             <div className={styles.menuItem}>
                 <div className={styles.wrapper}>
                     <Icon name={VIEW_BOXES} className={styles.itemIcon} />
-                    <div className={styles.itemName}>Вигляд</div>
+                    <div className={styles.itemName}>
+                        {translate("iconsView")}
+                    </div>
                 </div>
                 <Icon
                     name={RIGHT_ARROW}
@@ -127,7 +132,7 @@ const DesktopContextMenu = ({
                                             />
                                         </div>
                                         <div className={styles.sizeName}>
-                                            {name}
+                                            {translate(name)}
                                         </div>
                                     </div>
                                     <div className={styles.hotKeys}>
@@ -145,7 +150,9 @@ const DesktopContextMenu = ({
             <div className={styles.menuItem}>
                 <div className={styles.wrapper}>
                     <Icon name={PLUS_CIRCLE} className={styles.itemIcon} />
-                    <div className={styles.itemName}>Створити</div>
+                    <div className={styles.itemName}>
+                        {translate("createNewFile")}
+                    </div>
                 </div>
                 <Icon
                     name={RIGHT_ARROW}
@@ -155,7 +162,7 @@ const DesktopContextMenu = ({
                     <div
                         className={styles.subMenuItem}
                         onClick={createNewFile({
-                            name: "Нова папка",
+                            name: translate("newFolder"),
                             type: FOLDER,
                         })}
                     >
@@ -163,12 +170,14 @@ const DesktopContextMenu = ({
                             <Icon name={FOLDER} />
                         </div>
 
-                        <div className={styles.subMenuItemName}>Папка</div>
+                        <div className={styles.subMenuItemName}>
+                            {translate("folder")}
+                        </div>
                     </div>
                     <div
                         className={styles.subMenuItem}
                         onClick={createNewFile({
-                            name: "Новий текстовий документ",
+                            name: translate("newTextDocument"),
                             type: TEXT_FILE,
                         })}
                     >
@@ -176,7 +185,7 @@ const DesktopContextMenu = ({
                             <Icon name={TEXT_FILE} />
                         </div>
                         <div className={styles.subMenuItemName}>
-                            Текстовий документ
+                            {translate("textDocument")}
                         </div>
                     </div>
                 </div>

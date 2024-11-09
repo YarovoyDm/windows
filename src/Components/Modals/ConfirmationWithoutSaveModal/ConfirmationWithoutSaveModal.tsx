@@ -1,6 +1,7 @@
 import React from "react";
 
 import styles from "./ConfirmationWithoutSaveModal.module.scss";
+import useLanguage from "Hooks/useLanguage";
 
 type IProps = {
     handleSave: () => void;
@@ -13,20 +14,26 @@ const ConfirmationWithoutSaveModal = ({
     unsaveExit,
     onConfirmationModalChange,
 }: IProps) => {
+    const { translate } = useLanguage();
+
     return (
         <div className={styles.confirmation}>
             <div className={styles.confirmationWindow}>
                 <div className={styles.confirmationTitle}>
-                    Хочете зберегти зміни?
+                    {translate("confirmationUnsaveTitle")}
                 </div>
                 <div className={styles.confirmationSubTitle}>
-                    У вас є незбережені зміни.
+                    {translate("confirmationUnsaveSubTitle")}
                 </div>
                 <div className={styles.confirmationButtons}>
-                    <button onClick={() => handleSave()}>Зберегти</button>
-                    <button onClick={() => unsaveExit()}>Не зберігати</button>
+                    <button onClick={() => handleSave()}>
+                        {translate("save")}
+                    </button>
+                    <button onClick={() => unsaveExit()}>
+                        {translate("unsave")}
+                    </button>
                     <button onClick={onConfirmationModalChange}>
-                        Скасувати
+                        {translate("cancel")}
                     </button>
                 </div>
             </div>

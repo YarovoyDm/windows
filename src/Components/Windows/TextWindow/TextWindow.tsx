@@ -11,6 +11,7 @@ import { closeWindow, updateFile } from "Store/slices/Desktop";
 import styles from "./TextWindow.module.scss";
 import { IFile } from "Types/Desktop";
 import ConfirmationWithoutSaveModal from "Components/Modals/ConfirmationWithoutSaveModal/ConfirmationWithoutSaveModal";
+import useLanguage from "Hooks/useLanguage";
 
 const TextWindow = ({
     name,
@@ -25,6 +26,8 @@ const TextWindow = ({
     const [prevFileValue, setPrevFileValue] = useState(content);
     const [showSaveMessage, setShowSaveMessage] = useState(false);
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
+    const { translate } = useLanguage();
 
     const dispatch = useAppDispatch();
     const isFileChanged = useMemo(
@@ -97,7 +100,9 @@ const TextWindow = ({
                     onChange={e => onTextAreaChange(e)}
                 />
                 {showSaveMessage && (
-                    <div className={styles.saveMessage}>Збережено</div>
+                    <div className={styles.saveMessage}>
+                        {translate("textFileWasSaved")}
+                    </div>
                 )}
                 <div className={styles.footer}>
                     <div className={styles.filePath}>
@@ -105,7 +110,8 @@ const TextWindow = ({
                     </div>
                     <div className={styles.fileSettings}>
                         <div className={styles.settingItem}>
-                            {isFileChanged && "Змінено"}
+                            {isFileChanged &&
+                                translate("textFileWasChangeMarker")}
                         </div>
                         <div className={styles.settingItem}>Windows (CRLF)</div>
                         <div className={styles.settingItem}>UTF-8</div>

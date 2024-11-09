@@ -23,6 +23,8 @@ import { useContextMenu } from "Hooks/useContextMenu";
 import { selectWallpaper } from "Store/selectors/System";
 import TextWindow from "Components/Windows/TextWindow/TextWindow";
 import FolderWindow from "Components/Windows/FolderWindow/FolderWindow";
+import Notification from "Components/Notification/Notification";
+import useLanguage from "Hooks/useLanguage";
 
 type Position = {
     x: number;
@@ -44,6 +46,7 @@ const Desktop = () => {
         handleContextMenu,
         setContextMenuVisible,
     } = useContextMenu();
+    const { translate } = useLanguage();
 
     const openedWindows = useAppSelector(selectOpenedWindows);
     const desktopFiles = useAppSelector(selectFiles);
@@ -156,6 +159,7 @@ const Desktop = () => {
             onContextMenu={handleContextMenu}
             onDragOver={handleDragOver}
         >
+            <Notification text={translate("fullscreenAdvice")} />
             {contextMenuVisible && (
                 <DesktopContextMenu
                     isFileMenu={isFile}

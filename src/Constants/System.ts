@@ -6,6 +6,7 @@ import bessHamiti from "../assets/bessHamiti.jpg";
 import iriser from "../assets/iriser.jpg";
 import witcher from "../assets/witcher.jpg";
 import witcher2 from "../assets/witcher2.jpg";
+import translations from "Components/I18n/translations";
 
 export const USER: string = "User";
 export const POWER: string = "Power";
@@ -119,19 +120,19 @@ export const SIZE_HOT_KEYS_MAP = {
 
 export const DESKTOP_FILE_SIZE_UNIT = [
     {
-        name: "Великі пікторами",
+        name: "bigIcons" as keyof typeof translations.en,
         iconName: SQUARE_LIST,
         size: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_LARGE],
         hotKeys: "Crtl+Shift+2",
     },
     {
-        name: "Середні піктограми",
+        name: "mediumIcons" as keyof typeof translations.en,
         iconName: SQUARE_LIST,
         size: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_MEDIUM],
         hotKeys: "Crtl+Shift+3",
     },
     {
-        name: "Дрібні піктограми",
+        name: "smallIcons" as keyof typeof translations.en,
         iconName: VIEW_BOXES,
         size: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_SMALL],
         hotKeys: "Crtl+Shift+4",
