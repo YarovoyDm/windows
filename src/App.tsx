@@ -12,6 +12,8 @@ import { updateFile } from "Store/slices/Desktop";
 import RestartScenario from "Components/SystemScenarios/RestartScenario";
 import StartScenario from "Components/SystemScenarios/StartScenario";
 import ShutDownScenario from "Components/SystemScenarios/ShutDownScenario";
+import { selectSystemScenario } from "Store/selectors/System";
+import ErrorBoundary from "Components/ErrorBoundary/ErrorBoundary";
 
 const SCENARIOS_MAP = {
     restart: <RestartScenario />,
@@ -22,7 +24,7 @@ const SCENARIOS_MAP = {
 function App() {
     const dispatch = useDispatch();
     const { translate } = useLanguage();
-    const systemScenario = useAppSelector(state => state.system.systemScenario);
+    const systemScenario = useAppSelector(selectSystemScenario);
 
     const detectKeyDown = (e: KeyboardEvent) => {
         if (e.shiftKey && e.altKey) {
@@ -47,16 +49,20 @@ function App() {
     }, []);
 
     return (
-        <div className={styles.window}>
-            <Tooltip
-                id='taskPanelTooltips'
-                className={styles.taskPanelAppTooltip}
-                classNameArrow={styles.tooltipArrow}
-            />
-            {systemScenario
-                ? SCENARIOS_MAP[systemScenario as keyof typeof SCENARIOS_MAP]
-                : [<Desktop />, <TaskPanel />]}
-        </div>
+        <ErrorBoundary>
+            <div className={styles.window}>
+                <Tooltip
+                    id='taskPanelTooltips'
+                    className={styles.taskPanelAppTooltip}
+                    classNameArrow={styles.tooltipArrow}
+                />
+                {systemScenario
+                    ? SCENARIOS_MAP[
+                          systemScenario as keyof typeof SCENARIOS_MAP
+                      ]
+                    : [<Desktop />, <TaskPanel />]}
+            </div>
+        </ErrorBoundary>
     );
 }
 

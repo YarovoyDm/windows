@@ -29,18 +29,6 @@ const PowerModal = () => {
                     </div>
                 );
             })}
-            {/* <div className={styles.powerModalUnit}>
-                <Icon name={SLEEP} className={styles.modalUnitIcon} />
-                <div className={styles.modalUnitText}>Сон</div>
-            </div>
-            <div className={styles.powerModalUnit}>
-                <Icon name={RELOAD} className={styles.modalUnitIcon} />
-                <div className={styles.modalUnitText}>Перезавантажити</div>
-            </div>
-            <div className={styles.powerModalUnit}>
-                <Icon name={POWER} className={styles.modalUnitIcon} />
-                <div className={styles.modalUnitText}>Завершити роботу</div>
-            </div> */}
         </div>
     );
 };

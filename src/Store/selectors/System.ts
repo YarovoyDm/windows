@@ -23,3 +23,8 @@ export const selectSystemLanguage = createSelector(
     selectSystem,
     (state: SystemType) => state.systemLanguage,
 );
+
+export const selectSystemScenario = createSelector(
+    selectSystem,
+    (state: SystemType) => state.systemScenario,
+);
