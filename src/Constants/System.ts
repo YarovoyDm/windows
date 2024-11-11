@@ -29,12 +29,6 @@ export const SQUARE_OUTLINE: string = "SquareOutline";
 export const LINE: string = "Line";
 export const FULL_ARROW: string = "FullArrow";
 
-export const POWER_MODAL_UNITS = {
-    [POWER]: "Завершити роботу",
-    [SLEEP]: "Сон",
-    [RELOAD]: "Перезавантажити",
-};
-
 export const WALLPAPERS = [
     wallpaper,
     bri,
@@ -74,7 +68,7 @@ export const MAX_LANGUAGES: number = LANGUAGES.length - LANGUAGE_CHANGE_STEP;
 
 export const DELETE_KEY_CODE: string = "Delete";
 export const ENTER_KEY_CODE: string = "Enter";
-export const S_KEY_CODE: string = "s";
+export const S_KEY_CODE: string = "KeyS";
 
 // Events
 
@@ -140,3 +134,14 @@ export const DESKTOP_FILE_SIZE_UNIT = [
 ];
 
 export const SHOW_SAVE_MESSAGE_DELAY: number = 2000;
+
+//System scenarios
+
+export const RESTART_SCENARIO: string = "restart";
+export const SHUTWODN_SCENARIO: string = "shutdown";
+
+export const POWER_MODAL_UNITS = {
+    [POWER]: { name: "Завершити роботу", scenario: SHUTWODN_SCENARIO },
+    [SLEEP]: { name: "Сон", scenario: RESTART_SCENARIO },
+    [RELOAD]: { name: "Перезавантажити", scenario: RESTART_SCENARIO },
+};

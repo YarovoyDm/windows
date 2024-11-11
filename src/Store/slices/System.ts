@@ -1,4 +1,3 @@
-import React from "react";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
     DEFAULT_LANGUAGE_INDEX,
@@ -18,7 +17,8 @@ const initialSystemState = {
     systemLanguage: "en",
     isWindowsUnlock: false,
     desktopFileSize: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_MEDIUM],
-    wallpaper: WALLPAPERS[4],
+    wallpaper: WALLPAPERS[5],
+    systemScenario: "start",
 } as SystemType;
 
 const systemSlice = createSlice({
@@ -47,6 +47,9 @@ const systemSlice = createSlice({
         changeSystemLanguage(state: SystemType, action: PayloadAction<string>) {
             state.systemLanguage = action.payload;
         },
+        updateSystemScenario(state: SystemType, action) {
+            state.systemScenario = action.payload;
+        },
     },
 });
 
@@ -58,4 +61,5 @@ export const {
     changeWallpaper,
     toggleWindowsUnlock,
     changeSystemLanguage,
+    updateSystemScenario,
 } = systemSlice.actions;

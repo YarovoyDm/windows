@@ -64,7 +64,7 @@ const TextWindow = ({
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.ctrlKey && e.key === S_KEY_CODE) {
+            if (e.ctrlKey && e.code === S_KEY_CODE) {
                 e.preventDefault();
                 handleSave();
             }

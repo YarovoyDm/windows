@@ -18,10 +18,7 @@ const Notification = ({ delayBeforeShow, duration, text }: IProps) => {
     useEffect(() => {
         setTimeout(() => setVisible(true), delayBeforeShow ?? 2000);
 
-        const timer = setTimeout(
-            () => setVisible(false),
-            duration ?? 100000000000,
-        );
+        const timer = setTimeout(() => setVisible(false), duration ?? 10000);
 
         return () => clearTimeout(timer);
     }, []);

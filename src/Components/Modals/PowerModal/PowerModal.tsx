@@ -5,18 +5,27 @@ import { Icon } from "Components";
 import { POWER_MODAL_UNITS } from "Constants/System";
 
 import styles from "./PowerModal.module.scss";
+import { useAppDispatch } from "Store/index";
+import { updateSystemScenario } from "Store/slices/System";
 
 const PowerModal = () => {
+    const dispatch = useAppDispatch();
+
     return (
         <div
             onClick={e => e.stopPropagation()}
             className={cn(styles.powerModal, styles.taskPanelModal)}
         >
-            {_.map(POWER_MODAL_UNITS, (unit: string, key) => {
+            {_.map(POWER_MODAL_UNITS, (unit, key) => {
                 return (
-                    <div className={styles.powerModalUnit}>
+                    <div
+                        className={styles.powerModalUnit}
+                        onClick={() =>
+                            dispatch(updateSystemScenario(unit.scenario))
+                        }
+                    >
                         <Icon name={key} className={styles.modalUnitIcon} />
-                        <div className={styles.modalUnitText}>{unit}</div>
+                        <div className={styles.modalUnitText}>{unit.name}</div>
                     </div>
                 );
             })}

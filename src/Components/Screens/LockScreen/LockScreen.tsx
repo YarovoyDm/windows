@@ -1,10 +1,4 @@
-import React, {
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import styles from "./LockScreen.module.scss";
 import DateTimeDisplay from "Components/DateTimeDisplay/DateTimeDisplay";
@@ -17,7 +11,7 @@ import {
     USER,
 } from "Constants/System";
 import { useAppDispatch } from "Store/index";
-import { toggleWindowsUnlock } from "Store/slices/System";
+import { toggleWindowsUnlock, updateSystemScenario } from "Store/slices/System";
 
 const LockScreen = () => {
     const dispatch = useAppDispatch();
@@ -40,6 +34,7 @@ const LockScreen = () => {
     const login = () => {
         if (isPasswordValid) {
             dispatch(toggleWindowsUnlock(true));
+            dispatch(updateSystemScenario(null));
             return;
         }
         setError(true);
@@ -49,6 +44,7 @@ const LockScreen = () => {
         setIsLoginScreenShow(true);
         if (e.key === ENTER_KEY_CODE && isPasswordValid) {
             dispatch(toggleWindowsUnlock(true));
+            dispatch(updateSystemScenario(null));
         }
         if (
             e.key === ENTER_KEY_CODE &&

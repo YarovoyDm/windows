@@ -13,4 +13,5 @@ export type SystemType = {
     isWindowsUnlock: boolean;
     desktopFileSize: { width: number; height: number };
     wallpaper: string;
+    systemScenario: string;
 };
