@@ -14,4 +14,5 @@ export type SystemType = {
     desktopFileSize: { width: number; height: number };
     wallpaper: string;
     systemScenario: string;
+    brightness: number;
 };

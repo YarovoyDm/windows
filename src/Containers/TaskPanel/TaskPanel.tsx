@@ -7,7 +7,6 @@ import {
     TaskPanelSearch,
     Icon,
 } from "Components";
-import { WindowsModal } from "Components/Modals";
 import { WINDOWS } from "Constants/System";
 import { useClickOutside } from "Hooks/useClickOutside";
 import { handleCloseAllModals, toggleModal } from "Store/slices/TaskPanelSlice";
@@ -16,6 +15,7 @@ import { ModalNames, ObjectOfModalRefs } from "Types/TaskPanelTypes";
 
 import styles from "./TaskPanel.module.scss";
 import { selectLanguageIndex } from "Store/selectors/System";
+import WindowsModal from "Components/Modals/WindowsModal/WindowsModal";
 
 const TaskPanel: React.FC = () => {
     const dispatch = useAppDispatch();

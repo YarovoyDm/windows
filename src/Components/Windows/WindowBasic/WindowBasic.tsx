@@ -23,6 +23,7 @@ type IProps = {
     name: string;
     id: string;
     onCloseCallback?: false | (() => void);
+    system?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const WindowBasic = ({
@@ -30,6 +31,7 @@ const WindowBasic = ({
     name,
     id,
     onCloseCallback,
+    system,
     ...rest
 }: IProps) => {
     const [newSize, setNewSize] = useState<{

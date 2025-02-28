@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
-import WindowBasic from "Components/WindowBasic/WindowBasic";
+import WindowBasic from "Components/Windows/WindowBasic/WindowBasic";
 import {
     KEY_DOWN_EVENT,
     S_KEY_CODE,

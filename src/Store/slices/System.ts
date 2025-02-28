@@ -14,11 +14,12 @@ import { SystemType } from "Types/System";
 const initialSystemState = {
     inputLanguageIndex: DEFAULT_LANGUAGE_INDEX,
     systemPassword: SYSTEM_PASSWORD,
-    systemLanguage: "en",
+    systemLanguage: "ua",
     isWindowsUnlock: false,
     desktopFileSize: DESKTOP_FILE_SIZE[DESKTOP_FILE_SIZE_MEDIUM],
-    wallpaper: WALLPAPERS[5],
+    wallpaper: WALLPAPERS[3],
     systemScenario: "start",
+    brightness: 1,
 } as SystemType;
 
 const systemSlice = createSlice({
@@ -50,6 +51,9 @@ const systemSlice = createSlice({
         updateSystemScenario(state: SystemType, action) {
             state.systemScenario = action.payload;
         },
+        changeBrightness(state: SystemType, action: PayloadAction<number>) {
+            state.brightness = action.payload;
+        },
     },
 });
 
@@ -62,4 +66,5 @@ export const {
     toggleWindowsUnlock,
     changeSystemLanguage,
     updateSystemScenario,
+    changeBrightness,
 } = systemSlice.actions;

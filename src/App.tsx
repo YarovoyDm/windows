@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Tooltip } from "react-tooltip";
 import { CONTEXT_MENU_EVENT, KEY_DOWN_EVENT } from "Constants/System";
@@ -12,7 +12,10 @@ import { updateFile } from "Store/slices/Desktop";
 import RestartScenario from "Components/SystemScenarios/RestartScenario";
 import StartScenario from "Components/SystemScenarios/StartScenario";
 import ShutDownScenario from "Components/SystemScenarios/ShutDownScenario";
-import { selectSystemScenario } from "Store/selectors/System";
+import {
+    selectSystemBrightness,
+    selectSystemScenario,
+} from "Store/selectors/System";
 import ErrorBoundary from "Components/ErrorBoundary/ErrorBoundary";
 
 const SCENARIOS_MAP = {
@@ -25,6 +28,14 @@ function App() {
     const dispatch = useDispatch();
     const { translate } = useLanguage();
     const systemScenario = useAppSelector(selectSystemScenario);
+    const windowsRef = useRef<HTMLDivElement | null>(null);
+    const brightness = useAppSelector(selectSystemBrightness);
+
+    useEffect(() => {
+        if (windowsRef.current) {
+            windowsRef.current.style.filter = `brightness(${brightness})`;
+        }
+    }, [brightness]);
 
     const detectKeyDown = (e: KeyboardEvent) => {
         if (e.shiftKey && e.altKey) {
@@ -50,7 +61,7 @@ function App() {
 
     return (
         <ErrorBoundary>
-            <div className={styles.window}>
+            <div className={styles.window} ref={windowsRef}>
                 <Tooltip
                     id='taskPanelTooltips'
                     className={styles.taskPanelAppTooltip}

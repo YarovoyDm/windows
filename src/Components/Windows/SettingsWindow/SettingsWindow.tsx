@@ -3,13 +3,13 @@ import React from "react";
 import cn from "classnames";
 import { WALLPAPERS } from "Constants/System";
 
-import styles from "./SettingsModal.module.scss";
+import styles from "./SettingsWindow.module.scss";
 import { useAppDispatch, useAppSelector } from "Store/index";
 import { selectWallpaper } from "Store/selectors/System";
 import { changeWallpaper } from "Store/slices/System";
-import WindowBasic from "Components/WindowBasic/WindowBasic";
+import WindowBasic from "Components/Windows/WindowBasic/WindowBasic";
 
-const SettingsModal = () => {
+const SettingsWindow = () => {
     const dispatch = useAppDispatch();
     const currentWallpaper = useAppSelector(selectWallpaper);
 
@@ -34,4 +34,4 @@ const SettingsModal = () => {
     );
 };
 
-export default SettingsModal;
+export default SettingsWindow;

@@ -1,5 +1,5 @@
 import React from "react";
-import WindowBasic from "Components/WindowBasic/WindowBasic";
+import WindowBasic from "Components/Windows/WindowBasic/WindowBasic";
 
 import styles from "./FolderWindow.module.scss";
 import { useAppSelector } from "Store/index";

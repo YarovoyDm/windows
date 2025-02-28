@@ -28,3 +28,8 @@ export const selectSystemScenario = createSelector(
     selectSystem,
     (state: SystemType) => state.systemScenario,
 );
+
+export const selectSystemBrightness = createSelector(
+    selectSystem,
+    (state: SystemType) => state.brightness,
+);

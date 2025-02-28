@@ -4,6 +4,10 @@ import styles from "./Notification.module.scss";
 import { CROSS } from "Constants/System";
 import Icon from "Components/Icon/Icon";
 import useLanguage from "Hooks/useLanguage";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+import { useAppDispatch } from "Store/index";
+import { changeBrightness } from "Store/slices/System";
 
 type IProps = {
     delayBeforeShow?: number;
@@ -12,18 +16,26 @@ type IProps = {
 };
 
 const Notification = ({ delayBeforeShow, duration, text }: IProps) => {
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(true);
     const { translate } = useLanguage();
+    const [brightness, setBrightness] = useState<number | number[]>(1);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setTimeout(() => setVisible(true), delayBeforeShow ?? 2000);
-
         const timer = setTimeout(() => setVisible(false), duration ?? 10000);
 
         return () => clearTimeout(timer);
-    }, []);
+    }, [delayBeforeShow, duration]);
 
     const closeNotification = () => setVisible(false);
+
+    const onBrightnessChange = (e: number | number[]) => {
+        setBrightness(e);
+        const brightnessValue = Array.isArray(e) ? e[0] : e;
+
+        dispatch(changeBrightness(brightnessValue));
+    };
 
     return (
         <div
@@ -34,6 +46,13 @@ const Notification = ({ delayBeforeShow, duration, text }: IProps) => {
             }}
         >
             <header className={styles.header}>
+                <Slider
+                    step={0.1}
+                    min={0.1}
+                    value={brightness}
+                    max={1}
+                    onChange={e => onBrightnessChange(e)}
+                />
                 <div className={styles.title}>{translate("notification")}</div>
                 <div
                     className={styles.closeButton}
