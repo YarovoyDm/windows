@@ -16,7 +16,8 @@ const FolderWindow = ({ name, id }: { name: string; id: string }) => {
                 data-name={name}
                 className={styles.folder}
             >
-                {Array.isArray(folder.innerContent) &&
+                {folder &&
+                    Array.isArray(folder.innerContent) &&
                     folder.innerContent.map(item => {
                         return <div>{item.name}</div>;
                     })}

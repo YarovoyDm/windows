@@ -18,7 +18,7 @@ const SettingsWindow = () => {
     };
 
     return (
-        <WindowBasic name='dsd' id='sds'>
+        <WindowBasic name='Settings' id='sdsdsdss'>
             {WALLPAPERS.map(wallpaper => {
                 return (
                     <div

@@ -39,7 +39,6 @@ const initialDesktopState = {
     selectedFiles: [],
     bin: [],
     openedWindows: [],
-    isSettingsModalOpen: false,
 } as Desktop;
 
 const desktopSlice = createSlice({
@@ -73,9 +72,6 @@ const desktopSlice = createSlice({
                 file.position = action.payload.position;
             }
         },
-        settingsModalHandler(state: Desktop) {
-            state.isSettingsModalOpen = !state.isSettingsModalOpen;
-        },
         selectFile(state: Desktop, action: PayloadAction<string>) {
             if (!state.selectedFiles.includes(action.payload)) {
                 state.selectedFiles.push(action.payload);
@@ -108,6 +104,7 @@ const desktopSlice = createSlice({
                 id: string;
                 zIndex: number;
                 type: string;
+                isSystem?: boolean;
             }>,
         ) {
             const { id } = action.payload;
@@ -116,7 +113,10 @@ const desktopSlice = createSlice({
             )[0];
 
             state.openedWindows.push(action.payload);
-            currentFile.isOpened = true;
+
+            if (currentFile) {
+                currentFile.isOpened = true;
+            }
         },
         closeWindow(state: Desktop, action: PayloadAction<string>) {
             const currentFile = state.desktopFiles.filter(
@@ -126,7 +126,9 @@ const desktopSlice = createSlice({
             state.openedWindows = state.openedWindows.filter(
                 window => window.id !== action.payload,
             );
-            currentFile.isOpened = false;
+            if (currentFile) {
+                currentFile.isOpened = false;
+            }
         },
         changeWindowZindex(state: Desktop, action: PayloadAction<string>) {
             const currentFile = state.openedWindows.filter(
@@ -177,7 +179,6 @@ const desktopSlice = createSlice({
 export default desktopSlice.reducer;
 export const {
     removeFile,
-    settingsModalHandler,
     selectFile,
     deselectFile,
     clearSelection,

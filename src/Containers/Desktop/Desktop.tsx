@@ -11,7 +11,7 @@ import {
 } from "Constants/System";
 import { useAppSelector, useAppDispatch } from "Store/index";
 import {
-    selectSettingsModalState,
+    selectIsWindowOpen,
     selectFiles,
     selectOpenedWindows,
 } from "Store/selectors/Desktop";
@@ -25,6 +25,7 @@ import TextWindow from "Components/Windows/TextWindow/TextWindow";
 import FolderWindow from "Components/Windows/FolderWindow/FolderWindow";
 import Notification from "Components/Notification/Notification";
 import useLanguage from "Hooks/useLanguage";
+import SettingsWindow from "Components/Windows/SettingsWindow/SettingsWindow";
 
 type Position = {
     x: number;
@@ -51,7 +52,7 @@ const Desktop = () => {
     const openedWindows = useAppSelector(selectOpenedWindows);
     const desktopFiles = useAppSelector(selectFiles);
     const wallpaper = useAppSelector(selectWallpaper);
-    const isSettingsModalOpen = useAppSelector(selectSettingsModalState);
+    const isSettingsModalOpen = useAppSelector(selectIsWindowOpen("Settings"));
     const selectedFiles = useAppSelector(state => state.desktop.selectedFiles);
 
     const handleMouseDown = (
@@ -168,6 +169,9 @@ const Desktop = () => {
                 />
             )}
             {openedWindows.map(window => {
+                if (window.isSystem) {
+                    return;
+                }
                 if (window.type === TEXT_FILE) {
                     return (
                         <TextWindow
@@ -219,7 +223,7 @@ const Desktop = () => {
                     />
                 ),
             )}
-            {isSettingsModalOpen && <SettingsModal />}
+            {isSettingsModalOpen && <SettingsWindow />}
         </div>
     );
 };

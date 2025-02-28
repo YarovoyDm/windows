@@ -1,12 +1,16 @@
 import { Icon } from "Components";
-import { FILE_ACTIONS } from "Constants/File";
-import { useAppDispatch } from "Store/index";
+import { useAppDispatch, useAppSelector } from "Store/index";
 import {
     addAppToTaskPanel,
     handleCloseAllModals,
 } from "Store/slices/TaskPanelSlice";
 
 import styles from "./File.module.scss";
+import { openWindow } from "Store/slices/Desktop";
+import {
+    selectIsWindowOpen,
+    selectOpenedWindows,
+} from "Store/selectors/Desktop";
 
 type IFile = {
     name: string;
@@ -15,18 +19,22 @@ type IFile = {
 
 const File = ({ name, text }: IFile) => {
     const dispatch = useAppDispatch();
+    const isSettingsWindowOpen = useAppSelector(selectIsWindowOpen("Settings"));
 
     const onFileModalChange = () => {
-        dispatch(FILE_ACTIONS[name]);
         dispatch(handleCloseAllModals());
-        dispatch(
-            addAppToTaskPanel({
-                name: name,
-                component: <Icon name={name} />,
-                isOpen: true,
-                isFocused: true,
-            }),
-        );
+        if (!isSettingsWindowOpen) {
+            dispatch(
+                openWindow({
+                    zIndex: 999,
+                    content: [],
+                    fileName: name,
+                    id: "sdsdsdss",
+                    type: " 3434324",
+                    isSystem: true,
+                }),
+            );
+        }
     };
 
     return (

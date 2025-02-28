@@ -9,10 +9,13 @@ export const selectFiles = createSelector(
     (state: Desktop) => state.desktopFiles,
 );
 
-export const selectSettingsModalState = createSelector(
-    selectDesktop,
-    (state: Desktop) => state.isSettingsModalOpen,
-);
+export const selectIsWindowOpen = (winodwName: string) =>
+    createSelector(
+        selectDesktop,
+        (state: Desktop) =>
+            state.openedWindows.filter(window => window.fileName === winodwName)
+                .length,
+    );
 
 export const selectOpenedWindows = createSelector(
     selectDesktop,

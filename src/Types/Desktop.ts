@@ -15,7 +15,6 @@ export type IFile = {
 export type Desktop = {
     desktopFiles: IFile[];
     bin: Array<IFile>;
-    isSettingsModalOpen: boolean;
     selectedFiles: Array<string>;
     openedWindows: Array<{
         fileName: string;
@@ -23,5 +22,6 @@ export type Desktop = {
         id: string;
         zIndex: number;
         type: string;
+        isSystem?: boolean;
     }>;
 };
