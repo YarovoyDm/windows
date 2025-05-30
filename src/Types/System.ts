@@ -15,4 +15,7 @@ export type SystemType = {
     wallpaper: string;
     systemScenario: string;
     brightness: number;
+    isNightMode: boolean;
+    selectionStyles: { borderColor: string; areaColor: string };
+    fileSelectionColor: string;
 };

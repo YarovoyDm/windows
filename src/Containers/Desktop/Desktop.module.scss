@@ -1,7 +1,6 @@
 .Desktop {
     height: calc(100vh - 51px);
     width: 100%;
-    // background-image: url("../../assets/wallpaper.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
@@ -15,8 +14,6 @@
     }
     .selection {
         position: absolute;
-        border: 1px solid #4a90e2;
-        background-color: rgba(74, 144, 226, 0.2);
-        pointer-events: none; // Забороняє будь-які події для області виділення
+        pointer-events: none;
     }
 }

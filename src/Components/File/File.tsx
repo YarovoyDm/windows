@@ -1,16 +1,10 @@
 import { Icon } from "Components";
 import { useAppDispatch, useAppSelector } from "Store/index";
-import {
-    addAppToTaskPanel,
-    handleCloseAllModals,
-} from "Store/slices/TaskPanelSlice";
+import { handleCloseAllModals } from "Store/slices/TaskPanelSlice";
 
 import styles from "./File.module.scss";
 import { openWindow } from "Store/slices/Desktop";
-import {
-    selectIsWindowOpen,
-    selectOpenedWindows,
-} from "Store/selectors/Desktop";
+import { selectIsWindowOpen } from "Store/selectors/Desktop";
 
 type IFile = {
     name: string;

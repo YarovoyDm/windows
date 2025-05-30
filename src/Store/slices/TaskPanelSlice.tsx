@@ -9,11 +9,6 @@ import {
     STEAM,
     TELEGRAM,
 } from "Constants/TaskPanel";
-import {
-    DEFAULT_LANGUAGE_INDEX,
-    LANGUAGE_CHANGE_STEP,
-    MAX_LANGUAGES,
-} from "Constants/System";
 import { TaskPanelType, ToggleModalPayload } from "Types/TaskPanelTypes";
 
 const initialTaskPanelState = {

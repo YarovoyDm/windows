@@ -24,6 +24,7 @@ type IProps = {
     id: string;
     onCloseCallback?: false | (() => void);
     system?: boolean;
+    wishSidePadding?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const WindowBasic = ({
@@ -32,6 +33,7 @@ const WindowBasic = ({
     id,
     onCloseCallback,
     system,
+    wishSidePadding,
     ...rest
 }: IProps) => {
     const [newSize, setNewSize] = useState<{
@@ -84,6 +86,7 @@ const WindowBasic = ({
                 height: size.height,
                 borderRadius,
                 zIndex: Number(zIndex),
+                padding: wishSidePadding ? "0 10px" : 0,
             }}
             {...rest}
             onMouseDown={onWindowZindexChange}

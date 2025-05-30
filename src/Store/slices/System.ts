@@ -20,6 +20,12 @@ const initialSystemState = {
     wallpaper: WALLPAPERS[3],
     systemScenario: "start",
     brightness: 1,
+    isNightMode: false,
+    selectionStyles: {
+        borderColor: "#4a90e2",
+        areaColor: "rgba(74, 144, 226, 0.2)",
+    },
+    fileSelectionColor: "rgba(179, 180, 179, 1)",
 } as SystemType;
 
 const systemSlice = createSlice({
@@ -54,6 +60,24 @@ const systemSlice = createSlice({
         changeBrightness(state: SystemType, action: PayloadAction<number>) {
             state.brightness = action.payload;
         },
+        changeNightMode(state: SystemType) {
+            state.isNightMode = !state.isNightMode;
+        },
+        changeSelectionStyle(
+            state: SystemType,
+            action: PayloadAction<{
+                key: keyof typeof state.selectionStyles;
+                value: string;
+            }>,
+        ) {
+            state.selectionStyles[action.payload.key] = action.payload.value;
+        },
+        changeFileSelectionColor(
+            state: SystemType,
+            action: PayloadAction<string>,
+        ) {
+            state.fileSelectionColor = action.payload;
+        },
     },
 });
 
@@ -67,4 +91,7 @@ export const {
     changeSystemLanguage,
     updateSystemScenario,
     changeBrightness,
+    changeNightMode,
+    changeSelectionStyle,
+    changeFileSelectionColor,
 } = systemSlice.actions;

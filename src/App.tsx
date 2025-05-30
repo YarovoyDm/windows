@@ -13,6 +13,7 @@ import RestartScenario from "Components/SystemScenarios/RestartScenario";
 import StartScenario from "Components/SystemScenarios/StartScenario";
 import ShutDownScenario from "Components/SystemScenarios/ShutDownScenario";
 import {
+    selectNightMode,
     selectSystemBrightness,
     selectSystemScenario,
 } from "Store/selectors/System";
@@ -30,12 +31,20 @@ function App() {
     const systemScenario = useAppSelector(selectSystemScenario);
     const windowsRef = useRef<HTMLDivElement | null>(null);
     const brightness = useAppSelector(selectSystemBrightness);
+    const isNightMode = useAppSelector(selectNightMode);
 
     useEffect(() => {
         if (windowsRef.current) {
-            windowsRef.current.style.filter = `brightness(${brightness})`;
+            if (isNightMode) {
+                // Нічний режим: знижуємо яскравість та контраст
+                windowsRef.current.style.filter =
+                    "sepia(0.3) brightness(0.6) contrast(1.2)";
+            } else {
+                // Денні налаштування (якщо потрібно)
+                windowsRef.current.style.filter = `brightness(${brightness})`;
+            }
         }
-    }, [brightness]);
+    }, [brightness, isNightMode]);
 
     const detectKeyDown = (e: KeyboardEvent) => {
         if (e.shiftKey && e.altKey) {

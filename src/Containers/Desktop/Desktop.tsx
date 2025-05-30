@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DraggableDesktopFile, DesktopContextMenu } from "Components";
-import { SettingsModal } from "Components/Modals";
 import { DESKTOP_FILE_SIZE } from "Constants/File";
 import {
     CLICK_EVENT,
@@ -20,7 +19,7 @@ import { isFileInSelection } from "utils/IsFileInSelection";
 
 import styles from "./Desktop.module.scss";
 import { useContextMenu } from "Hooks/useContextMenu";
-import { selectWallpaper } from "Store/selectors/System";
+import { selectSelectionStyles, selectWallpaper } from "Store/selectors/System";
 import TextWindow from "Components/Windows/TextWindow/TextWindow";
 import FolderWindow from "Components/Windows/FolderWindow/FolderWindow";
 import Notification from "Components/Notification/Notification";
@@ -38,6 +37,7 @@ const Desktop = () => {
     const [currentPosition, setCurrentPosition] =
         useState<Position>(ZERO_POSITION);
     const selectionRef = useRef<HTMLDivElement>(null);
+    const selectionStyles = useAppSelector(selectSelectionStyles);
 
     const dispatch = useAppDispatch();
     const {
@@ -195,7 +195,11 @@ const Desktop = () => {
                 <div
                     ref={selectionRef}
                     className={styles.selection}
-                    style={getSelectionStyles()}
+                    style={{
+                        ...getSelectionStyles(),
+                        border: `solid 1px ${selectionStyles.borderColor}`,
+                        backgroundColor: selectionStyles.areaColor,
+                    }}
                 />
             )}
             {desktopFiles.map(

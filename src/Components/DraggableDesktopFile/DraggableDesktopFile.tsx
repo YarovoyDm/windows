@@ -17,7 +17,10 @@ import {
     openWindow,
     removeFile,
 } from "Store/slices/Desktop";
-import { selectFileSize } from "Store/selectors/System";
+import {
+    selectFileSelectionColor,
+    selectFileSize,
+} from "Store/selectors/System";
 import { IFile } from "Types/Desktop";
 
 import styles from "./DraggableDesktopFile.module.scss";
@@ -44,6 +47,7 @@ const DraggableDesktopFile = ({
     const [targetFolderName, setTargetFolderName] = useState<string>("");
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const fileRef = useRef<HTMLDivElement | null>(null);
+    const fileSelectionColor = useAppSelector(selectFileSelectionColor);
 
     const selectedSize = useAppSelector(selectFileSize);
     const dispatch = useAppDispatch();
@@ -189,9 +193,7 @@ const DraggableDesktopFile = ({
             data-id={id}
             data-name={name}
             onContextMenu={onContextMenu}
-            className={cn(styles.file, "prevent-selecting", {
-                [styles.selected]: isFileSelected,
-            })}
+            className={cn(styles.file, "prevent-selecting")}
             style={{
                 width: selectedSize?.width,
                 height: selectedSize?.height,
@@ -199,6 +201,7 @@ const DraggableDesktopFile = ({
                 left: `${position.x}px`,
                 position: "absolute",
                 zIndex: isFileSelected ? 999 : 1,
+                background: (isFileSelected && fileSelectionColor) || "",
             }}
         >
             <Icon

@@ -33,3 +33,16 @@ export const selectSystemBrightness = createSelector(
     selectSystem,
     (state: SystemType) => state.brightness,
 );
+
+export const selectNightMode = createSelector(
+    selectSystem,
+    (state: SystemType) => state.isNightMode,
+);
+export const selectSelectionStyles = createSelector(
+    selectSystem,
+    (state: SystemType) => state.selectionStyles,
+);
+export const selectFileSelectionColor = createSelector(
+    selectSystem,
+    (state: SystemType) => state.fileSelectionColor,
+);
